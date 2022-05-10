@@ -1,11 +1,19 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './App.css';
+import { Aside, Header } from './components';
+import AuthRoutes from './routes';
+import { Container, Content } from './style';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <h1>teste</h1>
+      <Container>
+        <Header />
+        <Aside />
+        <Content>
+          <AuthRoutes />
+        </Content>
+      </Container>
     </BrowserRouter>
   );
 }
