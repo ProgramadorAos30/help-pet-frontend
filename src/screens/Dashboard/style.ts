@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    > nav {
-        margin-bottom: 24px;
-    }
+`;
+
+export const Navigation = styled.nav`
+    margin-bottom: 24px;
 `;
 
 export const Header = styled.div`
@@ -36,7 +37,7 @@ export const SearchBar = styled.div`
     justify-content: space-between;
 
     > div:nth-child(1){
-        width: 810px;
+        width: 820px;
         display: flex;
         justify-content: space-between;
     }
@@ -50,4 +51,17 @@ export const SearchBar = styled.div`
             margin-right: 24px;
         }
     }
+`;
+
+export const StatusBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 0 64px;
+`;
+
+export const GraficItemContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 32px 0;
 `;

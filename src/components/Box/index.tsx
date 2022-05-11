@@ -11,6 +11,7 @@ const Box:React.FC <IProps> = (props) => {
     return (
         <S.Container
             padding={props.padding}
+            width={props.width}
         >
             {props.children}
         </S.Container>

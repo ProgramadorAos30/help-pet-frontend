@@ -4,7 +4,7 @@ export const Container = styled.button<{ selected: boolean; }>`
     background: none;
     border-radius: 20px;
     transition: 0.3s ease all;
-    background-color: ${props => props.selected ? props.theme.colors.blue : 'transparent'};
+    background-color: ${props => props.selected ? props.theme.colors.blue : props.theme.colors.white};
     color: ${props => props.selected ? props.theme.colors.white : props.theme.colors.lightGray};
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;

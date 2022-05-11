@@ -10,6 +10,14 @@ import users from './users.svg';
 import register from './Registrar.svg';
 import iconShow from './iconShow.svg';
 import ocurrenceIcon from './ocurrenceIcon.svg';
+import computerIcon from './computerIcon.svg';
+import energiIcon from './energiIcon.svg';
+import gasIcon from './gasIcon.svg';
+import lifeIcon from './lifeIcon.svg';
+import smartphoneIcon from './smartphoneIcon.svg';
+import starIcon from './starIcon.svg';
+import whaterIcon from './whaterIcon.svg';
+import wifiIcon from './wifiIcon.svg';
 
 export {
     logOut,
@@ -23,5 +31,13 @@ export {
     users,
     register,
     iconShow,
-    ocurrenceIcon
+    ocurrenceIcon,
+    computerIcon,
+    energiIcon,
+    gasIcon,
+    lifeIcon,
+    smartphoneIcon,
+    starIcon,
+    whaterIcon,
+    wifiIcon,
 }

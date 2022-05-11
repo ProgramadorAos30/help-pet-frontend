@@ -22,7 +22,7 @@ interface IProps {
 const CardInfo: React.FC <IProps> = (props) => {
     return (
         <S.Container width={props.width}>
-            <Box padding='20px'>
+            <Box padding='20px' width={props.width}>
                 <S.Card>
                     {props.icon != "" && (
                         <img src={props.icon} alt="" />
@@ -36,7 +36,13 @@ const CardInfo: React.FC <IProps> = (props) => {
                             <button
                                 onClick={props.setOpen}
                             >
-                                <img src={iconShow} alt="" />
+                                {props.open == true ?
+                                    <img src={iconShow} alt="" style={{
+                                        transform: 'scaleY(-1)'
+                                    }}/>
+                                    :
+                                    <img src={iconShow} alt="" />
+                                }
                             </button>
                         )}
                     </S.Content>
