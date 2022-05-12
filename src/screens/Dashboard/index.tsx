@@ -528,13 +528,14 @@ const Dashboard: React.FC = () => {
                                 type=""
                                 width='372px'
                             />
-                        </div>
+                        </div>            
                         <YearGrafic 
                             title='Ocorrências no ano'
                             number={1000}
                             data={ocurrences}
                         />
                     </>
+                    // ---
                 )}
                 {users == true && (
                     <Box padding='24px 20px'>
