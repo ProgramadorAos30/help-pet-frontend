@@ -13,7 +13,7 @@ import {
 const AuthRoutes: React.FC = () => {
 
     const routes = [
-        { id: 1, path: '/', component: <Dashboard />},
+        { id: 1, path: '', component: <Dashboard />},
         { id: 2, path: '/configuracoes', component: <Configuracoes />},
         { id: 3, path: '/mensagens', component: <Mensagens />},
         { id: 4, path: '/notificacoes', component: <Notificacoes />},
