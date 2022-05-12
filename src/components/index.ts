@@ -8,3 +8,5 @@ export { default as CustomInputText } from './CustomInputText/index';
 export { default as CardInfo } from './CardInfo/index';
 export { default as CardGraficItem } from './CardGraficItem/index';
 export { default as MultSelect } from './MultSelect/index';
+export { default as CardGraficArea } from './CardGraficArea/index';
+export { default as YearGrafic } from './YearGrafic/index';

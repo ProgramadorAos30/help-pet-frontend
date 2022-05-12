@@ -23,6 +23,11 @@ export const StyleSelect = styled.div <{ width?: string}>`
 
         > p {
             margin-left: 16px;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 20px;
+            color: ${props => props.theme.colors.dark};
         }
     }
 
@@ -43,6 +48,7 @@ export const Select = styled.div`
         width: 100%;
         border: none;
         color: ${props => props.theme.colors.dark};
+        padding-bottom: 8px;
 
         > label {
             width: 100%;
@@ -58,9 +64,9 @@ export const Select = styled.div`
             text-align: left;
             padding: 5px 16px !important;
             
-            :hover {
-                background: #FAFAFA;
-            }
+        }
+        :hover {
+            background: #FAFAFA;
         }
 
         > input {

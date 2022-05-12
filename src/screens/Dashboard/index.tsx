@@ -7,7 +7,8 @@ import {
     CustomInputText,
     CardInfo,
     CardGraficItem,
-    MultSelect
+    CardGraficArea,
+    YearGrafic
 } from '../../components';
 import {
     ocurrenceIcon,
@@ -26,6 +27,7 @@ const Dashboard: React.FC = () => {
     const [ value3, setValue3 ] = useState('');
     const [ data, setData] = useState('');
     const [ multValue, setMultValue ] = useState<string[]>([]);
+    const [ yearValue, setYearValue ] = useState('');
 
     let list = [
         {label: 'Pesquisar 1', value: 'pesquisa1'},
@@ -124,6 +126,196 @@ const Dashboard: React.FC = () => {
         ]
     }
 
+    const areaChart = [
+        {
+          name: 'Energia',
+          masculino: 4000,
+          feminino: 2400,
+          naoBinario: 2400,
+          outros: 4350,
+          title: 'Masculino'
+        },
+        {
+          name: 'Água',
+          masculino: 3000,
+          feminino: 1398,
+          naoBinario: 2210,
+          outros: 4350,
+          title: 'Feminino'
+        },
+        {
+          name: 'Internet',
+          masculino: 2000,
+          feminino: 9800,
+          naoBinario: 2290,
+          outros: 4350,
+          title: 'Não-binário'
+        },
+        {
+          name: 'Gás',
+          masculino: 2780,
+          feminino: 3908,
+          naoBinario: 2000,
+          outros: 4350,
+          title: 'Outros'
+        }
+    ];
+
+    const areaChart2 = [
+        {
+          name: 'Energia',
+          white: 4000,
+          yellow: 2400,
+          indigenous: 2400,
+          black: 4350,
+          pard: 3852,
+          title: 'Amarela'
+        },
+        {
+          name: 'Água',
+          white: 3000,
+          yellow: 1398,
+          indigenous: 2210,
+          black: 4350,
+          pard: 3852,
+          title: 'Branca'
+        },
+        {
+          name: 'Internet',
+          white: 2000,
+          yellow: 5800,
+          indigenous: 2290,
+          black: 4350,
+          pard: 3852,
+          title: 'Indígena'
+        },
+        {
+          name: 'Gás',
+          white: 2780,
+          yellow: 3908,
+          indigenous: 2000,
+          black: 4350,
+          pard: 3852,
+          title: 'Parda'
+        },
+        {
+          name: 'Lorem ipsum',
+          white: 2780,
+          yellow: 3908,
+          indigenous: 2000,
+          black: 4350,
+          pard: 3852,
+          title: 'Preta'
+        }
+    ];
+    
+    const year = [
+        {label: '2019', value: '2019'},
+        {label: '2020', value: '2020'},
+        {label: '2021', value: '2021'}
+    ]
+
+    const ocurrences = [
+        {
+            name: 'Energia',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Jan',
+            total: 300
+        },{
+            name: 'Água',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Fev',
+            total: 50
+        }, {
+            name: 'Internet',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Mar',
+            total: 150
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Abr',
+            total: 369
+        }, {
+            name: 'Água',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Mai',
+            total: 50
+        }, {
+            name: 'Internet',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Jun',
+            total: 150
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Jul',
+            total: 369
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Ago',
+            total: 369
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Set',
+            total: 369
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Out',
+            total: 369
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Nov',
+            total: 369
+        }, {
+            name: 'Gás',
+            energia: 4000,
+            agua: 1000,
+            internet: 2400,
+            gas: 1350,
+            month: 'Dez',
+            total: 369
+        }
+        
+    ]
+
     return (
         <>
             <S.Navigation>
@@ -209,9 +401,6 @@ const Dashboard: React.FC = () => {
                                         }}  
                                         value={data == '' ? '' : data}
                                     />
-                                    <>
-                                        {console.log(data)}
-                                    </>
                                     <CustomInputText 
                                         type='date'
                                         label='Até:'
@@ -289,17 +478,69 @@ const Dashboard: React.FC = () => {
                                 id="gas"
                             />
                         </S.GraficItemContainer>
+                        <S.StatusBox>
+                            <CardGraficArea 
+                                data={areaChart}
+                                valueItem={multValue}
+                                onChange={(e) => {
+                                    setMultValue(e)
+                                }}
+                                title="Genero"
+                                type="genero"
+                            />
+                            <CardGraficArea 
+                                data={areaChart2}
+                                valueItem={multValue}
+                                onChange={(e) => {
+                                    setMultValue(e)
+                                }}
+                                title="Raça"
+                                type="raca"
+                            />
+                        </S.StatusBox>
+                        <S.StatusBox style={{marginBottom: '-50px'}}>
+                            <p> Ocorrências no útimo ano - <b>2021</b></p>
+                            <div style={{background: '#fff'}}>
+                                <CustomSelect
+                                    width='254px'
+                                    defaultValue="Ano"
+                                    label='Filtrar por ano'
+                                    value={yearValue}
+                                    list={year}
+                                    onChange={(e: any) => {
+                                        setYearValue(e)
+                                    }}
+                                />
+                            </div>
+                        </S.StatusBox>
+                        <div style={{width: '764px', display: 'flex', justifyContent: 'space-between', margin: '40px 0 24px'}}>
+                            <CardInfo 
+                                icon={ocurrenceIcon}
+                                title="Total de ocorrências no ano"
+                                value={3160}
+                                type=""
+                                width='372px'
+                            />
+                            <CardInfo 
+                                icon=''
+                                title="Média de novas ocorrências por mês"
+                                value={540}
+                                type=""
+                                width='372px'
+                            />
+                        </div>
+                        <YearGrafic 
+                            title='Ocorrências no ano'
+                            number={1000}
+                            data={ocurrences}
+                        />
                     </>
                 )}
                 {users == true && (
                     <Box padding='24px 20px'>
-                        <h1>users</h1>   
-                        <MultSelect 
-                            valueItem={multValue}
-                            onChange={(e) => {
-                                setMultValue(e)
-                            }}
-                        />                 
+                        <S.Header>
+                            <h1>Usuários</h1>
+                        </S.Header>                  
                     </Box>
                 )}
             </S.Container>

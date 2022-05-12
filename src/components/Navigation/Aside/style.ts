@@ -4,8 +4,12 @@ import styled from "styled-components";
 export const Container = styled.div`
     grid-area: AS;
     height: 100vh;
+    width: 292px;
     background: ${props => props.theme.colors.white};
     box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
 `;
 
 export const logo = styled.div`
@@ -56,5 +60,9 @@ export const Link = styled(NavLink)`
         > img {
             filter: brightness(0) invert(1); 
         }
+    }
+
+    :hover{
+        opacity: 0.5;
     }
 `;

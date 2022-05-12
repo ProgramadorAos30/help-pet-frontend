@@ -13,6 +13,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     grid-area: CT;
+    width: 100%;
     padding: 40px;
     background: ${props => props.theme.colors.whiteSecconday};
 `;

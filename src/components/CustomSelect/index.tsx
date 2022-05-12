@@ -67,7 +67,11 @@ const CustomSelect:React.FC <IProps> = (props) => {
                 )}
             </div>
             <button onClick={() => setOpen(!open)}>
-                <img src={iconShow} alt="" width={24} style={{marginRight: '8px'}}/>
+                {open == false ?
+                    <img src={iconShow} alt="" width={24} style={{marginRight: '8px'}}/>
+                    :
+                    <img src={iconShow} alt="" width={24} style={{marginRight: '8px', transform: 'scaleY(-1)'}}/>
+                }
             </button>
         </S.StyleSelect>
     );
