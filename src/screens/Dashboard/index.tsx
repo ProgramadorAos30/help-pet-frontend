@@ -529,6 +529,7 @@ const Dashboard: React.FC = () => {
                                 width='372px'
                             />
                         </div>
+                        
                         <YearGrafic 
                             title='Ocorrências no ano'
                             number={1000}
