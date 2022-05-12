@@ -535,6 +535,7 @@ const Dashboard: React.FC = () => {
                             data={ocurrences}
                         />
                     </>
+                    // ---
                 )}
                 {users == true && (
                     <Box padding='24px 20px'>
