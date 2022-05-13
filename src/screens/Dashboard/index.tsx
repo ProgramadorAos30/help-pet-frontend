@@ -126,6 +126,116 @@ const Dashboard: React.FC = () => {
         ]
     }
 
+    const card5 = {
+        title: "Sul",
+        list: [
+            {
+                label: 'Sul',
+                value: '43'
+            }, {
+                label: 'Sul',
+                value: '63'
+            }, {
+                label: 'Sul',
+                value: '43'
+            }, {
+                label: 'Sul',
+                value: '13'
+            }, {
+                label: 'Sul',
+                value: '63'
+            },
+        ]
+    }
+
+    const card6 = {
+        title: "Norte",
+        list: [
+            {
+                label: 'Norte',
+                value: '43'
+            }, {
+                label: 'Norte',
+                value: '63'
+            }, {
+                label: 'Norte',
+                value: '43'
+            }, {
+                label: 'Norte',
+                value: '13'
+            }, {
+                label: 'Norte',
+                value: '63'
+            },
+        ]
+    }
+
+    const card7 = {
+        title: "Nordeste",
+        list: [
+            {
+                label: 'Nordeste',
+                value: '43'
+            }, {
+                label: 'Nordeste',
+                value: '63'
+            }, {
+                label: 'Nordeste',
+                value: '43'
+            }, {
+                label: 'Nordeste',
+                value: '13'
+            }, {
+                label: 'Nordeste',
+                value: '63'
+            },
+        ]
+    }
+
+    const card8 = {
+        title: "Sudeste",
+        list: [
+            {
+                label: 'Sudeste',
+                value: '43'
+            }, {
+                label: 'Sudeste',
+                value: '63'
+            }, {
+                label: 'Sudeste',
+                value: '43'
+            }, {
+                label: 'Sudeste',
+                value: '13'
+            }, {
+                label: 'Sudeste',
+                value: '63'
+            },
+        ]
+    }
+
+    const card9 = {
+        title: "Centro-Oeste",
+        list: [
+            {
+                label: 'Centro-Oeste',
+                value: '43'
+            }, {
+                label: 'Centro-Oeste',
+                value: '63'
+            }, {
+                label: 'Centro-Oeste',
+                value: '43'
+            }, {
+                label: 'Centro-Oeste',
+                value: '13'
+            }, {
+                label: 'Centro-Oeste',
+                value: '63'
+            },
+        ]
+    }
+
     const areaChart = [
         {
           name: 'Energia',
@@ -320,7 +430,7 @@ const Dashboard: React.FC = () => {
         <>
             <S.Navigation>
                 <DoubleButton
-                    text='Mapa'
+                    text='Ocorrências'
                     selected={map}
                     onSelect={() => {
                         setMap(true)
@@ -337,7 +447,6 @@ const Dashboard: React.FC = () => {
                 />
             </S.Navigation>
             <S.Container>
-
                 {map == true && (
                     <>
                         <Box padding='24px 20px'>
@@ -391,7 +500,7 @@ const Dashboard: React.FC = () => {
                                     />
                                 </div>
                                 <div>
-                                    <CustomInputText 
+                                    {/* <CustomInputText 
                                         type='date'
                                         label='De:'
                                         onChange={(e: any) => {
@@ -400,6 +509,7 @@ const Dashboard: React.FC = () => {
                                             
                                         }}  
                                         value={data == '' ? '' : data}
+                                        placeholder="--/--/--"
                                     />
                                     <CustomInputText 
                                         type='date'
@@ -408,7 +518,8 @@ const Dashboard: React.FC = () => {
                                             setData(e.target.value)
                                         }}  
                                         value={data}
-                                    />
+                                        placeholder="--/--/--"
+                                    /> */}
                                 </div>
                             </S.SearchBar>
                         </Box>
@@ -446,7 +557,9 @@ const Dashboard: React.FC = () => {
                             Gráfico de ocorrências - <b>RJ, Rio de Janeiro, Duque de Caxias | De 11/11/21 até 11/01/22</b>
                         </p>
                         <S.GraficItemContainer>
-                            <CardGraficItem 
+                            <CardGraficItem
+                                width='372px'
+                                widthChart={372} 
                                 list={card.list}
                                 title={card.title}
                                 value='325'
@@ -454,7 +567,9 @@ const Dashboard: React.FC = () => {
                                 id="energia"
                             />
 
-                            <CardGraficItem 
+                            <CardGraficItem
+                                width='372px'
+                                widthChart={372} 
                                 list={card2.list}
                                 title={card2.title}
                                 value='55'
@@ -462,7 +577,9 @@ const Dashboard: React.FC = () => {
                                 id="agua"
                             />
 
-                            <CardGraficItem 
+                            <CardGraficItem
+                                width='372px'
+                                widthChart={372} 
                                 list={card3.list}
                                 title={card3.title}
                                 value='25'
@@ -470,7 +587,9 @@ const Dashboard: React.FC = () => {
                                 id="wifi"
                             />
 
-                            <CardGraficItem 
+                            <CardGraficItem
+                                width='372px'
+                                widthChart={372} 
                                 list={card4.list}
                                 title={card4.title}
                                 value='155'
@@ -535,14 +654,195 @@ const Dashboard: React.FC = () => {
                             data={ocurrences}
                         />
                     </>
-                    // ---
                 )}
                 {users == true && (
-                    <Box padding='24px 20px'>
-                        <S.Header>
-                            <h1>Usuários</h1>
-                        </S.Header>                  
-                    </Box>
+                    <> 
+                        <S.StatusBox style={{marginBottom: '20px'}}>
+                            <CardInfo 
+                                icon={ocurrenceIcon}
+                                title="Total de usuários"
+                                value={3160}
+                                type=""
+                                width='372px'
+                            />
+                            <CardInfo 
+                                icon=''
+                                title="Total de novas usuários (hoje)"
+                                value={540}
+                                type=""
+                                width='372px'
+                            />
+                            <CardInfo 
+                                icon=''
+                                title="Total de usuários ativos (hoje)"
+                                value={540}
+                                type=""
+                                width='372px'
+                            />
+                            <CardInfo 
+                                icon=''
+                                title="Total de usuários inativos (hoje)"
+                                value={540}
+                                type=""
+                                width='372px'
+                            />
+                        </S.StatusBox>   
+                        <Box padding='24px 20px'>
+                            <S.Header>
+                                <h1>Filtros</h1>
+                                {value != '' && data != '' && (
+                                    <button 
+                                        onClick={() => {
+                                            setValue('');
+                                            setValue2('');
+                                            setValue3('');
+                                            setData('');
+                                        }}
+                                    >
+                                        Limpar filtros
+                                    </button>
+                                )}
+                            </S.Header>
+                            <S.SearchBar>
+                                <div>
+                                    <CustomSelect
+                                        width='254px'
+                                        defaultValue="Estados"
+                                        label='Filtrar por Estados'
+                                        value={value}
+                                        list={list}
+                                        onChange={(e: any) => {
+                                            setValue(e)
+                                            console.log(e);
+                                        }}
+                                    />
+                                    <CustomSelect
+                                        width='254px'
+                                        defaultValue="Município"
+                                        label='Filtrar por Estados'
+                                        value={value2}
+                                        list={list}
+                                        onChange={(e: any) => {
+                                            setValue2(e)
+                                        }}
+                                    />
+                                    <CustomSelect
+                                        width='254px'
+                                        defaultValue="Bairro"
+                                        label='Filtrar por Estados'
+                                        value={value3}
+                                        list={list}
+                                        onChange={(e: any) => {
+                                            setValue3(e)
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    {/* <CustomInputText 
+                                        type='date'
+                                        label='De:'
+                                        onChange={(e: any) => {
+                                            setData(e)
+                                            console.log(e);
+                                            
+                                        }}  
+                                        value={data == '' ? '' : data}
+                                    />
+                                    <CustomInputText 
+                                        type='date'
+                                        label='Até:'
+                                        onChange={(e: any) => {
+                                            setData(e.target.value)
+                                        }}  
+                                        value={data}
+                                    /> */}
+                                </div>
+                            </S.SearchBar>
+                        </Box>
+                        <p  style={{margin: '20px 0'}} >Gráfico de usuários por região - <b>Todos os locais | Desde o início</b></p>           
+                        <S.GraficItemContainer>
+                            <CardGraficItem
+                                width='284px' 
+                                widthChart={284}
+                                list={card5.list}
+                                title={card5.title}
+                                value='325'
+                                id="sul"
+                            />
+
+                            <CardGraficItem
+                                width='284px' 
+                                widthChart={284}
+                                list={card6.list}
+                                title={card6.title}
+                                value='55'
+                                id="Norte"
+                            />
+
+                            <CardGraficItem
+                                width='284px' 
+                                widthChart={284}
+                                list={card7.list}
+                                title={card7.title}
+                                value='25'
+                                id="nordeste"
+                            />
+
+                            <CardGraficItem
+                                width='284px' 
+                                widthChart={284}
+                                list={card8.list}
+                                title={card8.title}
+                                value='155'
+                                id="sudeste"
+                            />
+
+                            <CardGraficItem
+                                width='284px' 
+                                widthChart={284}
+                                list={card9.list}
+                                title={card9.title}
+                                value='155'
+                                id="centroOeste"
+                            />
+                        </S.GraficItemContainer>
+                        <S.StatusBox style={{marginBottom: '-50px'}}>
+                            <p> Usuários no útimo ano - <b>2021</b></p>
+                            <div style={{background: '#fff'}}>
+                                <CustomSelect
+                                    width='254px'
+                                    defaultValue="Ano"
+                                    label='Filtrar por ano'
+                                    value={yearValue}
+                                    list={year}
+                                    onChange={(e: any) => {
+                                        setYearValue(e)
+                                    }}
+                                />
+                            </div>
+                        </S.StatusBox>
+                        <div style={{width: '764px', display: 'flex', justifyContent: 'space-between', margin: '40px 0 24px'}}>
+                            <CardInfo 
+                                icon={ocurrenceIcon}
+                                title="Total de novos usuários no ano"
+                                value={3160}
+                                type=""
+                                width='372px'
+                            />
+                            <CardInfo 
+                                icon=''
+                                title="Média de novos usuários por mês"
+                                value={540}
+                                type=""
+                                width='372px'
+                            />
+                        </div>            
+                        <YearGrafic 
+                            title='Ocorrências no ano'
+                            number={1000}
+                            data={ocurrences}
+                        />
+                    </>
                 )}
             </S.Container>
         </>

@@ -9,6 +9,7 @@ export const StyleSelect = styled.div <{ width?: string}>`
     justify-content: space-between;
     cursor: pointer;
     position: relative;
+    z-index: 9;
 
     > button {
         background: transparent;
@@ -43,6 +44,7 @@ export const Select = styled.div`
     position: absolute;
     top: 50px;
     left: 0;
+    overflow-y: scroll;
 
     >div {
         width: 100%;

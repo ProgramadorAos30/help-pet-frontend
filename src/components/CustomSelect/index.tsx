@@ -3,14 +3,18 @@ import * as S from './style';
 import { iconShow } from '../../assets/index';
 
 type List = {
-    value: string,
-    label: string
+    value?: string,
+    label?: string,
+    id?: number,
+    nome?:string,
+    sigla?: string
 };
 
 interface IProps {
     onChange?: (e: any)=> void,
+    onBlur?:(e: any) => any,
     label: string,
-    list: List[]
+    list: List[] | any,
     value: string,
     defaultValue?: string,
     width?: string
@@ -19,6 +23,10 @@ interface IProps {
 const CustomSelect:React.FC <IProps> = (props) => {
     const [ value, setValue ] = useState('');
     const [ open, setOpen ] = useState(false);
+    console.log(props.list);
+    console.log(value);
+    
+    
 
     return (
         <S.StyleSelect
@@ -31,7 +39,7 @@ const CustomSelect:React.FC <IProps> = (props) => {
                     :
                     <S.DaufaultLabel htmlFor={props.label}>{props.defaultValue}</S.DaufaultLabel>
                 }
-                {props.value == '' ? 
+                {value == '' ? 
                     <p style={{display: 'none'}}>{value}</p>
                     :
                     <p>{value}</p>
@@ -42,23 +50,26 @@ const CustomSelect:React.FC <IProps> = (props) => {
                             return (
                                 <div key={index}>
                                     <label 
-                                        htmlFor={id.value}
+                                        htmlFor={id.value === "" ? id.nome : id.label}
                                         onClick={() => {
-                                            let valor = props.value
+                                            let valor = props.value === "" ? id.nome : id.value
                                             setOpen(!open)
-                                            setValue(id.value)
+                                            setValue(id.value === "" ? id.nome : id.value)
                                             valor = id.value
                                             if(props.onChange  != undefined){
-                                                props.onChange(id.value)
+                                                props.onChange(id.value === "" ? id.id : id.value)
+                                            }
+                                            if(props.onBlur  != undefined){
+                                                props.onBlur(id.value === "" ? id.id : id.value)
                                             }
                                         }}
-                                    >{id.label}</label>
+                                    >{id.label === "" ? id.nome : id.label}</label>
                                     <input
-                                        name={id.value}
-                                        id={id.value}
+                                        name={id.value === "" ? id.nome : id.label}
+                                        id={id.value === "" ? id.nome : id.label}
                                         type='checkbox'
                                         value={id.value}
-                                        placeholder={id.label}
+                                        placeholder={id.label === "" ? id.nome : id.label}
                                     />
                                 </div>
                             )
