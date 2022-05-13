@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div <{ width: string }>`
     background: ${props => props.theme.colors.white};
     border: 1px solid ${props => props.theme.colors.lightGray};
     border-radius: 8px;
     padding: 8px 16px;
-    width: 100%;
+    width: ${props => props.width};
     height: 56px;
     display: flex;
     align-items: center;

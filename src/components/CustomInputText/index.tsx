@@ -3,15 +3,17 @@ import * as S from './style';
 
 interface IProps {
     onChange?: (e: any)=> void,
+    onBlur?: (e: any)=> void,
     label?: string,
     value?: string,
     placeholder?: string,
-    type: string
+    type: string,
+    width: string
 };
 
 const CustomInputText:React.FC <IProps> = (props) => {
     return (
-        <S.Container>
+        <S.Container width={props.width}>
             <label 
                 htmlFor="date"
                 style={props.value != '' ? { 
@@ -28,7 +30,8 @@ const CustomInputText:React.FC <IProps> = (props) => {
                 type={props.type} 
                 value={props.value}
                 onChange={props.onChange}
-                placeholder='--/--/--'
+                onBlur={props.onBlur}
+                placeholder={props.placeholder}
                 style={props.value != '' ? { 
                     color: '#2C3941',
                     position: 'absolute',

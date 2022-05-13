@@ -16,24 +16,32 @@ interface IProps {
     title?: string,
     value?: string,
     id?: string,
-    list?: List[]
+    list?: List[],
+    width?: string,
+    widthChart?: number;
 }
 
 const CardGraficItem: React.FC <IProps> = (props) => {
     const [ color, setColor ] = useState('');
 
     function setColorGrafic(){
-        if(props.title == 'Quedas de energia'){
+        if(props.title == 'Quedas de energia' || props.title == 'Sul'){
             setColor('#FF954E')
         } 
-        if(props.title == 'Falta de água'){
+        if(props.title == 'Falta de água' || props.title == 'Norte'){
             setColor('#47DED0')
         }
-        if(props.title == 'Quedas de internet'){
+        if(props.title == 'Quedas de internet' || props.title == 'Nordeste'){
             setColor('#9D86ED')
         }
         if(props.title == 'Falta de gás'){
             setColor('#FF77F1')
+        }
+        if(props.title == 'Sudeste'){
+            setColor('#FF4363')
+        }
+        if(props.title == 'Centro-Oeste'){
+            setColor('#B8D335')
         }
     };
 
@@ -42,7 +50,7 @@ const CardGraficItem: React.FC <IProps> = (props) => {
     }, [color]);
     
     return (
-        <Box padding='0' width='372px'>
+        <Box padding='0' width={props.width}>
             <S.Container>
                 <div>
                     <img src={props.icon} alt="" />
@@ -52,7 +60,7 @@ const CardGraficItem: React.FC <IProps> = (props) => {
                     </div>
                 </div>
                 <AreaChart 
-                    width={372} 
+                    width={props.widthChart} 
                     height={82} 
                     data={props.list}
                     style={{background: '#fff'}}
