@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './style';
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { api, useUf, useCity } from "../../services";
+import { useForm, Controller } from "react-hook-form";
+import { api } from "../../services";
 import { useMutation } from 'react-query';
 import { queryClient } from '../../services/index';
 import { logo } from '../../assets';
@@ -35,6 +35,7 @@ const Login: React.FC = () => {
         mutate(obj);
         console.log(values, 'valores');
     };
+
     return (
         <S.Container>
             <div>
