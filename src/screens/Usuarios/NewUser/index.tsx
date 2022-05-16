@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as S from './style';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { api, useUf, useCity } from "../../../services";
-import { CustomInputText, CustomSelect, CustomInput, CustomSwitch } from '../../../components/index';
+import { CustomInput, CustomSelect, CustomSwitch } from '../../../components/index';
 import { IProps } from "./types";
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
@@ -64,11 +64,13 @@ const NewUser: React.FC = () => {
                             name="name"
                             render={({field: { onChange, onBlur, value }}) => (
                                 <CustomInput
+                                    width={372}
                                     type="text"
                                     label="Nome do moderador"
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
+
                                 />
                             )}
                         />  
@@ -84,6 +86,7 @@ const NewUser: React.FC = () => {
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
+                                    width={372}
                                 />
                             )}
                         />
@@ -94,6 +97,7 @@ const NewUser: React.FC = () => {
                             name="phone_number"
                             render={({field: { onChange, onBlur, value }}) => (
                                 <CustomInput
+                                    width={372}
                                     type="text"
                                     label="Numero do Whats"
                                     value={value}
@@ -107,6 +111,7 @@ const NewUser: React.FC = () => {
                             name="email"
                             render={({field: { onChange, onBlur, value }}) => (
                                 <CustomInput
+                                    width={372}
                                     type="text"
                                     label="Digite o email"
                                     value={value}
@@ -129,6 +134,7 @@ const NewUser: React.FC = () => {
                                     value={value}
                                     onBlur={onBlur}
                                     onChange={onChange}
+                                    width={372}
                                 />
                             )}
                         />
@@ -145,6 +151,7 @@ const NewUser: React.FC = () => {
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
+                                    width={372}
                                 />
                             )}
                         />
@@ -154,7 +161,8 @@ const NewUser: React.FC = () => {
                             control={control}
                             name="password"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput 
+                                <CustomInput
+                                    width={372} 
                                     label="Senha do moderador"
                                     value={value}
                                     onChange={onChange}

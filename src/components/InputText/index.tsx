@@ -49,7 +49,8 @@ interface IProps {
     onChange: (e: any) => any,
     onBlur: (e: any) => any,
     type: string,
-    value: any
+    value: any,
+    width: number
 }
 
 const CustomInput: React.FC <IProps> = (props) => {
@@ -57,7 +58,7 @@ const CustomInput: React.FC <IProps> = (props) => {
         <ThemeProvider theme={theme}>
             <FormControl
                 variant="filled" 
-                sx={{ minWidth: 372, height: 56, background: '#FFF  !important', borderRadius: '8px !important', border:'none'}}
+                sx={{ width: props.width, height: 56, background: '#FFF  !important', borderRadius: '8px !important', border:'none'}}
             >
                 <TextField 
                     variant="filled" 

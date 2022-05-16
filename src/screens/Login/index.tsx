@@ -52,7 +52,8 @@ const Login: React.FC = () => {
                                 onChange={onChange} 
                                 onBlur={onBlur} 
                                 type='text' 
-                                value={value}                    
+                                value={value}
+                                width={372}                    
                             />
                         )}
                     />
@@ -66,7 +67,8 @@ const Login: React.FC = () => {
                                 onChange={onChange} 
                                 onBlur={onBlur}  
                                 type='password' 
-                                value={value}                    
+                                value={value} 
+                                width={372}                      
                             />
                         )}
                     />

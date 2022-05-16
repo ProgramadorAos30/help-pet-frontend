@@ -37,7 +37,7 @@ export const SearchBar = styled.div`
     justify-content: space-between;
 
     > div:nth-child(1){
-        width: 820px;
+        width: 810px;
         display: flex;
         justify-content: space-between;
     }
@@ -46,10 +46,6 @@ export const SearchBar = styled.div`
         width: 376px;
         display: flex;
         justify-content: space-between;
-
-        > div {
-            margin-right: 24px;
-        }
     }
 `;
 
