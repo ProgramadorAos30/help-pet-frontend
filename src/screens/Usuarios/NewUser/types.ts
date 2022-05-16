@@ -6,4 +6,5 @@ export type IProps = {
     "city": string,
     "active": boolean,
     "role": string,
+    "password": string
 }

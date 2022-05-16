@@ -18,6 +18,7 @@ import smartphoneIcon from './smartphoneIcon.svg';
 import starIcon from './starIcon.svg';
 import whaterIcon from './whaterIcon.svg';
 import wifiIcon from './wifiIcon.svg';
+import loginBg from './login.png';
 
 export {
     logOut,
@@ -40,4 +41,5 @@ export {
     starIcon,
     whaterIcon,
     wifiIcon,
+    loginBg,
 }

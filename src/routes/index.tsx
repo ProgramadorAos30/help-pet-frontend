@@ -7,19 +7,21 @@ import {
     Notificacoes,
     Registros,
     Servicos,
-    Usuarios
+    Usuarios,
+    Login
  } from '../screens/index';
 
 const AuthRoutes: React.FC = () => {
 
     const routes = [
-        { id: 1, path: '', component: <Dashboard />},
-        { id: 2, path: '/configuracoes', component: <Configuracoes />},
-        { id: 3, path: '/mensagens', component: <Mensagens />},
-        { id: 4, path: '/notificacoes', component: <Notificacoes />},
-        { id: 5, path: '/registros', component: <Registros />},
-        { id: 6, path: '/servicos', component: <Servicos />},
-        { id: 7, path: '/usuarios', component: <Usuarios />},
+        { id: 1, path: '', component: <Login /> },
+        { id: 2, path: '/dashboard', component: <Dashboard />},
+        { id: 3, path: '/configuracoes', component: <Configuracoes />},
+        { id: 4, path: '/mensagens', component: <Mensagens />},
+        { id: 5, path: '/notificacoes', component: <Notificacoes />},
+        { id: 6, path: '/registros', component: <Registros />},
+        { id: 7, path: '/servicos', component: <Servicos />},
+        { id: 8, path: '/usuarios', component: <Usuarios />},
     ]
 
     return (

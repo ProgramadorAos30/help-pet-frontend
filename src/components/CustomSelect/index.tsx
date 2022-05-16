@@ -1,90 +1,107 @@
 import React, { useState } from 'react';
-import * as S from './style';
-import { iconShow } from '../../assets/index';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type List = {
     value?: string,
-    label?: string,
-    id?: number,
-    nome?:string,
-    sigla?: string
+    label?: string
 };
 
+type State = {
+    id?: number,
+    sigla?: string,
+    nome?:string,
+}
+
 interface IProps {
-    onChange?: (e: any)=> void,
     onBlur?:(e: any) => any,
+    onChange: (e: any) => any,
+    onClick?: () => void,
     label: string,
-    list: List[] | any,
+    list: List[] | State[] | any,
     value: string,
     defaultValue?: string,
-    width?: string
+    width?: string,
+    labelDefault?: string,
 };
 
 const CustomSelect:React.FC <IProps> = (props) => {
-    const [ value, setValue ] = useState('');
-    const [ open, setOpen ] = useState(false);
-    console.log(props.list);
-    console.log(value);
+    const theme = createTheme({
+        components: {
+            MuiSelect: {
+                styleOverrides: {
+                    select: {
+                        color: '#2C3941',
+                        fontWeight: '700',
+                        fontFamily: 'Inter', 
+                        border: '1px solid #AFAFAF !important',
+                        borderRadius: '8px', 
+                        background: '#fff',
+                        paddingTop: '25px',
+                    },
+                    
+                }
+            },
+            MuiInputLabel: {
+                styleOverrides:{
+                    root: {
+                    color: '#AFAFAF',
+                    "&.Mui-focused": {
+                        "color": "#AFAFAF",
+                        },
+                    },
+                    
+                }
+            },
+            MuiFormControl: {
+                styleOverrides: {
+                    root: {
+                        border: '0',
+                        "*": {
+                            "border": 'none',
+                        }
+                    },
+                }
+            }
+        }
+    });
     
+    const handleChange = (event: any) => props.onChange(event.target.value);
     
-
     return (
-        <S.StyleSelect
-            width={props.width} 
-            onClick={() => setOpen(!open)}
-        >
-            <div>
-                {props.value == '' ?
-                    <S.Label htmlFor={props.label}>{props.label}</S.Label>
+        <ThemeProvider theme={theme} >
+            <FormControl variant="filled" sx={{ minWidth: 372, height: 56 }}>
+                {props.value === '' ? 
+                    <InputLabel>{props.labelDefault}</InputLabel>
                     :
-                    <S.DaufaultLabel htmlFor={props.label}>{props.defaultValue}</S.DaufaultLabel>
+                    <InputLabel>{props.label}</InputLabel>
                 }
-                {value == '' ? 
-                    <p style={{display: 'none'}}>{value}</p>
-                    :
-                    <p>{value}</p>
-                }
-                {open == true && (
-                    <S.Select> 
-                        {props.list.map((id: any, index: number) => {
-                            return (
-                                <div key={index}>
-                                    <label 
-                                        htmlFor={id.value === "" ? id.nome : id.label}
-                                        onClick={() => {
-                                            let valor = props.value === "" ? id.nome : id.value
-                                            setOpen(!open)
-                                            setValue(id.value === "" ? id.nome : id.value)
-                                            valor = id.value
-                                            if(props.onChange  != undefined){
-                                                props.onChange(id.value === "" ? id.id : id.value)
-                                            }
-                                            if(props.onBlur  != undefined){
-                                                props.onBlur(id.value === "" ? id.id : id.value)
-                                            }
-                                        }}
-                                    >{id.label === "" ? id.nome : id.label}</label>
-                                    <input
-                                        name={id.value === "" ? id.nome : id.label}
-                                        id={id.value === "" ? id.nome : id.label}
-                                        type='checkbox'
-                                        value={id.value}
-                                        placeholder={id.label === "" ? id.nome : id.label}
-                                    />
-                                </div>
-                            )
-                        })}
-                    </S.Select>
-                )}
-            </div>
-            <button onClick={() => setOpen(!open)}>
-                {open == false ?
-                    <img src={iconShow} alt="" width={24} style={{marginRight: '8px'}}/>
-                    :
-                    <img src={iconShow} alt="" width={24} style={{marginRight: '8px', transform: 'scaleY(-1)'}}/>
-                }
-            </button>
-        </S.StyleSelect>
+                <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    disableUnderline
+                    onChange={props.onChange}
+                    onBlur={props.onBlur}
+                >
+                    <MenuItem disabled value="">
+                        <em>{props.labelDefault}</em>
+                    </MenuItem>
+                    {props.list?.map((id: any, index: number) => {
+                        return (
+                            <MenuItem 
+                                key={index} 
+                                value={id.value || id.nome}
+                            >
+                                {id.label || id.nome}
+                            </MenuItem>
+                        )
+                    })}
+                </Select>
+            </FormControl>
+        </ThemeProvider>
     );
 };
 
