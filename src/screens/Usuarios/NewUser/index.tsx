@@ -15,7 +15,6 @@ const postUser = async (data: IProps) => {
 const NewUser: React.FC = () => {
     const [ idUf, setIdUf ] = useState<any>(0);
     const { data: uf, isLoading: loadingUf } = useUf();
-    const { data: city, isLoading: loadingCity } = useCity(idUf);
     
     const { 
         handleSubmit,
@@ -50,19 +49,9 @@ const NewUser: React.FC = () => {
         {label: 'Mobile', value: 'Mobile'}
     ];
 
-    useEffect(() => {
-        watch((value, { name, type }) => {
-            if(value.state !== ''){
-                //@ts-ignore
-                uf?.forEach((id: any) => {
-                    if(id.nome == value.state){
-                        setIdUf(id.id)
-                    }
-                })
-                
-            }
-        })
-    }, [watch])
+    const watchUf = watch('state');
+
+    const { data: city, isLoading: loadingCity } = useCity(watchUf);
 
     return (
         <S.Container>
