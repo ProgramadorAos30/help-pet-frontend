@@ -14,7 +14,7 @@ import {
 const AuthRoutes: React.FC = () => {
 
     const routes = [
-        { id: 1, path: '', component: <Login /> },
+        { id: 1, path: '/singup', component: <Login /> },
         { id: 2, path: '/dashboard', component: <Dashboard />},
         { id: 3, path: '/configuracoes', component: <Configuracoes />},
         { id: 4, path: '/mensagens', component: <Mensagens />},
