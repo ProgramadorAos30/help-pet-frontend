@@ -15,6 +15,7 @@ export const Container = styled.div`
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
+                border: none;
                 > div {
                     margin-bottom: 20px;
                 }

@@ -4,24 +4,19 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { listCity, listUf } from '../../@types';
 
 type List = {
     value?: string,
     label?: string
 };
 
-type State = {
-    id?: number,
-    sigla?: string,
-    nome?:string,
-}
-
 interface IProps {
     onBlur?:(e: any) => any,
     onChange: (e: any) => any,
     onClick?: () => void,
     label: string,
-    list: List[] | State[] | any,
+    list: List[] | listUf[] | listCity[] | any,
     value: string,
     defaultValue?: string,
     width?: string,
@@ -93,7 +88,7 @@ const CustomSelect:React.FC <IProps> = (props) => {
                         return (
                             <MenuItem 
                                 key={index} 
-                                value={id.value || id.nome}
+                                value={id.value || id.sigla || id.nome}
                             >
                                 {id.label || id.nome}
                             </MenuItem>

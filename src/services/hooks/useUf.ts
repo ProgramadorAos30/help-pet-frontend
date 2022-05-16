@@ -1,6 +1,4 @@
-import { 
-    ibge
-} from "../index";
+import { ibge } from "../index";
 import { useQuery } from "react-query";
 import { UF } from "../../@types/index";
 
