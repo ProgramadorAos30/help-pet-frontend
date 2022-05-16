@@ -13,7 +13,7 @@ import {
 
 const Aside: React.FC = () => {
     const link = [
-        {to: '', icon: dashboard, label: 'Dashboard'},
+        {to: '/dashboard', icon: dashboard, label: 'Dashboard'},
         {to:'/registros', icon: registers, label: 'Registros'},
         {to: '/usuarios', icon: users, label: 'Usuários'},
         {to:'/servicos', icon: services, label: 'Serviços'},

@@ -17,6 +17,17 @@ export default createGlobalStyle`
     }
 
     *:focus {
-        outline: none;
+        outline: none !important;
+    }
+
+    select {
+        outline: none !important;
+        border: 0.5px solid #AFAFAF !important;
+        border-radius: 8px;
+    }
+
+    input{
+        border: 0.5px solid #AFAFAF !important;
+        border-radius: 8px;
     }
 `;

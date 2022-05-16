@@ -11,3 +11,5 @@ export { default as MultSelect } from './MultSelect/index';
 export { default as CardGraficArea } from './CardGraficArea/index';
 export { default as YearGrafic } from './YearGrafic/index';
 export { default as PersonalModal } from './Modal/index';
+export { default as CustomInput } from './InputText/index';
+export { default as CustomSwitch } from './Switch/index';

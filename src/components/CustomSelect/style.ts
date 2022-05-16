@@ -44,8 +44,9 @@ export const Select = styled.div`
     position: absolute;
     top: 50px;
     left: 0;
+    max-height: 250px;
     overflow-y: scroll;
-
+    
     >div {
         width: 100%;
         border: none;
@@ -67,12 +68,14 @@ export const Select = styled.div`
             padding: 5px 16px !important;
             
         }
-        :hover {
-            background: #FAFAFA;
-        }
 
         > input {
             display: none;
+            width: 0;
+        }
+        
+        :hover {
+            background: #FAFAFA;
         }
     }
 `;

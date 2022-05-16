@@ -5,12 +5,14 @@ import AuthRoutes from './routes';
 import { Container, Content } from './style';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from './services/index';
+import { Login } from './screens';
 
 const App: React.FC = () => {
 
   return (
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+          {/* <Login /> */}
           <Container>
             <Header />
             <Aside />
