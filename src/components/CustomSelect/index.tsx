@@ -19,7 +19,7 @@ interface IProps {
     list: List[] | listUf[] | listCity[] | any,
     value: string,
     defaultValue?: string,
-    width?: string,
+    width?: number,
     labelDefault?: string,
 };
 
@@ -68,7 +68,7 @@ const CustomSelect:React.FC <IProps> = (props) => {
     
     return (
         <ThemeProvider theme={theme} >
-            <FormControl variant="filled" sx={{ minWidth: 372, height: 56 }}>
+            <FormControl variant="filled" sx={{ width: props.width, height: 56 }}>
                 {props.value === '' ? 
                     <InputLabel>{props.labelDefault}</InputLabel>
                     :

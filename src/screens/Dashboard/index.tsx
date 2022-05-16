@@ -8,7 +8,8 @@ import {
     CardInfo,
     CardGraficItem,
     CardGraficArea,
-    YearGrafic
+    YearGrafic,
+    CustomInput
 } from '../../components';
 import {
     ocurrenceIcon,
@@ -468,9 +469,9 @@ const Dashboard: React.FC = () => {
                             <S.SearchBar>
                                 <div>
                                     <CustomSelect
-                                        width='254px'
-                                        defaultValue="Estados"
-                                        label='Filtrar por Estados'
+                                        width={254}
+                                        label='Estados'
+                                        labelDefault='Filtrar por Estados'
                                         value={value}
                                         list={list}
                                         onChange={(e: any) => {
@@ -479,9 +480,9 @@ const Dashboard: React.FC = () => {
                                         }}
                                     />
                                     <CustomSelect
-                                        width='254px'
-                                        defaultValue="Município"
-                                        label='Filtrar por Estados'
+                                        width={254}
+                                        label="Município"
+                                        labelDefault="Filtrar por Município"
                                         value={value2}
                                         list={list}
                                         onChange={(e: any) => {
@@ -489,9 +490,9 @@ const Dashboard: React.FC = () => {
                                         }}
                                     />
                                     <CustomSelect
-                                        width='254px'
-                                        defaultValue="Bairro"
-                                        label='Filtrar por Estados'
+                                        width={254}
+                                        label="Bairro"
+                                        labelDefault='Filtrar por Bairro'
                                         value={value3}
                                         list={list}
                                         onChange={(e: any) => {
@@ -500,26 +501,30 @@ const Dashboard: React.FC = () => {
                                     />
                                 </div>
                                 <div>
-                                    {/* <CustomInputText 
+                                    <CustomInput
+                                        width={176} 
                                         type='date'
                                         label='De:'
                                         onChange={(e: any) => {
-                                            setData(e)
+                                            setData(e);
                                             console.log(e);
-                                            
-                                        }}  
-                                        value={data == '' ? '' : data}
-                                        placeholder="--/--/--"
-                                    />
-                                    <CustomInputText 
+
+                                        } }
+                                        value={data} 
+                                        onBlur={function (e: any) {
+                                            throw new Error('Function not implemented.');
+                                        } }                                    />
+                                    <CustomInput
+                                        width={176} 
                                         type='date'
                                         label='Até:'
                                         onChange={(e: any) => {
-                                            setData(e.target.value)
-                                        }}  
-                                        value={data}
-                                        placeholder="--/--/--"
-                                    /> */}
+                                            setData(e.target.value);
+                                        } }
+                                        value={data} 
+                                        onBlur={function (e: any) {
+                                            throw new Error('Function not implemented.');
+                                        } }                                    />
                                 </div>
                             </S.SearchBar>
                         </Box>
@@ -621,7 +626,7 @@ const Dashboard: React.FC = () => {
                             <p> Ocorrências no útimo ano - <b>2021</b></p>
                             <div style={{background: '#fff'}}>
                                 <CustomSelect
-                                    width='254px'
+                                    width={254}
                                     defaultValue="Ano"
                                     label='Filtrar por ano'
                                     value={yearValue}
@@ -706,9 +711,9 @@ const Dashboard: React.FC = () => {
                             <S.SearchBar>
                                 <div>
                                     <CustomSelect
-                                        width='254px'
-                                        defaultValue="Estados"
-                                        label='Filtrar por Estados'
+                                        width={254}
+                                        label='Estados'
+                                        labelDefault='Filtrar por Estados'
                                         value={value}
                                         list={list}
                                         onChange={(e: any) => {
@@ -717,9 +722,9 @@ const Dashboard: React.FC = () => {
                                         }}
                                     />
                                     <CustomSelect
-                                        width='254px'
-                                        defaultValue="Município"
-                                        label='Filtrar por Estados'
+                                        width={254}
+                                        label="Município"
+                                        labelDefault="Filtrar por Município"
                                         value={value2}
                                         list={list}
                                         onChange={(e: any) => {
@@ -727,9 +732,9 @@ const Dashboard: React.FC = () => {
                                         }}
                                     />
                                     <CustomSelect
-                                        width='254px'
-                                        defaultValue="Bairro"
-                                        label='Filtrar por Estados'
+                                        width={254}
+                                        label="Bairro"
+                                        labelDefault='Filtrar por Bairro'
                                         value={value3}
                                         list={list}
                                         onChange={(e: any) => {
@@ -738,24 +743,30 @@ const Dashboard: React.FC = () => {
                                     />
                                 </div>
                                 <div>
-                                    {/* <CustomInputText 
+                                    <CustomInput
+                                        width={176} 
                                         type='date'
                                         label='De:'
                                         onChange={(e: any) => {
-                                            setData(e)
-                                            console.log(e);
-                                            
-                                        }}  
-                                        value={data == '' ? '' : data}
+                                            setData(e.target.value);
+                                        } }
+                                        value={data} 
+                                        onBlur={function (e: any) {
+                                            throw new Error('Function not implemented.');
+                                        } }                                    
                                     />
-                                    <CustomInputText 
+                                    <CustomInput
+                                        width={176} 
                                         type='date'
                                         label='Até:'
                                         onChange={(e: any) => {
-                                            setData(e.target.value)
-                                        }}  
-                                        value={data}
-                                    /> */}
+                                            setData(e.target.value);
+                                        } }
+                                        value={data} 
+                                        onBlur={function (e: any) {
+                                            throw new Error('Function not implemented.');
+                                        } }                                    
+                                    />
                                 </div>
                             </S.SearchBar>
                         </Box>
@@ -810,7 +821,7 @@ const Dashboard: React.FC = () => {
                             <p> Usuários no útimo ano - <b>2021</b></p>
                             <div style={{background: '#fff'}}>
                                 <CustomSelect
-                                    width='254px'
+                                    width={254}
                                     defaultValue="Ano"
                                     label='Filtrar por ano'
                                     value={yearValue}
