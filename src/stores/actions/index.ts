@@ -1,14 +1,1 @@
 export const TOKEN = 'TOKEN';
-export const USERS = 'USERS';
-export const USER_SETINGS = 'USER_SETINGS';
-export const OCCURRENCES = 'OCCURRENCES';
-export const OCCURRENCES_MAP = 'OCCURRENCES_MAP';
-export const NOTIFICATIONS = 'NOTIFICATIONS';
-export const SERVICES = 'SERVICES';
-export const SOURCES = 'SOURCES';
-export const MESSAGES = 'MESSAGES';
-export const DASHBOARD_USERS = 'DASHBOARD_USERS';
-export const DASHBOARD_OCCURRENCES = 'DASHBOARD_OCCURRENCES';
-export const UPLOADS = 'UPLOADS';
-export const STATE = 'STATE';
-export const CITY = 'CITY';

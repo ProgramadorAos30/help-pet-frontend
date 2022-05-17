@@ -6,13 +6,18 @@ import { Container, Content } from './style';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from './services/index';
 import { Login } from './screens';
+import { useSelector } from 'react-redux';
+import { RootState } from './stores';
 
 const App: React.FC = () => {
+  const { token } = useSelector((state : RootState) => state.clickState)
 
   return (
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          {/* <Login /> */}
+        {token == '' ?
+          <Login />
+          :
           <Container>
             <Header />
             <Aside />
@@ -20,6 +25,7 @@ const App: React.FC = () => {
               <AuthRoutes />
             </Content>
           </Container>
+        }
         </BrowserRouter>
       </QueryClientProvider>
   );

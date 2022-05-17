@@ -40,7 +40,7 @@ const NewUser: React.FC = () => {
             "role": values.role,
             "password": values.password,
         }
-        //mutate(obj);
+        mutate(obj);
         console.log(values, 'valores');
     };
 

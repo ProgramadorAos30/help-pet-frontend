@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import * as S from './style';
 import { DefaultButton, DoubleButton, PersonalModal } from '../../components';
 import NewUser from './NewUser';
+import { useUsers } from '../../services';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../stores';
 
 const Usuarios: React.FC = () => {
+    const { token } = useSelector((state : RootState) => state.clickState);
+    const { data: users } = useUsers(token);
     const [ open, setOpen ] = useState(false);
     const [ app, setApp ] = useState(true);
     const [ panel, setPanel ] = useState(false);

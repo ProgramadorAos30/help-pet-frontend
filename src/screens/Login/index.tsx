@@ -7,23 +7,28 @@ import { queryClient } from '../../services/index';
 import { logo } from '../../assets';
 import { CustomInput } from '../../components';
 import { IProps } from "./types";
+import { useDispatch } from 'react-redux';
+import { TOKEN } from '../../stores/actions';
 
-const postUser = async (data: IProps) => {
-    const { data: response } = await api.post('/authorize', data);
-    return response.data;
-};
 
 const Login: React.FC = () => {
+    const dispatch = useDispatch();
     const { 
         handleSubmit,
         formState: { errors },
         control,
         watch
     } = useForm<IProps>();
+    
+    const postUser = async (data: IProps) => {
+        const { data: response } = await api.post('/authorize', data);
+        dispatch({type: TOKEN, token: response.token})
+        return response.data;
+    };
 
     const { mutate, isLoading } = useMutation(postUser, {
         onSuccess: () => {
-          queryClient.invalidateQueries('users');
+            queryClient.invalidateQueries('users');
         }
     });
 
@@ -33,7 +38,6 @@ const Login: React.FC = () => {
             "password": values.password
         }
         mutate(obj);
-        console.log(values, 'valores');
     };
 
     return (

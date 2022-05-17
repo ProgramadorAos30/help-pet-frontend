@@ -9,5 +9,6 @@ export {
 
 export {
     useUf,
-    useCity
+    useCity,
+    useUsers
 } from './hooks/index';
