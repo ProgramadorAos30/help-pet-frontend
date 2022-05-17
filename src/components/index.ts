@@ -13,3 +13,6 @@ export { default as YearGrafic } from './YearGrafic/index';
 export { default as PersonalModal } from './Modal/index';
 export { default as CustomInput } from './InputText/index';
 export { default as CustomSwitch } from './Switch/index';
+export { default as CustomTextArea } from './CustomTextArea/index';
+export { default as CustomTolltip } from './Tolltip/index';
+export { default as Search } from './Search/index';

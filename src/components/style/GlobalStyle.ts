@@ -30,4 +30,14 @@ export default createGlobalStyle`
         border: 0.5px solid #AFAFAF !important;
         border-radius: 8px;
     }
+
+    input[type='radio'] {
+        accent-color: #1773E2;
+        width: 20px;
+        height: 20px;
+    }
+
+    fieldset {
+        border: none;
+    }
 `;

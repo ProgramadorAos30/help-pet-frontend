@@ -19,6 +19,8 @@ import starIcon from './starIcon.svg';
 import whaterIcon from './whaterIcon.svg';
 import wifiIcon from './wifiIcon.svg';
 import loginBg from './login.png';
+import blueAlert from './blueAlert.svg';
+import search from './search.svg';
 
 export {
     logOut,
@@ -42,4 +44,6 @@ export {
     whaterIcon,
     wifiIcon,
     loginBg,
+    blueAlert,
+    search
 }

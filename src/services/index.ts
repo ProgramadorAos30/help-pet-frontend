@@ -10,5 +10,7 @@ export {
 export {
     useUf,
     useCity,
-    useUsers
+    useUsers,
+    useService,
+    useOccurrences
 } from './hooks/index';

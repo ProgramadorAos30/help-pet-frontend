@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { listCity, listUf } from '../../@types';
+import { listCity, listUf, Services } from '../../@types';
 
 type List = {
     value?: string,
@@ -16,7 +16,7 @@ interface IProps {
     onChange: (e: any) => any,
     onClick?: () => void,
     label: string,
-    list: List[] | listUf[] | listCity[] | any,
+    list: List[] | listUf[] | listCity[] | Services[] | any,
     value: string,
     defaultValue?: string,
     width?: number,
@@ -88,9 +88,9 @@ const CustomSelect:React.FC <IProps> = (props) => {
                         return (
                             <MenuItem 
                                 key={index} 
-                                value={id.value || id.sigla || id.nome}
+                                value={id.value || id.sigla || id.nome || id.name}
                             >
-                                {id.label || id.nome}
+                                {id.label || id.nome  || id.name}
                             </MenuItem>
                         )
                     })}

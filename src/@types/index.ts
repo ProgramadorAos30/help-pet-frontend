@@ -150,7 +150,7 @@ export interface notifications {
     updatedAt: string
 };
 
-export interface occurrences {
+export interface Occurrences {
     service: {
       image: string,
       name: string,
@@ -264,7 +264,7 @@ export interface occurrences_map {
       updatedAt: string
 };
 
-export interface services {
+export interface Services {
     image: string,
     name: string,
     background_color: string,

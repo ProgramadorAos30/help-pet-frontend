@@ -52,6 +52,7 @@ const Usuarios: React.FC = () => {
                     <>
                         <h1>Painel</h1>
                         <PersonalModal 
+                            width={858}
                             open={open}
                             onClose={() => setOpen(!open)}
                             children={<NewUser />}
