@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style';
 import { 
     DoubleButton,
@@ -15,6 +15,13 @@ import NewOccurence from './newOccurence';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../stores';
 import { ocurrenceIcon } from '../../assets/index';
+import {
+    options,
+    iconShow,
+    energiIcon,
+    whaterIcon,
+    wifiIcon
+} from '../../assets/index';
 
 const Registros: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
@@ -26,6 +33,7 @@ const Registros: React.FC = () => {
     const [ maps, setMaps ] = useState(true);
     const [ list, setList ] = useState(false);
     const [ open, setOpen ] = useState(false);
+    const [ icon, setIcon ] = useState('');
     const [ openList, setOpenList ] = useState(false);
     
     console.log(occurrences);
@@ -133,9 +141,9 @@ const Registros: React.FC = () => {
                         padding='0'
                         width='1548px'
                     >
-                        <div>
+                        <S.Container>
                             <h1>Ocorrências registradas no aplicativo</h1>
-                            <div>
+                            <S.FiltersTop>
                                 <CustomSelect 
                                     onChange={function (e: any) {
                                         throw new Error('Function not implemented.');
@@ -200,11 +208,71 @@ const Registros: React.FC = () => {
                                     value={undefined} 
                                     width={176}                                
                                 />
-                            </div>
-                            <div>
-                                <Search onChange={() => {}} />
-                            </div>
-                        </div>
+                            </S.FiltersTop>
+                            <S.FiltersBottom>
+                                <Search onChange={() => {}} width="400px"/>
+                                <S.Radios>
+                                    <p>Status:</p>
+                                    <div>
+                                        <input type="radio" name="status" id="todos" defaultChecked/>
+                                        <label htmlFor="todos" >Todos</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="status" id="aproved"/>
+                                        <label htmlFor="aproved">Aprovado</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="status" id="reproved"/>
+                                        <label htmlFor="reproved">Reprovado</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="status" id="await"/>
+                                        <label htmlFor="await">Aguardando aprovação</label>
+                                    </div>
+                                </S.Radios>
+                            </S.FiltersBottom>
+                            <S.Table>
+                                <S.TableHead>
+                                    <tr>
+                                        <th style={{width: '218px'}}>Serviço interrompido</th>
+                                        <th style={{width: '218px'}}>Registrado por</th>
+                                        <th style={{width: '179px'}}>Horá da ocorrência</th>
+                                        <th style={{width: '358px'}}>Endereço</th>
+                                        <th style={{width: '207px'}}>Status ocorrência</th>
+                                        <th style={{width: '150px'}}>Já foi finalizada?</th>
+                                        <th style={{width: '85px'}}>Ações</th>
+                                        <th style={{width: '135px'}}>Ver no mapa</th>
+                                    </tr>
+                                </S.TableHead>
+                                <S.TableBody>
+                                    {occurrences?.map((id: any) => {
+                                        return (
+                                            <tr>
+                                                <td>
+                                                    <img src={icon} alt="" />
+                                                    {id.service.name}
+                                                </td>
+                                                <td>{id.user.name}</td>
+                                                <td>{id.updatedAt}</td>
+                                                <td>{id.address}</td>
+                                                <td>{id.status}</td>
+                                                <td>{id.finished_status}</td>
+                                                <td>
+                                                    <button>
+                                                        <img src={options} alt="" />
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <button>
+                                                        <img src={iconShow} alt="" />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </S.TableBody>
+                            </S.Table>
+                        </S.Container>
                     </Box>
                 </>
             )}

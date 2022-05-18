@@ -21,6 +21,7 @@ import wifiIcon from './wifiIcon.svg';
 import loginBg from './login.png';
 import blueAlert from './blueAlert.svg';
 import search from './search.svg';
+import options from './options.svg';
 
 export {
     logOut,
@@ -45,5 +46,6 @@ export {
     wifiIcon,
     loginBg,
     blueAlert,
-    search
+    search,
+    options
 }

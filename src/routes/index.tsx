@@ -22,7 +22,7 @@ const AuthRoutes: React.FC = () => {
         { id: 6, path: '/registros', component: <Registros />},
         { id: 7, path: '/servicos', component: <Servicos />},
         { id: 8, path: '/usuarios', component: <Usuarios />},
-    ]
+    ];
 
     return (
         <Routes>
