@@ -5,7 +5,7 @@ import { Services } from "../../@types";
 const getUsers = async <T>(token: string):Promise<Services[]> => {
     const { data } = await api.get<Services[]>('/services', {
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
         }
     })
     return data;

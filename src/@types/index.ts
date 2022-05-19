@@ -151,60 +151,70 @@ export interface notifications {
 };
 
 export interface Occurrences {
-    service: {
-      image: string,
-      name: string,
-      background_color: string,
-      active: boolean,
-      other_option: boolean,
-      sources: [
-        string
-      ],
-      _id: string
-    },
-    source: string,
-    source_name: string,
-    date: string,
-    restoration_date: string,
-    address: string,
-    neighborhood: string,
-    city: string,
-    state: string,
-    country: string,
-    special_place: string,
-    have_energy_meter: string,
-    have_hydrometer: string,
-    have_reservoir: string,
-    type_place: string,
-    area: string,
-    description: string,
-    restoration_description: string,
-    agree_share: boolean,
-    latitude: string,
-    longitude: string,
-    status: string,
-    finished_status: string,
-    user: {
-      name: string,
-      age: string,
-      phone_number: string,
-      email: string,
-      password: string,
-      state: string,
+    data: [{
+      service: {
+        image: string,
+        name: string,
+        background_color: string,
+        active: boolean,
+        other_option: boolean,
+        sources: [
+          string
+        ],
+        _id: string
+      },
+      source: string,
+      source_name: string,
+      date: string,
+      restoration_date: string,
+      address: string,
+      neighborhood: string,
       city: string,
-      genre: string,
-      breed: string,
-      active: boolean,
-      trusted: boolean,
-      role: string,
-      first_access: boolean,
+      state: string,
+      country: string,
+      special_place: string,
+      have_energy_meter: string,
+      have_hydrometer: string,
+      have_reservoir: string,
+      type_place: string,
+      area: string,
+      description: string,
+      restoration_description: string,
+      agree_share: boolean,
+      latitude: string,
+      longitude: string,
+      status: string,
+      finished_status: string,
+      user: {
+        name: string,
+        age: string,
+        phone_number: string,
+        email: string,
+        password: string,
+        state: string,
+        city: string,
+        genre: string,
+        breed: string,
+        active: boolean,
+        trusted: boolean,
+        role: string,
+        first_access: boolean,
+        _id: string,
+        createdAt: string,
+        updatedAt: string
+      },
       _id: string,
       createdAt: string,
-      updatedAt: string
-    },
-    _id: string,
-    createdAt: string,
-    updatedAt: string
+      updatedAt: string,
+    }],
+    meta: {
+      page: any,
+      take: any,
+      itemCount: any,
+      pageCount: any,
+      hasPreviousPage: any,
+      hasNextPage: any
+    }
 };
 
 export interface occurrences_map {

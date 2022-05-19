@@ -7,6 +7,8 @@ export {
     queryClient
 } from './queryClient';
 
+export { convertDate } from './functions/index';
+
 export {
     useUf,
     useCity,

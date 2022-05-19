@@ -8,7 +8,7 @@ const getOccurrences = async <T>(
     page?: number,
     take?: number,
     finished_status?: string,
-    services?: string,
+    services?: string[] | any,
     city?: string,
     final_date?: string,
     initial_date?: string
@@ -31,7 +31,7 @@ const getOccurrences = async <T>(
     if(finished_status != undefined){
         params.append("finished_status", finished_status)
     }
-    if(services != undefined){
+    if(services == ['']){
         params.append("services", services)
     }
     if(city != undefined){
@@ -44,13 +44,13 @@ const getOccurrences = async <T>(
         params.append("initial_date", initial_date)
     }
 
-    const { data } = await api.get<Occurrences[]>('/occurrences', {
+    const resp = await api.get<Occurrences[]>('/occurrences', {
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
         },
         params: params
     })
-    return data;
+    return resp.data;
 }
 
 export const useOccurrences = <T>(
@@ -59,13 +59,12 @@ export const useOccurrences = <T>(
     page?: number,
     take?: number,
     finished_status?: string,
-    services?: string,
+    services?: string[] | any,
     city?: string,
     final_date?: string,
     initial_date?: string
 ):UseQueryResult<Occurrences[]> => {
-    return useQuery('ocurrence', () => 
-    getOccurrences(
+    return useQuery(['ocurrence', 
         token,
         order,
         page,
@@ -74,6 +73,14 @@ export const useOccurrences = <T>(
         services,
         city,
         final_date,
-        initial_date
-    )
+        initial_date 
+    ], () => getOccurrences(token,
+        order,
+        page,
+        take,
+        finished_status,
+        services,
+        city,
+        final_date,
+        initial_date)
 )}

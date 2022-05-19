@@ -8,58 +8,46 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-    'Energia',
-    'Água',
-    'Internet',
-    'Gás'
-];
-
 interface IProps {
     onChange: (e: any) => void,
-    valueItem: string[]
-}
+    valueItem: string[] | any,
+    width: number,
+    list: any
+};
 
 const theme = createTheme({
     components: {
-      MuiSelect: {
-        styleOverrides: {
-            select: {
-                color: '#2C3941',
-                fontWeight: '700',
-                fontFamily: 'Inter', 
-                border: '1px solid #AFAFAF',
-                borderRadius: '8px', 
-                background: '#FFF', 
-                outline: 'none',
-                paddingTop: '25px'
-            },
-            
-        }
-      },
-      MuiInputLabel: {
-          styleOverrides:{
-              root: {
-                color: '#AFAFAF',
-                "&.Mui-focused": {
-                    "color": "#AFAFAF",
-                  },
-              },
-              
-          }
-      },
-      MuiFormControl: {
+        MuiSelect: {
+            styleOverrides: {
+                select: {
+                    color: '#2C3941',
+                    fontWeight: '700',
+                    fontFamily: 'Inter', 
+                    borderRadius: '8px',
+                    border: '1px solid #AFAFAF', 
+                    background: '#fff',
+                    paddingTop: '15px',
+                    "& :hover": {
+                        border: 'none'
+                    }
+                },
+                
+            }
+        },
+        MuiInputLabel: {
+            styleOverrides:{
+                root: {
+                    color: '#AFAFAF',
+                    background: 'transparent',
+                    "&.Mui-focused": {
+                        "color": "#AFAFAF",
+                        'background': 'transparent',
+                    },
+                },
+                
+            }
+        },
+        MuiFormControl: {
           styleOverrides: {
               root: {
                   border: '0',
@@ -68,7 +56,18 @@ const theme = createTheme({
                   }
               },
           }
-      }
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    color: '#2C3941',
+                    fontWeight: '700',
+                    fontFamily: 'Inter', 
+                    background: "transparent"
+                }
+            }
+        },
+        
     }
 });
 
@@ -77,14 +76,14 @@ const MultSelect: React.FC <IProps> = (props) => {
         const {
             target: { value },
         } = event;
-        props.onChange(typeof value === 'string' ? value.split(',') : value)
+        props.onChange(typeof value === 'string' ? value.split(',') : value);
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <FormControl sx={{ minWidth: 372, height: 56 }} variant="filled">
+            <FormControl sx={{ minWidth: props.width, height: 50 }} variant="filled">
                 {props.valueItem.length == 0 ? 
-                    <InputLabel></InputLabel>
+                    <span style={{display: 'none'}}/>
                     :
                     <InputLabel>Serviços</InputLabel>
                 }
@@ -92,6 +91,7 @@ const MultSelect: React.FC <IProps> = (props) => {
                     multiple
                     displayEmpty
                     disableUnderline
+                    disableInjectingGlobalStyles
                     value={props.valueItem}
                     onChange={handleChange}
                     input={<OutlinedInput label="Todos os serviços" />}
@@ -101,13 +101,12 @@ const MultSelect: React.FC <IProps> = (props) => {
                         }
                         return selected.join(', ');
                     }}
-                    MenuProps={MenuProps}
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
                     <MenuItem disabled value="">
-                        <em>Todos os serviços</em>
+                        <em style={{borderBottom: '1px solid #AFAFAF', width: '100%'}}>Todos os serviços</em>
                     </MenuItem>
-                {names.map((id: any, index: number) => (
+                {props.list?.map((id: any, index: number) => (
                     <MenuItem key={index} value={id}>
                         <Checkbox checked={props.valueItem.indexOf(id) > -1} />
                         <ListItemText primary={id} />

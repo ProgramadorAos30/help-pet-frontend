@@ -16,3 +16,5 @@ export { default as CustomSwitch } from './Switch/index';
 export { default as CustomTextArea } from './CustomTextArea/index';
 export { default as CustomTolltip } from './Tolltip/index';
 export { default as Search } from './Search/index';
+export { default as TolltipRigth } from './TolltipRigth/index';
+export { default as CardService } from './CardService/index';

@@ -22,6 +22,8 @@ import loginBg from './login.png';
 import blueAlert from './blueAlert.svg';
 import search from './search.svg';
 import options from './options.svg';
+import trusted from './trusted.svg';
+import noTrusted from './noTrusted.svg';
 
 export {
     logOut,
@@ -47,5 +49,7 @@ export {
     loginBg,
     blueAlert,
     search,
-    options
+    options,
+    trusted,
+    noTrusted
 }

@@ -15,7 +15,7 @@ export default {
         whiteSecconday: '#F8F8F8',
         lightGray: '#C7C7C7',
         gray: '#AEAEAE',
-        dark: '#3C3941',
+        dark: '#2C3941',
 
         //complementary collors
         orange: '#FF954E',
