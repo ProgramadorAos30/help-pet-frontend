@@ -24,6 +24,7 @@ import search from './search.svg';
 import options from './options.svg';
 import trusted from './trusted.svg';
 import noTrusted from './noTrusted.svg';
+import logoPng from './logo.png';
 
 export {
     logOut,
@@ -51,5 +52,6 @@ export {
     search,
     options,
     trusted,
-    noTrusted
+    noTrusted,
+    logoPng
 }

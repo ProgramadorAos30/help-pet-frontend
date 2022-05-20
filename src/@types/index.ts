@@ -292,7 +292,7 @@ export interface soucers {
     _id: string
 };
 
-export interface uploads {
-    file: string,
-    _id: string
+export interface Uploads {
+    file: any,
+    _id?: string
 };

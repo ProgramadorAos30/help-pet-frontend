@@ -54,17 +54,17 @@ export const Container = styled.div`
                 float: right;
             }
 
-            > button {
-                width: 100%;
-                height: 48px;
-                border: none;
-                color: ${props => props.theme.colors.white};
-                background: ${props => props.theme.colors.gradient};
-            }
-
             > div {
                 margin-bottom: 24px;
             }
         }
     }
+`;
+
+export const Button = styled.button <{ disabled: boolean }>`
+        width: 100%;
+        height: 48px;
+        border: none;
+        color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
+        background: ${props => props.disabled == false ? props.theme.colors.gradient : '#C7C7C7'};
 `;

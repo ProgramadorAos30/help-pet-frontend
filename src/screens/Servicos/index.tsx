@@ -7,6 +7,7 @@ import {
     CardService,
     PersonalModal
 } from '../../components';
+import NewService from './NewService';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
@@ -50,7 +51,7 @@ const Servicos: React.FC = () => {
                 onClose={() => setNewService(!newService)}
                 open={newService}
                 width={861}
-                children={<h1>asda</h1>}
+                children={<NewService />}
             />
         </>
     )

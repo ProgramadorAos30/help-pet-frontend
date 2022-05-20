@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Container = styled.div`
     grid-area: MH;
@@ -47,11 +48,10 @@ export const Container = styled.div`
                 color: ${props => props.theme.colors.dark};
                 margin-right: 12px;
             }
-
-            > button {
-                background: none;
-                border: none;
-            }
         }
     }
+`;
+
+export const Link = styled(NavLink)`
+    
 `;

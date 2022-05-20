@@ -6,6 +6,8 @@ const getUsers = async <T>(token: string):Promise<Services[]> => {
     const { data } = await api.get<Services[]>('/services', {
         headers: {
             'Authorization': `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
         }
     })
     return data;

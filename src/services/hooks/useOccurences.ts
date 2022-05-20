@@ -47,6 +47,8 @@ const getOccurrences = async <T>(
     const resp = await api.get<Occurrences[]>('/occurrences', {
         headers: {
             'Authorization': `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
         },
         params: params
     })

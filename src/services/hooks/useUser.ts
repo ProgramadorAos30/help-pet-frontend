@@ -5,8 +5,7 @@ import { User } from "../../@types";
 const getUsers = async <T>(token: string):Promise<User[]> => {
     const { data } = await api.get<User[]>('/users', {
         headers: {
-            'Authorization': `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*"
+            'Authorization': `Bearer ${token}`
         }
     })
     return data;
