@@ -40,4 +40,8 @@ export default createGlobalStyle`
     fieldset {
         border: none;
     }
+
+    img {
+        pointer-events: none;
+    }
 `;
