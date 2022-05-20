@@ -1,22 +1,37 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import * as S from './style';
 import { useSelector } from 'react-redux';
-import { CardService } from '../../components';
 import { useService } from '../../services';
 import { RootState } from '../../stores';
+import { 
+    CardService,
+    PersonalModal
+} from '../../components';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
-    console.log(services);
-    
+    const [ newService, setNewService ] = useState(false);
 
     return (
         <>
-            <div>
-                <button></button>
-                <button></button>
-            </div>
-            <div>
+            <S.Head>
+                <h1>Serviços</h1>
+                <div>
+                    <button>
+                        Adicionar fonte
+                    </button>
+                    <button
+                        type='button'
+                        onClick={() => {
+                            setNewService(!newService)
+                        }}
+                    >
+                        Cadastrar Serviço
+                    </button>
+                </div>
+            </S.Head>
+            <S.Container>
                 {services?.map((id: any) => {
                     return (
                         <CardService 
@@ -26,10 +41,17 @@ const Servicos: React.FC = () => {
                             serviceName={id.name} 
                             status={id.active} 
                             image={id.image}
+                            backgrounColor={id.background_color}
                         />
                     )
                 })}
-            </div>
+            </S.Container>
+            <PersonalModal 
+                onClose={() => setNewService(!newService)}
+                open={newService}
+                width={861}
+                children={<h1>asda</h1>}
+            />
         </>
     )
 }

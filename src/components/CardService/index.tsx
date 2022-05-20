@@ -1,26 +1,38 @@
 import React from 'react';
 import * as S from './style';
+import {
+    options
+} from '../../assets/index'
 
 interface IProps {
     onClick: () => any,
     serviceName: string,
     fonte?: number | string,
     status: boolean,
-    image: string
+    image: string,
+    backgrounColor: string
 }
 
 const CardService: React.FC <IProps> = (props) => {
     return (
         <S.Container>
-            <div>
-                <img src={props.image} alt="" />
+            <S.Top background={props.backgrounColor}>
                 <div>
-                    <p>Serviço</p>
-                    <h1>{props.serviceName}</h1>
+                    <div>
+                        <img src={props.image} alt="" />
+                    </div>
+                    <div>
+                        <p>Serviço</p>
+                        <h1>{props.serviceName}</h1>
+                    </div>
                 </div>
-                <button>...</button>
-            </div>
-            <div>
+                <button
+                    onClick={props.onClick}
+                >   
+                    <img src={options} alt="" />
+                </button>
+            </S.Top>
+            <S.Bottom status={props.status}>
                 <div>
                     <p>Fontes</p>
                     <p>{props.fonte}</p>
@@ -29,7 +41,7 @@ const CardService: React.FC <IProps> = (props) => {
                     <p>Status</p>
                     <p>{props.status == true ? 'Ativo' : 'Inativo'}</p>
                 </div>
-            </div>
+            </S.Bottom>
         </S.Container>
     );
 };
