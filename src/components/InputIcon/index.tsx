@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import * as S from './style';
+import { uploadIcon } from '../../assets/index';
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
 import { idText } from 'typescript';
@@ -17,13 +19,15 @@ interface IProps {
 const InputIcon: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: uploads } = useUploads(token);
-    const [ img, setImg ] = useState<any>('');
+    const ref = useRef<HTMLInputElement>(null);
 
     console.log(uploads)
 
     return (
-        <>
+        <S.Container>
             <input 
+                ref={ref}
+                style={{display: 'none'}}
                 type="file" 
                 accept='image/png,image/gif,image/jpeg'
                 onChange={(e: any) => {
@@ -39,19 +43,29 @@ const InputIcon: React.FC = () => {
                             }
                         }).then((resp: any) => {
                             console.log(resp.data);
-                            setImg(resp.data.file)
                         }).catch((err) => {
                             console.log(err);
                         })
                     }
                 }}
             />
+            <S.Upload
+                type="button"
+                onClick={() => {
+                    ref.current?.click();
+                }}
+            >
+                <div>
+                    <img src={uploadIcon} alt="Upload icon" />
+                    <p>Importar ícone</p>
+                </div>
+            </S.Upload>
             {uploads?.map((id: any) => {
                 return (
                     <img src={id.file} alt="" />
                 )
             })}
-        </>
+        </S.Container>
     );
 };
 

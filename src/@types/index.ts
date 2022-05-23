@@ -46,7 +46,7 @@ export interface User {
     updatedAt: string
 };
 
-export interface user_setings {
+export interface User_setings {
     user: string,
     service_notifications: [
       string
@@ -56,7 +56,7 @@ export interface user_setings {
     _id: string
 };
 
-export interface dashboard_occurrences {
+export interface Dashboard_occurrences {
     total: number,
     new_today: number,
     approved_today: number,
@@ -83,7 +83,7 @@ export interface dashboard_occurrences {
     }
 };
 
-export interface dashboard_users {
+export interface Dashboard_users {
     total: number,
     new_today: number,
     active_today: number,
@@ -97,7 +97,7 @@ export interface dashboard_users {
     }
 };
 
-export interface messages {
+export interface Messages {
     name: string,
     email: string,
     reason: string,
@@ -109,7 +109,7 @@ export interface messages {
     _id: string
 };
 
-export interface notifications {
+export interface Notifications {
     title: string,
     message: string,
     occurrence: {
@@ -217,7 +217,7 @@ export interface Occurrences {
     }
 };
 
-export interface occurrences_map {
+export interface Occurrences_map {
       service: {
         image: string,
         name: string,
@@ -286,13 +286,13 @@ export interface Services {
     _id: string
 };
 
-export interface soucers {
+export interface Soucers {
     service: string,
     name: string,
-    _id: string
+    id?: string
 };
 
 export interface Uploads {
     file: any,
-    _id?: string
+    id?: string
 };
