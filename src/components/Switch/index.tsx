@@ -7,7 +7,7 @@ import { styled } from '@mui/system';
 interface IProps {
     leftLabel: string,
     rightLabel: string,
-    value: boolean, 
+    value: boolean | any, 
     onChange: (e: any) => any,
     onBlur: (e: any) => any
 }

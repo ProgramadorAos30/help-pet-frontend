@@ -280,11 +280,19 @@ export interface Services {
     background_color: string,
     active: boolean,
     other_option: boolean,
-    sources: [
-      string
-    ],
-    _id: string
+    sources: Soucers[],
+    id?: string
 };
+
+export type ServiceFormData = {
+  image?: string,
+  name?: string,
+  background_color: string,
+  active?: boolean,
+  other_option?: boolean,
+  sources?: Soucers[],
+  _id?: string
+}
 
 export interface Soucers {
     service: string,

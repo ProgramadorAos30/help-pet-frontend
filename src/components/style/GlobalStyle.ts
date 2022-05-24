@@ -31,7 +31,7 @@ export default createGlobalStyle`
         border-radius: 8px;
     }
 
-    input[type='radio'] {
+    input[type='radio'], input[type='checkbox'] {
         accent-color: #1773E2;
         width: 20px;
         height: 20px;

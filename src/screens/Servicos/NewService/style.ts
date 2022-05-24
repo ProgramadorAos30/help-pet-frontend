@@ -60,11 +60,72 @@ export const Fonts = styled.fieldset`
 
     > div {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
     }
 `;
 
 export const Item = styled.p`
-    
+    background: rgba(96, 99, 163, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 9.5px 12px;
+    margin-right: 12px;
+    color: ${props => props.theme.colors.blue};
+
+    > button {
+        border: none;
+        background: none;
+        margin-left: 8px;
+    }
+
+`;
+
+export const ItemsList = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`;
+
+export const ContainerBtn = styled.div`
+    width: 774px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        width: 274px;
+        height: 48px;
+    }
+
+    > button:nth-child(1){
+        background: none;
+        border: 1px solid ${props => props.theme.colors.warning};
+        color: ${props => props.theme.colors.warning};
+    }
+
+    > button:nth-child(2){
+        border: none;
+        color: ${props => props.theme.colors.white};
+        background-color: ${props => props.theme.colors.blue};
+    }
+`;
+
+export const AnotherOptions = styled.fieldset`
+    width: 334px;
+    display: flex;
+    align-items: center;
+    margin: 26px 0 50px;
+
+    > input {
+        margin-right: 14px;
+    }
 `;
