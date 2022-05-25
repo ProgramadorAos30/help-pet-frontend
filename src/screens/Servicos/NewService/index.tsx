@@ -25,21 +25,22 @@ import { alertRed } from '../../../assets';
 const NewService: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const [ services, setServices ] = useState<Services>();
-    const [ isFontSelected, setFontSelected ] = useState<{ name: string; index: any; }>();
+    const [ isFontSelected, setFontSelected ] = useState<{ type: string; index: any; }>();
     const [ sourceConfirm, setSourceConfirm ] = useState(false);
-    const [ sourceValue, setSourceValue ] = useState<string>();
+    const [ idSource, setIdSource ] = useState<any>('');
 
     const {
         control,
         register,
         handleSubmit,
         watch,
+        setValue,
         formState: { errors, isSubmitting },
     } = useForm<ServiceFormData>();
 
     const fontsFieldArray = useFieldArray({
         control,
-        name: "sources",
+        name: 'sources',
     });
 
     const postService = async (token: string, { id, ...dados }: any ) => {
@@ -51,7 +52,7 @@ const NewService: React.FC = () => {
         return response.data;
     };
 
-    const putService = async (token: string, id:any, data: Services ) => {
+    const putService = async (token: string, id:string, data: Services ) => {
         const { data: response } = await api.put(`/services/${id}`, data, {
             'headers': {
                 'Authorization': `Bearer: ${token}`
@@ -69,7 +70,7 @@ const NewService: React.FC = () => {
         return response.data
     };
 
-    const putSource = async (token: string, id: any, dados: any) => {
+    const putSource = async (token: string, id: string, dados: any) => {
         const { data: response } = await api.put(`/sources/${id}`, dados, {
             'headers': {
                 'Authorization': `Bearer ${token}`
@@ -92,8 +93,8 @@ const NewService: React.FC = () => {
         const data: any = [];
 
         Object.keys(item).map((keys) => {
-            let key = keys as keyof unknown
-            if (item[key] !== '') data[key] = item[key];
+            let key = keys as keyof unknown;
+            if (item[key] !== "") data[key] = item[key];
             else data[key] = null;
         });
 
@@ -115,10 +116,15 @@ const NewService: React.FC = () => {
         try {
             const _service: Services = await registerService(values);
             setServices(_service);
+            
+            if (!_service.id) return;
 
             let arraySources = [
-                ...(values?.sources || [])
+                ...(values?.sources || []),
             ];
+
+            console.log(arraySources, 'matriz');
+            
 
             for await(let item of arraySources){
                 let data: any = {
@@ -127,7 +133,7 @@ const NewService: React.FC = () => {
 
                 Object.keys(item).map((keys) => {
                     let key = keys as keyof unknown;
-                    if(item[key] !== '') data[key] = item[key];
+                    if (item[key] !== "") data[key] = item[key];
                     else data[key] = null;
                 });
 
@@ -138,7 +144,7 @@ const NewService: React.FC = () => {
                     
                     await method
                         .then((resp) => {
-                            return resp.data
+                            return resp
                         }).catch((error) => {
                             return error
                         })
@@ -162,6 +168,16 @@ const NewService: React.FC = () => {
         {label: 'Amarelo', value: '#FFB906'}
     ];
 
+    console.log(fontsFieldArray.fields)
+
+    // useEffect(() => {
+    //     setValue('sources', [idSource])
+    //     fontsFieldArray.fields.forEach((id) => {
+    //         if(id) setIdSource(id.id)
+    //     })
+    // }, [])
+
+    
     return(
         <S.Container>
             <h1>Cadastrar serviço</h1>
@@ -223,30 +239,38 @@ const NewService: React.FC = () => {
                 <S.Fonts>
                     <h1>Fontes</h1>
                     <div>
-                        <input type='hidden' {...register(`sources.${isFontSelected?.index}.id`)}/>
                         <Controller 
                             name={`sources.${isFontSelected?.index}.name`}
                             control={control}
                             render={({field: {onChange, onBlur, value}}) => (
-                                <CustomInput
-                                    label='Digite o nome da fonte'
-                                    type='Text'
-                                    value={value}
-                                    width={372}
-                                    onBlur={onBlur}
-                                    onChange={onChange}
-                                />
+                                <>
+                                    <CustomInput
+                                        label='Digite o nome da fonte'
+                                        type='Text'
+                                        value={value}
+                                        width={372}
+                                        onBlur={onBlur}
+                                        onChange={onChange}
+                                    />
+                                    <S.Button 
+                                        type="button"
+                                        onClick={() => {
+                                            addField(fontsFieldArray as any, {
+                                                name: value,
+                                                id: idSource
+                                            })
+
+                                            fontsFieldArray.fields.forEach((id) => {
+                                                if(id) setIdSource(id.id)
+                                            })
+                                        }}
+                                    >
+                                        Adicionar
+                                    </S.Button>
+                                </>
                             )}
                         
                         />
-                        <S.Button 
-                            type="button"
-                            onClick={() => {
-                                addField(fontsFieldArray as any, { type: 'sources' })
-                            }}
-                        >
-                            Adicionar
-                        </S.Button>
                     </div>
                 </S.Fonts>
                 <S.ItemsList>
@@ -264,7 +288,7 @@ const NewService: React.FC = () => {
                                             setSourceConfirm(true);
                                             setFontSelected({
                                                 index,
-                                                name: 'sources'
+                                                type: 'sources'
                                             })
                                         }
                                     }}

@@ -21,8 +21,6 @@ const InputIcon: React.FC = () => {
     const { data: uploads } = useUploads(token);
     const ref = useRef<HTMLInputElement>(null);
 
-    console.log(uploads)
-
     return (
         <S.Container>
             <input 

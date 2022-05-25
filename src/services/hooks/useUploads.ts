@@ -4,10 +4,8 @@ import { Uploads } from "../../@types";
 
 const getUploads = async <T>(token: string):Promise<Uploads[]> => {
     const { data } = await api.get<Uploads[]>('/uploads', {
-        'headers': {
-            'Authorization': `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*"
+        headers: {
+            'Authorization': `Bearer ${token}`
         }
     })
     return data;

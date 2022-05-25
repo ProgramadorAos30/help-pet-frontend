@@ -290,14 +290,15 @@ export type ServiceFormData = {
   background_color: string,
   active?: boolean,
   other_option?: boolean,
-  sources?: Soucers[],
-  _id?: string
+  sources: Soucers[],
+  id?: string
 }
 
 export interface Soucers {
     service: string,
     name: string,
     id?: string
+    _id?: string
 };
 
 export interface Uploads {
