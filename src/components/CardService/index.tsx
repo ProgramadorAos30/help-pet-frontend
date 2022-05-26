@@ -1,7 +1,12 @@
 import React from 'react';
 import * as S from './style';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Popover from '@mui/material/Popover';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import {
-    options
+    options,
+    alertRed
 } from '../../assets/index'
 
 interface IProps {
@@ -10,7 +15,9 @@ interface IProps {
     fonte?: number | string,
     status: boolean,
     image: string,
-    backgrounColor: string
+    backgrounColor: string,
+    onDelete: () => void,
+    onEdit: () => void
 }
 
 const CardService: React.FC <IProps> = (props) => {
@@ -26,11 +33,53 @@ const CardService: React.FC <IProps> = (props) => {
                         <h1>{props.serviceName}</h1>
                     </div>
                 </div>
-                <button
-                    onClick={props.onClick}
-                >   
-                    <img src={options} alt="" />
-                </button>
+                
+                <PopupState variant="popover" popupId="demo-popup-popover">
+                    {(popupState) => (
+                            <>
+                                <button
+                                    type='button'
+                                    {...bindTrigger(popupState)}
+                                >   
+                                    <img src={options} alt="" />
+                                </button>
+                                <Popover
+                                    anchorReference="anchorPosition"
+                                    anchorPosition={{ top: 215, left: 640 }}
+                                    {...bindPopover(popupState)}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <S.Dialog>
+                                        <button 
+                                            {...bindPopover(popupState)}
+                                            type='button'
+                                        >
+                                            <img src={alertRed} alt="" />
+                                        </button>
+                                        <button 
+                                            onClick={props.onEdit}
+                                            type='button'
+                                        >
+                                            Editar
+                                        </button>
+                                        <button 
+                                            onClick={props.onDelete}
+                                            type='button'
+                                        >
+                                            Excluir
+                                        </button>
+                                    </S.Dialog>
+                                </Popover>
+                            </>
+                    )}
+                </PopupState>
             </S.Top>
             <S.Bottom status={props.status}>
                 <div>

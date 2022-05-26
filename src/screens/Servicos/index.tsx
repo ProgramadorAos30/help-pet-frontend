@@ -8,11 +8,13 @@ import {
     PersonalModal
 } from '../../components';
 import NewService from './NewService';
+import ModalDelete from '../../components/ModalDelete';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
     const [ newService, setNewService ] = useState(false);
+    const [ showDelete, setShowDelete ] = useState(false);
 
     return (
         <>
@@ -35,10 +37,14 @@ const Servicos: React.FC = () => {
             <S.Container>
                 {services?.map((id: any) => {
                     return (
-                        <CardService 
-                            onClick={function () {
-                                throw new Error('Function not implemented.');
-                            } } 
+                        <CardService
+                            onClick={() => {
+                                
+                            }} 
+                            onDelete={() => {
+                                setShowDelete(true)
+                            }}
+                            onEdit={() => {}}
                             serviceName={id.name} 
                             status={id.active} 
                             image={id.image}
@@ -51,6 +57,16 @@ const Servicos: React.FC = () => {
             <NewService
                 isModal={newService}
                 onHide={() => setNewService(!newService)}
+            />
+
+            <ModalDelete 
+                mensage='Deseja mesmo excluir este serviço?'
+                onClose={() => setShowDelete(false)}
+                onDelete={() => {
+                    
+                }}
+                open={showDelete}
+                width={469}
             />
         </>
     )

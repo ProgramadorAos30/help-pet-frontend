@@ -27,6 +27,7 @@ import noTrusted from './noTrusted.svg';
 import logoPng from './logo.png';
 import uploadIcon from './uploadIcon.svg';
 import alertRed from './alertRed.svg';
+import orangeAlert from './orangeAlert.svg'
 
 export {
     logOut,
@@ -57,5 +58,6 @@ export {
     noTrusted,
     logoPng,
     uploadIcon,
-    alertRed
+    alertRed,
+    orangeAlert
 }
