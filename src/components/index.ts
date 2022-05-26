@@ -19,3 +19,4 @@ export { default as Search } from './Search/index';
 export { default as TolltipRigth } from './TolltipRigth/index';
 export { default as CardService } from './CardService/index';
 export { default as InputIcon } from './InputIcon/index';
+export { default as ModalMsg } from './ModalMsg/index';

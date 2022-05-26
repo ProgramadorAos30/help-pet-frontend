@@ -47,11 +47,10 @@ const Servicos: React.FC = () => {
                     )
                 })}
             </S.Container>
-            <PersonalModal 
-                onClose={() => setNewService(!newService)}
-                open={newService}
-                width={861}
-                children={<NewService />}
+            
+            <NewService
+                isModal={newService}
+                onHide={() => setNewService(!newService)}
             />
         </>
     )

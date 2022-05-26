@@ -72,6 +72,7 @@ export const Item = styled.p`
     align-items: center;
     padding: 9.5px 12px;
     margin-right: 12px;
+    margin-bottom: 12px;
     color: ${props => props.theme.colors.blue};
 
     > button {
