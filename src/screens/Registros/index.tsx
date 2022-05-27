@@ -12,7 +12,7 @@ import {
     TolltipRigth,
     MultSelect
 } from '../../components';
-import { convertDate, useOccurrences, useService } from '../../services/index';
+import { convertDate, useCity, useOccurrences, useService, useUf } from '../../services/index';
 import NewOccurence from './newOccurence';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../stores';
@@ -28,14 +28,20 @@ import { UseQueryResult } from 'react-query';
 
 const Registros: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
+
     const [ openList, setOpenList ] = useState(false);
     const [ maps, setMaps ] = useState(true);
     const [ list, setList ] = useState(false);
     const [ open, setOpen ] = useState(false);
     const [ listServices, setListServices ] = useState<any>();
+    const [ page, setPage ] = useState<number>(1);
     const [ status, setStatus ] = useState<any>(undefined);
     const [ service, setService ] = useState<string []>([]);
-    const [ page, setPage ] = useState<number>(1)
+    const [ address, setAddress ] = useState<any>();
+    const [ ufValue, setUfValue ] = useState<any>();
+    const [ cityValue, setCityValue ] = useState<any>();
+    const [ initialDate, setInitialDate ] = useState<any>(undefined);
+    const [ finalDate, setFinalDate ] = useState<any>(undefined)
 
     const { 
         data: occurrences, 
@@ -45,15 +51,20 @@ const Registros: React.FC = () => {
     } = useOccurrences(
         token, 
         'DESC', 
-        1, 
-        10, 
-        status == '' ? undefined : status, 
-        service == [''] ? undefined : service,
-
+        page, 
+        10,
+        status,
+        service,
+        address,
+        ufValue,
+        cityValue,
+        undefined,
+        initialDate,
+        finalDate
     );
     const { data: dataServices } = useService(token);
-    
-    console.log(occurrences, listServices, service);
+    const { data: dataUf } = useUf();
+    const { data: dataCity } = useCity(ufValue);
 
     let lista = [
         {label: 'Pesquisar 1', value: 'pesquisa1'},
@@ -83,7 +94,10 @@ const Registros: React.FC = () => {
         })
         setListServices(obj)
         
-    }, [dataServices])
+    }, [dataServices]);
+    
+    console.log(initialDate, finalDate, 'date');
+    
 
     return (
         <>
@@ -183,23 +197,25 @@ const Registros: React.FC = () => {
                             <h1>Ocorrências registradas no aplicativo</h1>
                             <S.FiltersTop>
                                 <CustomSelect 
-                                    onChange={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    } } 
+                                    onChange={(e) => {
+                                        setUfValue(e.target.value)
+                                        console.log(e.target.value);
+                                        
+                                    }} 
                                     label='Selecione o Estado'
                                     labelDefault='Estado'
-                                    list={lista} 
-                                    value=''
+                                    list={dataUf} 
+                                    value={ufValue}
                                     width={254}
                                 />
                                 <CustomSelect 
-                                    onChange={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    } } 
+                                    onChange={(e) => {
+                                        setCityValue(e.target.value)
+                                    }} 
                                     label='Selecione a Cidade'
                                     labelDefault='Cidade'
-                                    list={lista} 
-                                    value=''
+                                    list={dataCity} 
+                                    value={cityValue}
                                     width={254}
                                 />
                                 <CustomSelect 
@@ -222,33 +238,33 @@ const Registros: React.FC = () => {
                                 />
                                 <CustomInput 
                                     label='De' 
-                                    onChange={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                    } } 
+                                    onChange={(e: any) => {
+                                        setInitialDate(e.target.value)
+                                    }} 
                                     onBlur={function (e: any) {
                                     throw new Error('Function not implemented.');
                                     } } 
-                                    type={'date'} 
-                                    value={undefined} 
+                                    type='datetime-local'
+                                    value={initialDate} 
                                     width={176}                                
                                 />
                                 <CustomInput 
                                     label='Até' 
-                                    onChange={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                    } } 
+                                    onChange={(e: any) => {
+                                        setFinalDate(e.target.value)
+                                    }} 
                                     onBlur={function (e: any) {
                                     throw new Error('Function not implemented.');
                                     } } 
-                                    type={'date'} 
-                                    value={undefined} 
+                                    type='datetime-local'
+                                    value={finalDate} 
                                     width={176}                                
                                 />
                             </S.FiltersTop>
                             <S.FiltersBottom>
                                 <Search 
-                                    onChange={() => {
-
+                                    onChange={(e: any) => {
+                                        setAddress(e.target.value);
                                     }} 
                                     width="400px"
                                 />

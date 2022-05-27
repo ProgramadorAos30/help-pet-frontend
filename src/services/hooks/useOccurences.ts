@@ -9,9 +9,12 @@ const getOccurrences = async <T>(
     take?: number,
     finished_status?: string,
     services?: string[] | any,
+    address?: string,
+    state?: string,
     city?: string,
-    final_date?: string,
-    initial_date?: string
+    neighborhood?: string,
+    initial_date?: string,
+    final_date?: string
 
 ):Promise<Occurrences[]> => {
 
@@ -34,6 +37,9 @@ const getOccurrences = async <T>(
     if(services == ['']){
         params.append("services", services)
     }
+    if(address != undefined){
+        params.append("address", address)
+    }
     if(city != undefined){
         params.append("city", city)
     }
@@ -42,6 +48,12 @@ const getOccurrences = async <T>(
     }
     if(initial_date != undefined){
         params.append("initial_date", initial_date)
+    }
+    if(neighborhood != undefined){
+        params.append("neighborhood", neighborhood)
+    }
+    if(state != undefined){
+        params.append("state", state)
     }
 
     const resp = await api.get<Occurrences[]>('/occurrences', {
@@ -60,27 +72,38 @@ export const useOccurrences = <T>(
     take?: number,
     finished_status?: string,
     services?: string[] | any,
+    address?: string,
+    state?: string,
     city?: string,
-    final_date?: string,
-    initial_date?: string
+    neighborhood?: string,
+    initial_date?: string,
+    final_date?: string
 ):UseQueryResult<Occurrences[]> => {
     return useQuery(['ocurrence', 
+    token,
+    order,
+    page,
+    take,
+    finished_status,
+    services,
+    address,
+    state,
+    city,
+    neighborhood,
+    initial_date,
+    final_date 
+    ], () => getOccurrences(
         token,
         order,
         page,
         take,
         finished_status,
         services,
+        address,
+        state,
         city,
-        final_date,
-        initial_date 
-    ], () => getOccurrences(token,
-        order,
-        page,
-        take,
-        finished_status,
-        services,
-        city,
-        final_date,
-        initial_date)
+        neighborhood,
+        initial_date,
+        final_date
+    )
 )}
