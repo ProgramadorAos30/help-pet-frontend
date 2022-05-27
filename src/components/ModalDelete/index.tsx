@@ -9,7 +9,8 @@ interface IProps {
     onClose: () => void,
     width: number,
     mensage: string,
-    onDelete: () => void
+    onDelete: () => void,
+    buttonText: any
 }
 
 const ModalDelete: React.FC <IProps> = (props) => {
@@ -104,7 +105,7 @@ const ModalDelete: React.FC <IProps> = (props) => {
                             type='button'
                             onClick={props.onDelete}
                         >
-                            Sim, excluir
+                            {props.buttonText}
                         </button>
                     </div>
                 </Container>

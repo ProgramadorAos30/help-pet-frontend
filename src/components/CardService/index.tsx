@@ -44,8 +44,6 @@ const CardService: React.FC <IProps> = (props) => {
                                     <img src={options} alt="" />
                                 </button>
                                 <Popover
-                                    anchorReference="anchorPosition"
-                                    anchorPosition={{ top: 215, left: 640 }}
                                     {...bindPopover(popupState)}
                                     anchorOrigin={{
                                         vertical: 'bottom',

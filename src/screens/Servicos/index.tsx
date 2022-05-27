@@ -1,20 +1,41 @@
 import React, { useState } from 'react';
 import * as S from './style';
 import { useSelector } from 'react-redux';
-import { useService } from '../../services';
+import { api, queryClient, useService } from '../../services';
 import { RootState } from '../../stores';
 import { 
     CardService,
-    PersonalModal
+    ModalDelete,
+    ModalMsg
 } from '../../components';
 import NewService from './NewService';
-import ModalDelete from '../../components/ModalDelete';
+import { useMutation } from 'react-query';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
+    const [ idService, setIdService ] = useState<string>('')
     const [ newService, setNewService ] = useState(false);
     const [ showDelete, setShowDelete ] = useState(false);
+    const [ showSuccess, setShowSuccess ] = useState(false);
+
+    const deleteService = async (id: string) => {
+        const data = await api.delete(`/services/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        return data
+    };
+
+    const { mutate, isLoading } = useMutation(deleteService, {
+        onSuccess: () => {
+          queryClient.invalidateQueries('services');
+          setShowDelete(false)
+          setShowSuccess(true)
+        }
+    });
 
     return (
         <>
@@ -39,9 +60,9 @@ const Servicos: React.FC = () => {
                     return (
                         <CardService
                             onClick={() => {
-                                
                             }} 
                             onDelete={() => {
+                                setIdService(id.id)
                                 setShowDelete(true)
                             }}
                             onEdit={() => {}}
@@ -62,10 +83,20 @@ const Servicos: React.FC = () => {
             <ModalDelete 
                 mensage='Deseja mesmo excluir este serviço?'
                 onClose={() => setShowDelete(false)}
-                onDelete={() => {
-                    
-                }}
+                onDelete={() => {mutate(idService)}}
                 open={showDelete}
+                width={469}
+                buttonText={isLoading == false ? 'Sim, excluir' : 'Excluindo...' }
+            />
+
+            <ModalMsg 
+                mensage='O serviço foi excluido com sucesso!'
+                onClose={() => {
+                    setShowSuccess(false)
+                    setShowDelete(false)
+                }}
+                open={showSuccess}
+                status=""
                 width={469}
             />
         </>
