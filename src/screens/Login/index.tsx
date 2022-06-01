@@ -1,19 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import * as S from './style';
 import { useForm, Controller } from "react-hook-form";
 import { api } from "../../services";
 import { useMutation } from 'react-query';
 import { queryClient } from '../../services/index';
 import { logoPng } from '../../assets';
-import { CustomInput } from '../../components';
+import { CustomInput, ModalMsg } from '../../components';
 import { IProps } from "./types";
 import { useDispatch } from 'react-redux';
 import { TOKEN, USER } from '../../stores/actions';
 import { NavLink } from 'react-router-dom';
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from './validation-schema';
 
 const Login: React.FC = () => {
     const dispatch = useDispatch();
+    const [ open, setOpen ] = useState(false);
     const ref = useRef<any>(null)
     const { 
         handleSubmit,
@@ -22,7 +24,10 @@ const Login: React.FC = () => {
         watch,
         getValues,
         getFieldState
-    } = useForm<IProps>({ mode: "onChange" });
+    } = useForm<IProps>({ 
+        mode: "onChange",
+        resolver: yupResolver(schema)
+    });
     
     const postUser = async (data: IProps) => {
         const { data: response } = await api.post('/authorize', data);
@@ -36,6 +41,9 @@ const Login: React.FC = () => {
     const { mutate, isLoading } = useMutation(postUser, {
         onSuccess: () => {
             queryClient.invalidateQueries('users');
+        },
+        onError: () => {
+            setOpen(!open);
         }
     });
 
@@ -46,6 +54,15 @@ const Login: React.FC = () => {
         }
         mutate(obj);
     };
+
+    const validationUsername = (value: string) => {
+        let email = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
+        let phone = new RegExp('\(\d{2,}\) \d{4,}\-\d{4}')
+
+        return email
+    }
+
+    console.log(validationUsername('gabriel@gmail.com'))
 
     return (
         <S.Container>
@@ -59,14 +76,21 @@ const Login: React.FC = () => {
                         name='username'
                         defaultValue=""
                         render={({field: { onChange, onBlur, value }}) => (
-                            <CustomInput 
-                                label='Digite seu e-mail ou WhatsApp' 
-                                onChange={onChange} 
-                                onBlur={onBlur} 
-                                type='text' 
-                                value={value}
-                                width={372}                    
-                            />
+                            <>
+                                <CustomInput 
+                                    label='Digite seu e-mail ou WhatsApp' 
+                                    onChange={onChange} 
+                                    onBlur={onBlur} 
+                                    type='text' 
+                                    value={value}
+                                    width={372}                    
+                                />
+                                {errors?.username && (
+                                    <p>
+                                        {errors?.username?.message}
+                                    </p>
+                                )}
+                            </>
                         )}
                     />
                     <Controller 
@@ -74,14 +98,21 @@ const Login: React.FC = () => {
                         name='password'
                         defaultValue=""
                         render={({field: { onChange, onBlur, value }}) => (
-                            <CustomInput 
-                                label='Digite sua senha' 
-                                onChange={onChange} 
-                                onBlur={onBlur}  
-                                type='password' 
-                                value={value} 
-                                width={372}                      
-                            />
+                            <>
+                                <CustomInput 
+                                    label='Digite sua senha' 
+                                    onChange={onChange} 
+                                    onBlur={onBlur}  
+                                    type='password' 
+                                    value={value} 
+                                    width={372}                      
+                                />
+                                {errors?.password && (
+                                    <p>
+                                        {errors?.password?.message}
+                                    </p>
+                                )}
+                            </>
                         )}
                     />
                     <p>Esqueci minha senha</p>
@@ -97,6 +128,13 @@ const Login: React.FC = () => {
                     <NavLink to="/" style={{display: 'none'}} ref={ref}/>
                 </form>
             </div>
+            <ModalMsg 
+                open={open} 
+                onClose={() => setOpen(!open)} 
+                width={375} 
+                status={''} 
+                mensage='Usuário ou senha inválida'            
+            />
         </S.Container>
     );
 };
