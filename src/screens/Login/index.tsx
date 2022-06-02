@@ -114,7 +114,7 @@ const Login: React.FC = () => {
                         </span>
                     )}
                     </fieldset>
-                    <p>Esqueci minha senha</p>
+                    <S.RemeberPassword>Esqueci minha senha</S.RemeberPassword>
                     <S.Button 
                         type='submit'
                         onClick={() => {

@@ -45,14 +45,6 @@ export const Container = styled.div`
 
         > form {
 
-            > p {
-                text-align: right;
-                border-bottom: 1px solid #0A3466;
-                color: #0A3466;
-                cursor: pointer;
-                margin-bottom: 51px;
-                float: right;
-            }
 
             > fieldset {
                 margin-bottom: 24px;
@@ -76,4 +68,18 @@ export const Button = styled.button <{ disabled: boolean }>`
         border: none;
         color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
         background: ${props => props.disabled == false ? props.theme.colors.gradient : '#C7C7C7'};
+`;
+
+export const RemeberPassword = styled.button`
+    text-align: right;
+    border-bottom: 1px solid #0A3466;
+    color: #0A3466;
+    cursor: pointer;
+    margin-bottom: 51px;
+    float: right;
+    cursor: pointer;
+
+    :hover {
+        background: none;
+    }
 `;
