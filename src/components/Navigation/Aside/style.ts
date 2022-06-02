@@ -10,7 +10,7 @@ export const Container = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 999 !important;
 `;
 
 export const logo = styled.div`
@@ -47,7 +47,7 @@ export const Link = styled(NavLink)`
 
     > img{
         margin-right: 22px;
-        filter: opacity(0.4) drop-shadow(0 0 0 red); 
+        filter: opacity(0.4) drop-shadow(0 0 0); 
     }
 
     :hover, &.active {
