@@ -54,6 +54,15 @@ export const Container = styled.div`
                 float: right;
             }
 
+            > fieldset {
+                margin-bottom: 24px;
+
+                span { 
+                    color: red;
+                }
+            }
+
+
             > div {
                 margin-bottom: 24px;
             }

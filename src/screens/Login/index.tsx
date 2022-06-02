@@ -55,17 +55,8 @@ const Login: React.FC = () => {
         mutate(obj);
     };
 
-    
-
-
-    const validationUsername = (value: string) => {
-        let email = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
-        let phone = new RegExp('\(\d{2,}\) \d{4,}\-\d{4}')
-
-        return email
-    }
-
-    console.log(validationUsername('gabriel@gmail.com'))
+    const password =  watch('password');
+    const username = watch('username');
 
     return (
         <S.Container>
@@ -74,6 +65,7 @@ const Login: React.FC = () => {
                 <p>Faça seu login</p>
                 <h1>Para acessar a nossa plataforma!</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <fieldset>
                     <Controller 
                         control={control}
                         name='username'
@@ -88,14 +80,16 @@ const Login: React.FC = () => {
                                     value={value}
                                     width={372}                    
                                 />
-                                {errors?.username && (
-                                    <p>
-                                        {errors?.username?.message}
-                                    </p>
-                                )}
                             </>
                         )}
                     />
+                    {errors?.username && (
+                        <span>
+                            {errors?.username?.message}
+                        </span>
+                    )}
+                    </fieldset>
+                    <fieldset>
                     <Controller 
                         control={control}
                         name='password'
@@ -110,14 +104,16 @@ const Login: React.FC = () => {
                                     value={value} 
                                     width={372}                      
                                 />
-                                {errors?.password && (
-                                    <p>
-                                        {errors?.password?.message}
-                                    </p>
-                                )}
+                                
                             </>
                         )}
                     />
+                    {errors?.password && (
+                        <span>
+                            {errors?.password?.message}
+                        </span>
+                    )}
+                    </fieldset>
                     <p>Esqueci minha senha</p>
                     <S.Button 
                         type='submit'
