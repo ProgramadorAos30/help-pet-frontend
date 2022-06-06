@@ -14,7 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from './validation-schema';
 import RecoveryPassword from './RecoveryPassword';
 
-const Login: React.FC = () => {
+const Login: React.FC = (onHide, onClose) => {
     const dispatch = useDispatch();
     const [ open, setOpen ] = useState(false);
     const [ recoveryPassword, setRecoveryPassword ] = useState(false);
