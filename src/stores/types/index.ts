@@ -26,5 +26,10 @@ export type typeState = {
         "_id": string,
         "createdAt": string,
         "updatedAt": string
+    },
+    sendcode: {
+        "user_id": string,
+        "code": string,
+        "active": boolean
     }
 }

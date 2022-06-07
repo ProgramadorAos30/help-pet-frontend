@@ -28,6 +28,7 @@ import logoPng from './logo.png';
 import uploadIcon from './uploadIcon.svg';
 import alertRed from './alertRed.svg';
 import orangeAlert from './orangeAlert.svg'
+import alertDark from './alertDark.svg';
 
 export {
     logOut,
@@ -59,5 +60,6 @@ export {
     logoPng,
     uploadIcon,
     alertRed,
-    orangeAlert
+    orangeAlert,
+    alertDark
 }

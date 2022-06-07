@@ -240,10 +240,9 @@ const Registros: React.FC = () => {
                                     label='De' 
                                     onChange={(e: any) => {
                                         setInitialDate(e.target.value)
+                                        console.log(e.target.value)
                                     }} 
-                                    onBlur={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                    } } 
+                                    onBlur={() => {}} 
                                     type='datetime-local'
                                     value={initialDate} 
                                     width={176}                                
@@ -461,6 +460,7 @@ const Registros: React.FC = () => {
 
             <PersonalModal 
                 width={1604}
+                padding={4}
                 open={open}
                 onClose={() => setOpen(!open)}
                 children={<NewOccurence/>}

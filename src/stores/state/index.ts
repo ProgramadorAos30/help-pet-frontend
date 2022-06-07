@@ -26,5 +26,10 @@ export const initialState = {
         "_id": "",
         "createdAt": "",
         "updatedAt": ""
+    },
+    sendcode: {
+        "user_id": "",
+        "code": "",
+        "active": false
     }
  }

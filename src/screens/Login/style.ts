@@ -78,6 +78,8 @@ export const RemeberPassword = styled.button`
     margin-bottom: 51px;
     float: right;
     cursor: pointer;
+    background: none;
+    border: none;
 
     :hover {
         background: none;

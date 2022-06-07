@@ -6,7 +6,8 @@ interface IProps {
     open: boolean,
     onClose: () => void,
     children: any,
-    width: number
+    width: number,
+    padding: number
 }
 
 const PersonalModal: React.FC <IProps> = (props) => {
@@ -21,7 +22,7 @@ const PersonalModal: React.FC <IProps> = (props) => {
       width: props.width,
       bgcolor: 'background.paper',
       border: 'none',
-      p: 4,
+      p: props.padding,
       borderRadius: '8px'
     };
     return (

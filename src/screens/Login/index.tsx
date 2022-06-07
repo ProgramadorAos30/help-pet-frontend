@@ -14,7 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from './validation-schema';
 import RecoveryPassword from './RecoveryPassword';
 
-const Login: React.FC = (onHide, onClose) => {
+const Login: React.FC = () => {
     const dispatch = useDispatch();
     const [ open, setOpen ] = useState(false);
     const [ recoveryPassword, setRecoveryPassword ] = useState(false);
@@ -142,15 +142,19 @@ const Login: React.FC = (onHide, onClose) => {
                     status={''} 
                     mensage='Usuário ou senha inválida'            
                 />
-                <PersonalModal 
-                    open={recoveryPassword} 
-                    onClose={() => setRecoveryPassword(!recoveryPassword)}
-                    width={568}
-                    children={
-                        <RecoveryPassword />
-                    }
-                />
+                
             </S.Container>
+            <PersonalModal 
+                open={recoveryPassword} 
+                onClose={() => setRecoveryPassword(!recoveryPassword)}
+                width={568}
+                padding={0}
+                children={
+                    <RecoveryPassword />
+                }
+            />
+
+            {/*  */}
         </>
     );
 };

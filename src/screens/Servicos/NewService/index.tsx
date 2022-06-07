@@ -200,6 +200,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
     return(
         <PersonalModal 
             onClose={onHide}
+            padding={4}
             open={isModal}
             width={861}
             children={
