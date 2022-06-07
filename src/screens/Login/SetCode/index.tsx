@@ -7,7 +7,12 @@ import { RootState } from '../../../stores';
 import { ModalMsg, PersonalModal } from '../../../components';
 import NewPassword from '../NewsPassword';
 
-const SetCode: React.FC = () => {
+interface IProps {
+    onClose: () => void,
+    closeOne: () => void
+}
+
+const SetCode: React.FC<IProps> = ({onClose, closeOne}) => {
     const { sendcode } = useSelector((state : RootState) => state.clickState)
     const [ recoveryPassword, setRecoveryPassword ] = useState(false);
     const [ codeValue, setCodeValeu ] = useState('');
@@ -30,7 +35,9 @@ const SetCode: React.FC = () => {
     return (
         <div>
             <S.Container>
-                <S.ButtonBack>
+                <S.ButtonBack
+                    onClick={onClose}
+                >
                     <img src={iconShow} alt="" />
                 </S.ButtonBack>
                 <h1>Código de segurança</h1>
@@ -51,7 +58,12 @@ const SetCode: React.FC = () => {
                     </fieldset>
                     <div>
                         <p>Não recebeu o código ainda?</p>
-                        <button>
+                        <button
+                            type='button'
+                            onClick={() => {
+                                onClose()
+                            }}
+                        >
                             Enviar novamente
                         </button>
                     </div>
@@ -60,7 +72,7 @@ const SetCode: React.FC = () => {
                         disabled={disable}
                         onClick={() => {
                             if(codeValue == sendcode.code){
-                                setRecoveryPassword(!recoveryPassword)
+                                setRecoveryPassword(true)
                             } else {
                                 setErrorMsg(!errorMsg)
                             }
@@ -79,11 +91,15 @@ const SetCode: React.FC = () => {
             />
             <PersonalModal 
                 open={recoveryPassword} 
-                onClose={() => setRecoveryPassword(!recoveryPassword)}
+                onClose={() => setRecoveryPassword(false)}
                 width={568}
                 padding={0}
                 children={
-                    <NewPassword />
+                    <NewPassword 
+                        onClose={() => setRecoveryPassword(false)}
+                        closeOne={() => closeOne()}
+                        closeTwo={() => onClose()}
+                    />
                 }
             />
         </div>

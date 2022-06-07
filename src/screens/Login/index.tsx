@@ -150,11 +150,11 @@ const Login: React.FC = () => {
                 width={568}
                 padding={0}
                 children={
-                    <RecoveryPassword />
+                    <RecoveryPassword 
+                        onClose={() => setRecoveryPassword(!recoveryPassword)}
+                    />
                 }
             />
-
-            {/*  */}
         </>
     );
 };

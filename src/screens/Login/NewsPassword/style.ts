@@ -99,6 +99,7 @@ export const ButtonSend = styled.button <{ disabled: boolean }>`
     margin-top: 32px;
     color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
     background: ${props => props.disabled == false ? props.theme.colors.gradient : '#C7C7C7'};
+    border-radius: 8px;
 `;
 
 export const ReciveCode = styled.button`

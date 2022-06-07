@@ -16,11 +16,15 @@ interface Username {
     username: string
 }
 
+interface IProps {
+    onClose: () => void,
+}
+
 const schema = Yup.object().shape({
     username: Yup.string().required("E-mail ou WhatsApp são obrigatórios")
 })
 
-const RecoveryPassword: React.FC = () => {
+const RecoveryPassword: React.FC<IProps> = ({onClose}) => {
     const dispatch = useDispatch();
     const [ recoveryPassword, setRecoveryPassword ] = useState(false);
     const { 
@@ -63,7 +67,9 @@ const RecoveryPassword: React.FC = () => {
         <>
             <div>
                 <S.Container>
-                    <S.ButtonBack>
+                    <S.ButtonBack
+                        onClick={onClose}
+                    >
                         <img src={iconShow} alt="" />
                     </S.ButtonBack>
                     <h1>Esqueci minha senha</h1>
@@ -111,7 +117,10 @@ const RecoveryPassword: React.FC = () => {
                     width={568}
                     padding={0}
                     children={
-                        <SetCode />
+                        <SetCode 
+                            onClose={() => setRecoveryPassword(!recoveryPassword)}
+                            closeOne={() => onClose()}
+                        />
                     }
                 />
             </div>

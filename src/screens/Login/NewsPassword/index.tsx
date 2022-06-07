@@ -16,11 +16,17 @@ interface NewPassword {
     new_password: string
 }
 
+interface IProps {
+    onClose: () => void,
+    closeOne: () => void,
+    closeTwo: () => void
+}
+
 const schema = Yup.object().shape({
     new_password: Yup.string().required("Senha é obrigatória")
 })
 
-const NewPassword: React.FC = () => {
+const NewPassword: React.FC <IProps> = ({onClose, closeOne, closeTwo}) => {
     const { sendcode } = useSelector((state : RootState) => state.clickState);
     const [ password, setPassword ] = useState<string>('');
     const [ enable, setEnable ] = useState<boolean>(true);
@@ -74,7 +80,9 @@ const NewPassword: React.FC = () => {
     return (
         <>
             <S.Container>
-                <S.ButtonBack>
+                <S.ButtonBack
+                    onClick={() => onClose()}
+                >
                     <img src={iconShow} alt="" />
                 </S.ButtonBack>
                 <h1>Alterar senha</h1>
@@ -123,7 +131,12 @@ const NewPassword: React.FC = () => {
 
             <ModalMsg 
                 open={errorMsg} 
-                onClose={() => setErrorMsg(!errorMsg)} 
+                onClose={() => {
+                    closeOne()
+                    closeTwo()
+                    setErrorMsg(!errorMsg)
+
+                }} 
                 width={469} 
                 status='success'
                 mensage='Senha alterada com sucesso.'            
