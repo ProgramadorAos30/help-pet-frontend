@@ -98,7 +98,7 @@ export const ButtonSend = styled.button <{ disabled: boolean }>`
     border: none;
     margin-top: 32px;
     color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
-    background: ${props => props.disabled == false ? props.theme.colors.gradient : '#C7C7C7'};
+    background: ${props => props.disabled == false ? props.theme.colors.blue : '#C7C7C7'};
     border-radius: 8px;
 `;
 

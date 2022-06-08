@@ -66,6 +66,7 @@ export const Button = styled.button <{ disabled: boolean }>`
         width: 100%;
         height: 48px;
         border: none;
+        border-radius: 8px;
         color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
         background: ${props => props.disabled == false ? props.theme.colors.gradient : '#C7C7C7'};
 `;
