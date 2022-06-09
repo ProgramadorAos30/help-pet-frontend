@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as S from './style';
 import { 
     CustomSelect, 
@@ -38,6 +38,9 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
     const [ idSource, setIdSource ] = useState<any>([]);
     const [ successMsg, setSuccessMsg ] = useState(false);
     const [ errMsg, setErrMsg ] = useState(false);
+    const refSubmit = useRef<any>(null);
+    const refCheckbok = useRef<any>(null);
+    const refLabel = useRef<any>(null);
 
     const {
         control,
@@ -98,86 +101,6 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         field.remove(index);
     };
 
-    async function registerService(values: ServiceFormData) {
-        const { sources, ...item } = values;
-
-        const data: any = [];
-
-        Object.keys(item).map((keys) => {
-            let key = keys as keyof unknown;
-            if (item[key] !== "") data[key] = item[key];
-            else data[key] = null;
-        });
-
-        if (Object.entries(data).length === 0) return;
-
-        const obj: any = {
-            image: values.image,
-            name: values.name,
-            background_color: values.background_color,
-            active: values.active,
-            other_option: values.other_option,
-            sources: idSource
-        }
-        
-        const method: Promise<AxiosResponse <any, any> > = !!data.id 
-            ? putService(token, data.id,data)
-            : postService(token, obj)
-            console.log(obj, data, 'return')
-
-        return await method
-            .then((resp) => {
-                return resp.data
-            }).catch((error) => {
-                return error
-            })
-    };
-
-    async function onSubmit(values: ServiceFormData) {
-        try {
-            const _service: Services = await registerService(values);
-            setServices(_service);
-
-            if (!_service.id) return;
-
-            let arraySources = [
-                ...(values?.sources || [])
-            ];
-
-            for await(let item of arraySources){
-                let data: any = {
-                    services: _service.id
-                };
-
-                Object.keys(item).map((keys) => {
-                    let key = keys as keyof unknown;
-                    if (item[key] !== "") data[key] = item[key];
-                    else data[key] = null;
-                });
-
-                if(!!data){
-                    const method = !!data?.id
-                    ? putSource(token, data?.id, data)
-                    : postSource(token, data)
-                    
-                    await method
-                        .then((resp) => {
-                            setSuccessMsg(!successMsg)
-                            return resp.data
-                        }).catch((error) => {
-                            setErrMsg(!errMsg)
-                            return error
-                        })
-                };
-            };
-        }
-
-        catch(error){
-            console.log(error);
-            
-        }
-    };
-
     const colors = [
         {label: 'Laranja', value: '#FF954E'},
         {label: 'Ciano', value: '#47DED0'},
@@ -195,11 +118,11 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         }
       }, [isModal, reset]);
 
-    console.log(fontsFieldArray.fields);
+    console.log(watch('other_option'));
     
     return(
         <PersonalModal 
-            modalBackground={true}
+            modalBackground={false}
             onClose={onHide}
             padding={4}
             open={isModal}
@@ -207,7 +130,15 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
             children={
                 <S.Container>
                     <h1>Cadastrar serviço</h1>
-                    <S.Form onSubmit={handleSubmit(onSubmit)}>
+                    <S.Form>
+                        <input 
+                            {...register("other_option")}
+                            type="checkbox" 
+                            id="other_option"
+                            name='other_option'
+                            ref={refCheckbok}
+                            style={{display: 'none'}}
+                        />
                         <S.Header>
                             <InputIcon />
                             <div>
@@ -252,6 +183,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                         <CustomSwitch
                                             leftLabel="Inativo"
                                             rightLabel="Ativo"
+                                            //@ts-ignore
                                             value={value}
                                             onChange={onChange}
                                             onBlur={onBlur}
@@ -262,6 +194,14 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                         </S.Header>
                         <div>
                         </div>
+                        <button 
+                            type='submit'
+                            ref={refSubmit}
+                            style={{display: 'none'}}
+                        />
+                    </S.Form>
+
+                    <form>
                         <S.Fonts>
                             <h1>Fontes</h1>
                             <div>
@@ -294,49 +234,60 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                 />
                             </div>
                         </S.Fonts>
-                        <S.ItemsList>
-                        {fontsFieldArray?.fields?.map((field, index) => {
-                            return (
-                                <>
-                                    <S.Item>
-                                        {field.name}
-                                        <button
-                                            type='button'
-                                            onClick={() => {
-                                                if(!watch(`sources.${index}.id`)){
-                                                    removeField(fontsFieldArray as any, index)
-                                                } else {
-                                                    setSourceConfirm(true);
-                                                    setFontSelected({
-                                                        index,
-                                                        name: 'sources'
-                                                    })
-                                                }
-                                            }}
-                                        >
-                                            <img src={alertRed} alt="" />
-                                        </button>
-                                    </S.Item>
-                                </>
-                            )
-                        })}
-                        </S.ItemsList>
-                        <S.AnotherOptions>
-                            <input type="checkbox" {...register('other_option')} id="other"/>
-                            <label htmlFor="other">Incluir opção <b>outros</b></label>
-                        </S.AnotherOptions>
-                        <S.ContainerBtn>
-                            <button type="button" onClick={onHide}>Cancelar</button>
+                    </form>
+                    <S.ItemsList>
+                    {fontsFieldArray?.fields?.map((field, index) => {
+                        return (
+                            <>
+                                <S.Item>
+                                    {field.name}
+                                    <button
+                                        type='button'
+                                        onClick={() => {
+                                            if(!watch(`sources.${index}.id`)){
+                                                removeField(fontsFieldArray as any, index)
+                                            } else {
+                                                setSourceConfirm(true);
+                                                setFontSelected({
+                                                    index,
+                                                    name: 'sources'
+                                                })
+                                            }
+                                        }}
+                                    >
+                                        <img src={alertRed} alt="" />
+                                    </button>
+                                </S.Item>
+                            </>
+                        )
+                    })}
+                    </S.ItemsList>
+                    <S.AnotherOptions>
+                        <input 
+                            type="checkbox" 
+                            ref={refLabel}
+                            onClick={() => {
+                                refCheckbok?.current?.click()
+                            }}
+                        />
+                        <label>Incluir opção <b>outros</b></label>
+                    </S.AnotherOptions>
+                    <S.ContainerBtn>
+                        <button type="button" onClick={onHide}>Cancelar</button>
 
-                            <button type="submit">
-                                {isSubmitting ? (
-                                    "Cadastrando ..."
-                                ) : (
-                                    "Finalizar cadastro"
-                                )}
-                            </button>
-                        </S.ContainerBtn>
-                    </S.Form>
+                        <button 
+                            type="button"
+                            onClick={() => {
+                                refSubmit?.current?.click();
+                            }}
+                        >
+                            {isSubmitting ? (
+                                "Cadastrando ..."
+                            ) : (
+                                "Finalizar cadastro"
+                            )}
+                        </button>
+                    </S.ContainerBtn>
                     <ModalMsg
                         height='312px'
                         modalBackground={false} 

@@ -27,7 +27,7 @@ const InputIcon: React.FC = () => {
                 ref={ref}
                 style={{display: 'none'}}
                 type="file" 
-                accept='image/png, image/svg'
+                accept='image/png, image/svg, image/jpeg'
                 onChange={(e: any) => {
                     let image = new FileReader();
                     image.readAsDataURL(e.target.files[0])
