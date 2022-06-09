@@ -90,6 +90,8 @@ const Servicos: React.FC = () => {
             />
 
             <ModalMsg 
+                height='312px'
+                modalBackground={false}
                 mensage='O serviço foi excluido com sucesso!'
                 onClose={() => {
                     setShowSuccess(false)

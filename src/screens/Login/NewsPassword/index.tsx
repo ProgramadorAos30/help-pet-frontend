@@ -30,29 +30,26 @@ const NewPassword: React.FC <IProps> = ({onClose, closeOne, closeTwo}) => {
     const { sendcode } = useSelector((state : RootState) => state.clickState);
     const [ password, setPassword ] = useState<string>('');
     const [ enable, setEnable ] = useState<boolean>(true);
-    const [ errorMsg, setErrorMsg ] = useState(false);
+    const [ successMsg, setSuccess ] = useState<boolean>(false);
 
     const { 
         handleSubmit,
-        formState: { errors, isDirty, isValid },
         control,
-        watch,
-        getValues,
-        getFieldState
+        watch
     } = useForm<NewPassword>({ 
         mode: "onChange",
         resolver: yupResolver(schema)
     });
 
     const postNewPassword = async (user: NewPassword) => {
-        const { data: resp } = await api.post('/forgot-password', user)
-        return resp.data
+        const resp = await api.post('/forgot-password', user)
+        return resp
     };
 
-    const { mutate, isLoading, data } = useMutation(postNewPassword, {
+    const { mutate, isLoading} = useMutation(postNewPassword, {
         onSuccess: () => {
             queryClient.invalidateQueries('forget-password');
-            setErrorMsg(!errorMsg)
+            setSuccess(true);
         },
         onError: (error) => {
             console.log(error)
@@ -130,14 +127,15 @@ const NewPassword: React.FC <IProps> = ({onClose, closeOne, closeTwo}) => {
             </S.Container>
 
             <ModalMsg 
-                open={errorMsg} 
+                height='280px'
+                modalBackground={true}
+                open={successMsg} 
                 onClose={() => {
-                    closeOne()
-                    closeTwo()
-                    setErrorMsg(!errorMsg)
-
+                    setSuccess(false)
+                    closeOne();
+                    closeTwo();
                 }} 
-                width={469} 
+                width={568} 
                 status='success'
                 mensage='Senha alterada com sucesso.'            
             />

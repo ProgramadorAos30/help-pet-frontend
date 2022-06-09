@@ -76,7 +76,7 @@ const Login: React.FC = () => {
                             render={({field: { onChange, onBlur, value }}) => (
                                 <>
                                     <CustomInput 
-                                        label='Digite seu e-mail ou WhatsApp' 
+                                        label='Digite seu e-mail ou celular' 
                                         onChange={onChange} 
                                         onBlur={onBlur} 
                                         type='text' 
@@ -136,6 +136,8 @@ const Login: React.FC = () => {
                     </form>
                 </div>
                 <ModalMsg 
+                    height='312px'
+                    modalBackground={false}
                     open={open} 
                     onClose={() => setOpen(!open)} 
                     width={375} 
@@ -145,6 +147,7 @@ const Login: React.FC = () => {
                 
             </S.Container>
             <PersonalModal 
+                modalBackground={false}
                 open={recoveryPassword} 
                 onClose={() => setRecoveryPassword(!recoveryPassword)}
                 width={568}

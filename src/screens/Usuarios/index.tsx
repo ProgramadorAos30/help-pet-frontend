@@ -296,6 +296,7 @@ const Usuarios: React.FC = () => {
                             
                         </div>
                         <PersonalModal 
+                            modalBackground={true}
                             padding={4}
                             width={858}
                             open={open}

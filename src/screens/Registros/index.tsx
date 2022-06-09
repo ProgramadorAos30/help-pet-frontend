@@ -459,6 +459,7 @@ const Registros: React.FC = () => {
             )}
 
             <PersonalModal 
+                modalBackground={true}
                 width={1604}
                 padding={4}
                 open={open}

@@ -1,4 +1,4 @@
-import { SENDCODE, TOKEN, USER } from '../actions/index';
+import { SENDCODE, TOKEN, USER, USERNAME } from '../actions/index';
 import { initialState } from '../state/index';
 
 export const reducer = (state = initialState, action: any) => {
@@ -11,6 +11,9 @@ export const reducer = (state = initialState, action: any) => {
 
         case SENDCODE:
             return { ...state, sendcode: action.sendcode }
+
+        case USERNAME:
+            return { ...state, username: action.username }
 
         default:
             return { ...state };

@@ -31,5 +31,6 @@ export const initialState = {
         "user_id": "",
         "code": "",
         "active": false
-    }
+    },
+    username: ""
  }

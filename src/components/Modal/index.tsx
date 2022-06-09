@@ -7,7 +7,8 @@ interface IProps {
     onClose: () => void,
     children: any,
     width: number,
-    padding: number
+    padding: number,
+    modalBackground: boolean
 }
 
 const PersonalModal: React.FC <IProps> = (props) => {
@@ -23,12 +24,13 @@ const PersonalModal: React.FC <IProps> = (props) => {
       bgcolor: 'background.paper',
       border: 'none',
       p: props.padding,
-      borderRadius: '8px'
+      borderRadius: '8px',
     };
     return (
         <Modal
             open={props.open}
             onClose={props.onClose}
+            hideBackdrop={props.modalBackground}
         >
             <Box sx={style}>
                 {props.children}

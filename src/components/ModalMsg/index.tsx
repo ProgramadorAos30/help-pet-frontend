@@ -13,6 +13,8 @@ interface IProps {
     width: number,
     status: string,
     mensage: string
+    modalBackground: boolean,
+    height: string
 }
 
 const ModalMsg: React.FC <IProps> = (props) => {
@@ -31,11 +33,12 @@ const ModalMsg: React.FC <IProps> = (props) => {
         borderRadius: '8px'
     };
 
-    const Container = styled.div`
+    const Container = styled.div<{ height: string }>`
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        height: ${props => props.height == '' ? '312px' : props.height};
 
         > img {
             width: 60px;
@@ -74,9 +77,10 @@ const ModalMsg: React.FC <IProps> = (props) => {
         <Modal
             open={props.open}
             onClose={props.onClose}
+            hideBackdrop={props.modalBackground}
         >
             <Box sx={style}>
-                <Container>
+                <Container height={props.height}>
                     <img src={props.status == 'success' ? trusted : alertRed} alt="" />
                     <p>{props.mensage}</p>
                     <button

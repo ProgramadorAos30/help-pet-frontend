@@ -10,7 +10,7 @@ import { queryClient } from '../../../services/index';
 import * as Yup from 'yup';
 import SetCode from '../SetCode';
 import { useDispatch } from 'react-redux';
-import { SENDCODE } from '../../../stores/actions';
+import { SENDCODE, USERNAME } from '../../../stores/actions';
 
 interface Username {
     username: string
@@ -61,6 +61,8 @@ const RecoveryPassword: React.FC<IProps> = ({onClose}) => {
         }
         
         mutate(obj);
+
+        dispatch({ type: USERNAME, username: value.username})
     }
 
     return (
@@ -83,7 +85,7 @@ const RecoveryPassword: React.FC<IProps> = ({onClose}) => {
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => (
                                 <CustomInput 
-                                    label='Digite seu e-mail ou WhatsApp'
+                                    label='Digite seu e-mail ou celular'
                                     onChange={onChange} 
                                     onBlur={onBlur} 
                                     type='text' 
@@ -100,18 +102,16 @@ const RecoveryPassword: React.FC<IProps> = ({onClose}) => {
                         <S.ButtonSend
                             type="submit"
                             disabled={!isDirty || !isValid}
+                            onClick={() => {
+                                setRecoveryPassword(!recoveryPassword)
+                            }}
                         >
                             {isLoading == true ? 'Enviando código...' : 'Enviar código'}
                         </S.ButtonSend>
                     </form>
                 </S.Container>
-                <S.ReciveCode
-                    type='button'
-                    onClick={() => setRecoveryPassword(!recoveryPassword)}
-                >
-                    Já recebi o código
-                </S.ReciveCode>
                 <PersonalModal 
+                    modalBackground={true}
                     open={recoveryPassword} 
                     onClose={() => setRecoveryPassword(!recoveryPassword)}
                     width={568}

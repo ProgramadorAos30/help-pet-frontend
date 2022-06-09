@@ -31,5 +31,6 @@ export type typeState = {
         "user_id": string,
         "code": string,
         "active": boolean
-    }
+    },
+    username: string
 }

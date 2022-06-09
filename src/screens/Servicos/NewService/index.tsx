@@ -199,6 +199,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
     
     return(
         <PersonalModal 
+            modalBackground={true}
             onClose={onHide}
             padding={4}
             open={isModal}
@@ -336,7 +337,9 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                             </button>
                         </S.ContainerBtn>
                     </S.Form>
-                    <ModalMsg 
+                    <ModalMsg
+                        height='312px'
+                        modalBackground={false} 
                         mensage='O serviço foi cadastrado com sucesso!'
                         onClose={() => {
                             setSuccessMsg(!successMsg)
@@ -347,6 +350,8 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                         width={496}
                     />
                     <ModalMsg 
+                        height='312px'
+                        modalBackground={false}
                         mensage='Falaha ao cadastrar serviço!'
                         onClose={() => {
                             setErrMsg(!errMsg)

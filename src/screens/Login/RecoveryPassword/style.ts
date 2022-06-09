@@ -61,7 +61,7 @@ export const ButtonBack = styled.button`
     }
 `;
 
-export const ButtonSend = styled.button <{ disabled: boolean }>`
+export const ButtonSend = styled.button<{ disabled: boolean }>`
     width: 372px;
     height: 48px;
     border: none;
