@@ -16,14 +16,14 @@ import {
 } from 'react-hook-form';
 import { 
     ServiceFormData, 
-    Services, 
-    SourceFormData
+    Services,
+    SourceFormData, 
 } from '../../../@types';
-import { api } from '../../../services';
-import { AxiosResponse } from 'axios';
+import { api, queryClient, useSources } from '../../../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores';
 import { alertRed } from '../../../assets';
+import { useMutation } from 'react-query';
 
 interface IProps {
     isModal: boolean;
@@ -32,12 +32,14 @@ interface IProps {
 
 const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
     const { token } = useSelector((state : RootState) => state.clickState);
-    const [ services, setServices ] = useState<Services>();
+    const { data: sources } = useSources(token);
+
     const [ isFontSelected, setFontSelected ] = useState<{ name: string; index: any; }>();
-    const [ sourceConfirm, setSourceConfirm ] = useState(false);
-    const [ idSource, setIdSource ] = useState<any>([]);
+    const [ sourcesList, setSourcesList ] = useState<any>([]);
     const [ successMsg, setSuccessMsg ] = useState(false);
     const [ errMsg, setErrMsg ] = useState(false);
+    const [ otherOptions, setOtherOptions ] = useState<boolean>(false);
+
     const refSubmit = useRef<any>(null);
     const refCheckbok = useRef<any>(null);
     const refLabel = useRef<any>(null);
@@ -52,13 +54,19 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         formState: { errors, isSubmitting },
     } = useForm<ServiceFormData>();
 
+    const {
+        handleSubmit: handleSources,
+        control: controlSOurce,
+        reset: resetSource
+    } = useForm<SourceFormData>();  
+
     const fontsFieldArray = useFieldArray({
         control,
         name: 'sources',
     });
 
-    function postService (token: string, { id, ...dados }: any ) {
-        const resp = api.post('/services', dados, {
+    const postService = async (dados: ServiceFormData) => {
+        const {data: resp} = await api.post('/services', dados, {
             'headers': {
                 'Authorization': `Bearer ${token}`
             }
@@ -66,16 +74,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         return resp;
     };
 
-    function putService (token: string, id:string, data: Services ) {
-        const resp = api.put(`/services/${id}`, data, {
-            'headers': {
-                'Authorization': `Bearer: ${token}`
-            }
-        });
-        return resp;
-    };
-
-    function postSource (token: string, { id, ...dados }: any) {
+    const postSource = async (dados: SourceFormData) => {
         const resp = api.post(`/sources`, dados, {
             'headers': {
                 'Authorization': `Bearer ${token}`
@@ -84,12 +83,13 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         return resp
     };
 
-    function putSource (token: string, id: string, dados: any){
-        const resp = api.put(`/sources/${id}`, dados, {
+    const deleteSource = async (id: any) => {
+        const resp = await api.delete(`/sources/${id}`, {
             'headers': {
                 'Authorization': `Bearer ${token}`
             }
-        });
+        })
+
         return resp
     };
 
@@ -101,6 +101,59 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         field.remove(index);
     };
 
+    const { mutate: mutateService } = useMutation(postService, {
+        onSuccess: () => {
+          queryClient.invalidateQueries('services');
+          setSuccessMsg(true)
+          setSourcesList([])
+        }
+    });
+
+    const { mutate: mutateSource } = useMutation(postSource, {
+        onSuccess: (resp) => {
+            queryClient.invalidateQueries('sources')
+            console.log(resp.data, 'resp')
+
+            let obj =  [
+                ...sourcesList, 
+                resp.data.id
+            ]
+
+            setSourcesList(obj)
+
+        }
+    });
+
+    const onSubmitService = (values: ServiceFormData) => {
+        const obj = {
+            'name': values.name,
+            'background_color': values.background_color,
+            'active': values.active,
+            'other_option': otherOptions,
+            'sources': sourcesList
+        }
+
+        mutateService(obj);
+    };
+
+    const onSubmitSource = (values: SourceFormData) => {
+        const obj = {
+            "name": values.name
+        }
+
+        mutateSource(obj)
+    };
+
+    setValue('other_option', otherOptions);
+
+    useEffect(() => {
+        if (!isModal) {
+          reset();
+          resetSource();
+          setSourcesList([])
+        }
+    }, [isModal, reset]);
+
     const colors = [
         {label: 'Laranja', value: '#FF954E'},
         {label: 'Ciano', value: '#47DED0'},
@@ -111,14 +164,6 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         {label: 'Azul', value: '#4A7EE4'},
         {label: 'Amarelo', value: '#FFB906'}
     ];
-
-    useEffect(() => {
-        if (!isModal) {
-          reset();
-        }
-      }, [isModal, reset]);
-
-    console.log(watch('other_option'));
     
     return(
         <PersonalModal 
@@ -130,15 +175,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
             children={
                 <S.Container>
                     <h1>Cadastrar serviço</h1>
-                    <S.Form>
-                        <input 
-                            {...register("other_option")}
-                            type="checkbox" 
-                            id="other_option"
-                            name='other_option'
-                            ref={refCheckbok}
-                            style={{display: 'none'}}
-                        />
+                    <S.Form onSubmit={handleSubmit(onSubmitService)}>
                         <S.Header>
                             <InputIcon />
                             <div>
@@ -183,8 +220,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                         <CustomSwitch
                                             leftLabel="Inativo"
                                             rightLabel="Ativo"
-                                            //@ts-ignore
-                                            value={value}
+                                            value={value?.toString() === "false"}
                                             onChange={onChange}
                                             onBlur={onBlur}
                                         />
@@ -201,13 +237,13 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                         />
                     </S.Form>
 
-                    <form>
+                    <form onSubmit={handleSources(onSubmitSource)}>
                         <S.Fonts>
                             <h1>Fontes</h1>
                             <div>
                                 <Controller 
-                                    name={`sources.${isFontSelected?.index}.name`}
-                                    control={control}
+                                    name='name'
+                                    control={controlSOurce}
                                     render={({field: {onChange, onBlur, value}}) => (
                                         <>
                                             <CustomInput
@@ -219,7 +255,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                                 onChange={onChange}
                                             />
                                             <S.Button 
-                                                type="button"
+                                                type="submit"
                                                 onClick={() => {
                                                     addField(fontsFieldArray as any, {
                                                         name: value
@@ -236,18 +272,21 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                         </S.Fonts>
                     </form>
                     <S.ItemsList>
-                    {fontsFieldArray?.fields?.map((field, index) => {
-                        return (
-                            <>
+                        {fontsFieldArray?.fields?.map((field, index) => {
+                            return (
                                 <S.Item>
                                     {field.name}
                                     <button
                                         type='button'
                                         onClick={() => {
                                             if(!watch(`sources.${index}.id`)){
-                                                removeField(fontsFieldArray as any, index)
+                                                removeField(fontsFieldArray as any, index);
+                                                sources?.forEach((id) => {
+                                                    if(id.name === field.name){
+                                                        deleteSource(id?.id)
+                                                    }
+                                                })
                                             } else {
-                                                setSourceConfirm(true);
                                                 setFontSelected({
                                                     index,
                                                     name: 'sources'
@@ -258,25 +297,22 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                         <img src={alertRed} alt="" />
                                     </button>
                                 </S.Item>
-                            </>
-                        )
-                    })}
+                            )
+                        })}
                     </S.ItemsList>
                     <S.AnotherOptions>
                         <input 
                             type="checkbox" 
-                            ref={refLabel}
                             onClick={() => {
-                                refCheckbok?.current?.click()
+                                setOtherOptions(!otherOptions)
                             }}
                         />
                         <label>Incluir opção <b>outros</b></label>
                     </S.AnotherOptions>
                     <S.ContainerBtn>
                         <button type="button" onClick={onHide}>Cancelar</button>
-
                         <button 
-                            type="button"
+                            type='button'
                             onClick={() => {
                                 refSubmit?.current?.click();
                             }}

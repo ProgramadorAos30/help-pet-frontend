@@ -286,16 +286,16 @@ export interface Services {
 
 export type ServiceFormData = {
   image?: string,
-  name?: string,
+  name: string,
   background_color: string,
-  active?: boolean,
-  other_option?: boolean,
-  sources: SourceFormData[],
+  active: boolean,
+  other_option: boolean,
+  sources?: SourceFormData[],
   id?: string
 }
 
 export type SourceFormData = {
-  service: string,
+  service?: string,
   name: string,
   id?: string
   _id?: string

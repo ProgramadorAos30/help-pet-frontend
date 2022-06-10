@@ -15,5 +15,6 @@ export {
     useUsers,
     useService,
     useOccurrences,
-    useUploads
+    useUploads,
+    useSources
 } from './hooks/index';
