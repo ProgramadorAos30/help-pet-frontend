@@ -10,9 +10,9 @@ Aplicativo com o intuito de ajudar tutores e Ongs de animais para custeio de seu
 
 ## 🛠Stack utilizada🛠
 
-**Front-end:** React, Redux, TailwindCSS
+**Front-end:** React
 
-**Back-end:** Node, Express
+**Back-end:** Node
 
 
 ## Contribuindo
