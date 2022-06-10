@@ -13,23 +13,7 @@ interface IProps {
     buttonText: any
 }
 
-const ModalDelete: React.FC <IProps> = (props) => {
-    const style = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: props.width,
-        bgcolor: 'background.paper',
-        border: 'none',
-        p: 4,
-        borderRadius: '8px'
-    };
-
-    const Container = styled.div`
+const Container = styled.div`
         padding: 40px;
         height: 312px;
         width: 389px;
@@ -83,7 +67,23 @@ const ModalDelete: React.FC <IProps> = (props) => {
                 color: #FFF;
             }
         }
-    `;
+`;
+
+const ModalDelete: React.FC <IProps> = (props) => {
+    const style = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: props.width,
+        bgcolor: 'background.paper',
+        border: 'none',
+        p: 4,
+        borderRadius: '8px'
+    };
 
     return (
         <Modal

@@ -28,19 +28,19 @@ import { useMutation } from 'react-query';
 interface IProps {
     isModal: boolean;
     onHide: () => void;
+    service: any
 }
 
-const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
+const EditService: React.FC <IProps> = ({ isModal, onHide, service }) => {
     const { token } = useSelector((state : RootState) => state.clickState);
-    const { data: sources } = useSources(token);
-
-    const [ isFontSelected, setFontSelected ] = useState<{ name: string; index: any; }>();
-    const [ sourcesList, setSourcesList ] = useState<any>([]);
+    const { data: source } = useSources(token);
     const [ successMsg, setSuccessMsg ] = useState(false);
     const [ errMsg, setErrMsg ] = useState(false);
+    const [ isFontSelected, setFontSelected ] = useState<{ name: string; index: any; }>();
+    const [ sourcesList, setSourcesList ] = useState<any>([]);
     const [ otherOptions, setOtherOptions ] = useState<boolean>(false);
-
     const refSubmit = useRef<any>(null);
+
 
     const {
         control,
@@ -60,18 +60,20 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         formState: { isSubmitting: SubmitSource }
     } = useForm<SourceFormData>();  
 
-    const fontsFieldArray = useFieldArray({
-        control,
-        name: 'sources',
-    });
+    useEffect(() => {
+        if(service !== undefined || service !== null) {
+            reset(service)
+        }
+    }, [service])
 
-    const postService = async (dados: ServiceFormData) => {
-        const {data: resp} = await api.post('/services', dados, {
-            'headers': {
+    const putService = async (id: string, dados?: any) => {
+        const { data: resp } = await api.put(`/services/${id}`, dados, {
+            headers: {
                 'Authorization': `Bearer ${token}`
             }
-        });
-        return resp;
+        })
+
+        return resp
     };
 
     const postSource = async (dados: SourceFormData) => {
@@ -101,7 +103,12 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         field.remove(index);
     };
 
-    const { mutate: mutateService } = useMutation(postService, {
+    const fontsFieldArray = useFieldArray({
+        control,
+        name: 'sources',
+    });
+
+    const { mutate: mutateService } = useMutation(putService, {
         onSuccess: () => {
           queryClient.invalidateQueries('services');
           setSuccessMsg(true)
@@ -126,6 +133,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
     });
 
     const onSubmitService = (values: ServiceFormData) => {
+
         const obj = {
             'name': values.name,
             'background_color': values.background_color,
@@ -133,8 +141,9 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
             'other_option': otherOptions,
             'sources': sourcesList
         }
-
-        mutateService(obj);
+        let aux = Object.assign(service, obj)
+        
+        mutateService(service.id, aux);
     };
 
     const onSubmitSource = (values: SourceFormData) => {
@@ -145,6 +154,8 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         mutateSource(obj)
     };
 
+    console.log(service, 'service')
+
     setValue('other_option', otherOptions);
 
     useEffect(() => {
@@ -154,7 +165,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
           setSourcesList([])
         }
     }, [isModal, reset]);
-
+    
     const colors = [
         {label: 'Laranja', value: '#FF954E'},
         {label: 'Ciano', value: '#47DED0'},
@@ -166,16 +177,17 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         {label: 'Amarelo', value: '#FFB906'}
     ];
     
-    return(
-        <PersonalModal 
-            modalBackground={false}
-            onClose={onHide}
-            padding={4}
-            open={isModal}
-            width={861}
-            children={
-                <S.Container>
-                    <h1>Cadastrar serviço</h1>
+    return (
+        <>
+            <PersonalModal 
+                open={isModal} 
+                onClose={onHide} 
+                width={861}
+                padding={4} 
+                modalBackground={false}            
+                children={  
+                    <S.Container>
+                    <h1>Editar serviço</h1>
                     <S.Form onSubmit={handleSubmit(onSubmitService)}>
                         <S.Header>
                             <InputIcon />
@@ -203,6 +215,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                             width={254}
                                             label='Cor de background'
                                             list={colors}
+                                            defaultValue={service.background_color}
                                             value={value}
                                             labelDefault='Cor de background'
                                             onChange={onChange}
@@ -281,30 +294,40 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                     <S.ItemsList>
                         {fontsFieldArray?.fields?.map((field, index) => {
                             return (
-                                <S.Item>
-                                    {field.name}
-                                    <button
-                                        id='remove-source'
-                                        type='button'
-                                        onClick={() => {
-                                            if(!watch(`sources.${index}.id`)){
-                                                removeField(fontsFieldArray as any, index);
-                                                sources?.forEach((id) => {
-                                                    if(id.name === field.name){
-                                                        deleteSource(id?.id)
-                                                    }
-                                                })
-                                            } else {
-                                                setFontSelected({
-                                                    index,
-                                                    name: 'sources'
-                                                })
-                                            }
-                                        }}
-                                    >
-                                        <img src={alertRed} alt="" />
-                                    </button>
-                                </S.Item>
+                                <>
+                                    {service.sources.map((id_service: any) => {
+                                        return (
+                                            <>
+                                                {field.name === id_service.name &&(
+                                                    <S.Item>
+                                                        {field.name}
+                                                        <button
+                                                            id='remove-source'
+                                                            type='button'
+                                                            onClick={() => {
+                                                                if(!watch(`sources.${index}.id`)){
+                                                                    removeField(fontsFieldArray as any, index);
+                                                                    source?.forEach((id) => {
+                                                                        if(id.name === field.name){
+                                                                            deleteSource(id?.id)
+                                                                        } 
+                                                                    })
+                                                                } else {
+                                                                    setFontSelected({
+                                                                        index,
+                                                                        name: 'sources'
+                                                                    })
+                                                                }
+                                                            }}
+                                                        >
+                                                            <img src={alertRed} alt="" />
+                                                        </button>
+                                                    </S.Item>
+                                                )}
+                                            </>
+                                        )
+                                    })}
+                                </>
                             )
                         })}
                     </S.ItemsList>
@@ -326,10 +349,10 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                 fontsFieldArray?.fields?.map((field, index) => {
                                     if(!watch(`sources.${index}.id`)){
                                         removeField(fontsFieldArray as any, index);
-                                        sources?.forEach((id) => {
+                                        source?.forEach((id) => {
                                             if(id.name === field.name){
                                                 deleteSource(id?.id)
-                                            }
+                                            } 
                                         })
                                     }
                                 })
@@ -376,9 +399,37 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                         width={496}
                     />
                 </S.Container>
-            }
-        />
+                } 
+            />
+
+            <>
+                <ModalMsg
+                    height='312px'
+                    modalBackground={false} 
+                    mensage='O serviço foi editado com sucesso!'
+                    onClose={() => {
+                        setSuccessMsg(!successMsg)
+                        onHide()
+                    }}
+                    open={successMsg}
+                    status="success"
+                    width={496}
+                />
+                <ModalMsg 
+                    height='312px'
+                    modalBackground={false}
+                    mensage='Falaha ao editar serviço!'
+                    onClose={() => {
+                        setErrMsg(!errMsg)
+                        onHide()
+                    }}
+                    open={errMsg}
+                    status="falha"
+                    width={496}
+                />
+            </>
+        </>
     );
 };
 
-export default NewService;
+export default EditService;

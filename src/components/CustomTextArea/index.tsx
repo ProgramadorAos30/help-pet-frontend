@@ -11,11 +11,9 @@ interface IProps {
     width: string,
     heigth: string
 }
-
-const CustomTextArea: React.FC <IProps> = (props) => {
-    const TextArea = styled.textarea`
-        width: ${props.width};
-        height: ${props.heigth};
+    const TextArea = styled.textarea< {width: string, heigth: string} >`
+        width: ${props => props.width};
+        height: ${props => props.heigth};
         border-radius: 8px;
         border: 1px solid #AFAFAF;
         padding: 16px;
@@ -28,8 +26,12 @@ const CustomTextArea: React.FC <IProps> = (props) => {
         color: #2C3941;
     `;
 
+const CustomTextArea: React.FC <IProps> = (props) => {
+
     return (
         <TextArea 
+            heigth={props.heigth}
+            width={props.width}
             placeholder={props.placeholder}
             onChange={props.onChange}
             onBlur={props.onBlur}

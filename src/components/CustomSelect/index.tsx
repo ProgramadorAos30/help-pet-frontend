@@ -21,6 +21,7 @@ interface IProps {
     defaultValue?: string,
     width?: number,
     labelDefault?: string,
+    id?: string
 };
 
 const CustomSelect:React.FC <IProps> = (props) => {
@@ -75,8 +76,8 @@ const CustomSelect:React.FC <IProps> = (props) => {
                     <InputLabel>{props.label}</InputLabel>
                 }
                 <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
+                    labelId={props.id}
+                    id={props.id}
                     disableUnderline
                     defaultValue="" 
                     onChange={props.onChange}

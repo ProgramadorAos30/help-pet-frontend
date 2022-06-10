@@ -10,12 +10,15 @@ import {
 } from '../../components';
 import NewService from './NewService';
 import { useMutation } from 'react-query';
+import EditService from './EditService';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
     const [ idService, setIdService ] = useState<string>('')
     const [ newService, setNewService ] = useState(false);
+    const [ editService, setEditService ] = useState(false);
+    const [ serviceObj, setServiceObj ] = useState<any>();
     const [ showDelete, setShowDelete ] = useState(false);
     const [ showSuccess, setShowSuccess ] = useState(false);
 
@@ -65,7 +68,10 @@ const Servicos: React.FC = () => {
                                 setIdService(id.id)
                                 setShowDelete(true)
                             }}
-                            onEdit={() => {}}
+                            onEdit={() => {
+                                setEditService(true)
+                                setServiceObj(id)
+                            }}
                             serviceName={id.name} 
                             status={id.active} 
                             image={id.image}
@@ -78,6 +84,12 @@ const Servicos: React.FC = () => {
             <NewService
                 isModal={newService}
                 onHide={() => setNewService(!newService)}
+            />
+
+            <EditService 
+                isModal={editService}
+                onHide={() => setEditService(!editService)}
+                service={serviceObj}
             />
 
             <ModalDelete 

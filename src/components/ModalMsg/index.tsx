@@ -17,6 +17,46 @@ interface IProps {
     height: string
 }
 
+const Container = styled.div<{ height: string }>`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: ${props => props.height == '' ? '312px' : props.height};
+
+    > img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 24px;
+    }
+
+    > p {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 34px;
+        color: #2C3941;
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    > button {
+        border: none;
+        border-radius: 8px;
+        color: #FFF;
+        background-color: #1773E2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        width: 311px;
+        height: 48px;
+    }
+`;
+
 const ModalMsg: React.FC <IProps> = (props) => {
     const style = {
         display: 'flex',
@@ -32,46 +72,6 @@ const ModalMsg: React.FC <IProps> = (props) => {
         p: 4,
         borderRadius: '8px'
     };
-
-    const Container = styled.div<{ height: string }>`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: ${props => props.height == '' ? '312px' : props.height};
-
-        > img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 24px;
-        }
-
-        > p {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 24px;
-            line-height: 34px;
-            color: #2C3941;
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        > button {
-            border: none;
-            border-radius: 8px;
-            color: #FFF;
-            background-color: #1773E2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 19px;
-            width: 311px;
-            height: 48px;
-        }
-    `;
 
     return (
         <Modal

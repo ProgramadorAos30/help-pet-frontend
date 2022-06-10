@@ -8,7 +8,8 @@ interface IProps {
     rightLabel: string,
     value: boolean, 
     onChange: (e: any) => any,
-    onBlur: (e: any) => any
+    onBlur: (e: any) => any,
+    id?: string
 }
 
 const CustomSwitch: React.FC <IProps> = (props) => {
