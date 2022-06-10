@@ -17,7 +17,7 @@ Aplicativo com o intuito de ajudar tutores e Ongs de animais para custeio de seu
 
 ## Contribuindo
 
-Contribuições são sempre bem-vindas!
+Contribuições são sempre bem-vindos(as)!
 
 Veja [como-contribuir.md](https://www.github.com/henriquesoto92) para saber como começar.
 
