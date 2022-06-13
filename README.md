@@ -1,5 +1,4 @@
-
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+[![Logo](https://avatars.githubusercontent.com/u/107225881?s=96&v=4)](https://programadoraos30.com.br)
 
 
 # HelP Pet 🐶🐱🐦🐸
@@ -25,10 +24,10 @@ Por favor, siga o [codigo-de-conduta.md](https://www.github.com/henriquesoto92) 
 
 
 ## 🔗 Links
-[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherinempeterson.com/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
-[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/)
 
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/henriquesoto92)
+
+[![Twitch](https://img.shields.io/twitch/status/ProgramadorAos30?style=social)](https://www.twitch.tv/programadoraos30)
 
 ## Roadmap
 
