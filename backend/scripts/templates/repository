@@ -1,0 +1,28 @@
+import { Connection } from "./database/Connection";
+
+export class <resource_name> {
+  private connection: Connection;
+  constructor() {
+    this.connection = new Connection();
+  }
+
+  get<resource_name>() {
+    return ["item 1", "item 2"];
+  }
+
+  get<resource_name>ById(id: number) {
+    return "item 1";
+  }
+
+  create<resource_name>(item: Record<string, unknown>): Record<string, unknown> {
+    return { id: 1, description: "description" };
+  }
+
+  update<resource_name>(item: Record<string, unknown>): Record<string, unknown> {
+    return { id: 2, description: "description" };
+  }
+
+  delete<resource_name>(id: number) {
+    return true;
+  }
+}

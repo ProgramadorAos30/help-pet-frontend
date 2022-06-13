@@ -1,0 +1,10 @@
+import { <resource_name> } from "../controllers/index";
+import { Router } from "express";
+
+const setup = () => {
+  const router = Router();
+  router.get("/", <resource_name>.foo);
+  return router;
+};
+
+export { setup };
