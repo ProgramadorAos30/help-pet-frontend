@@ -34,3 +34,7 @@ export class Logger {
     }
   }
 }
+
+export const getLoggerInstance = (): Logger => {
+  return new Logger(LogLevel.INFO);
+};

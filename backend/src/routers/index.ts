@@ -1,1 +1,1 @@
-export { ExampleRouter } from "./ExampleRouter";
+export * as Example from "./Example";

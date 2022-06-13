@@ -1,1 +1,1 @@
-export { ExampleController } from "@controllers/ExampleController";
+export * as Example from "./Example";
