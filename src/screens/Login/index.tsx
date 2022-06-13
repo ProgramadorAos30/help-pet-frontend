@@ -81,7 +81,8 @@ const Login: React.FC = () => {
                                         onBlur={onBlur} 
                                         type='text' 
                                         value={value}
-                                        width={372}                    
+                                        width={372}  
+                                        id="username"         
                                     />
                                 </>
                             )}
@@ -105,7 +106,8 @@ const Login: React.FC = () => {
                                         onBlur={onBlur}  
                                         type='password' 
                                         value={value} 
-                                        width={372}                      
+                                        width={372}
+                                        id="password"                      
                                     />
                                     
                                 </>
@@ -118,12 +120,14 @@ const Login: React.FC = () => {
                         )}
                         </fieldset>
                         <S.RemeberPassword
+                            id="remeber_password"
                             type='button'
                             onClick={() => setRecoveryPassword(!recoveryPassword)}
                         >
                             Esqueci minha senha
                         </S.RemeberPassword>
-                        <S.Button 
+                        <S.Button
+                            id='submit' 
                             type='submit'
                             onClick={() => {
                                 ref?.current?.click()
