@@ -49,6 +49,7 @@ const Servicos: React.FC = () => {
                         Adicionar fonte
                     </button>
                     <button
+                        id='new_service'
                         type='button'
                         onClick={() => {
                             setNewService(!newService)

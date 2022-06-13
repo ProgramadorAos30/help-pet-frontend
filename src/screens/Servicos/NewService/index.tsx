@@ -310,6 +310,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                     </S.ItemsList>
                     <S.AnotherOptions>
                         <input 
+                            id="other_option"
                             type="checkbox" 
                             onClick={() => {
                                 setOtherOptions(!otherOptions)
