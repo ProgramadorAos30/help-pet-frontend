@@ -1,28 +1,27 @@
-import { Connection } from "./database/Connection";
+import Connection from "./database/Connection";
 
-export class <resource_name> {
-  private connection: Connection;
-  constructor() {
-    this.connection = new Connection();
-  }
+const getConnection = () => {
+  return Connection.getConnection();
+};
 
-  get<resource_name>() {
-    return ["item 1", "item 2"];
-  }
+const get<resource_name> = () => {
+  return ["item 1", "item 2"];
+};
 
-  get<resource_name>ById(id: number) {
-    return "item 1";
-  }
+const get<resource_name>ById = (id: number) => {
+  return "item 1";
+};
 
-  create<resource_name>(item: Record<string, unknown>): Record<string, unknown> {
-    return { id: 1, description: "description" };
-  }
+const create<resource_name> = (item: Record<string, unknown>): Record<string, unknown> => {
+  return { id: 1, description: "description" };
+};
 
-  update<resource_name>(item: Record<string, unknown>): Record<string, unknown> {
-    return { id: 2, description: "description" };
-  }
+const update<resource_name> = (item: Record<string, unknown>): Record<string, unknown> => {
+  return { id: 2, description: "description" };
+};
 
-  delete<resource_name>(id: number) {
-    return true;
-  }
-}
+const delete<resource_name> = (id: number) => {
+  return true;
+};
+
+export { get<resource_name>, get<resource_name>ById, create<resource_name>, update<resource_name>, delete<resource_name> };

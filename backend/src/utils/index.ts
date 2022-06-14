@@ -1,1 +1,1 @@
-export { Logger, LogLevel } from "./Logger";
+export { Logger, LogLevel, getLoggerInstance } from "./Logger";

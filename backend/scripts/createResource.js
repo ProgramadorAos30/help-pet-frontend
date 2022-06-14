@@ -21,26 +21,26 @@ const createFile = (sourcePath, distPath, fileModifier) => {
 
 const createRepository = (resourceName) => {
   const sourcePath = "./scripts/templates/repository";
-  const disPath = `./src/data/${resourceName}.ts`;
+  const disPath = `./src/data/${resourceName}Repository.ts`;
   const fileModifier = (source) => source.replace(/<resource_name>/g, resourceName);
   createFile(sourcePath, disPath, fileModifier);
-  fs.appendFileSync("./src/data/index.ts", `export * as ${resourceName} from './${resourceName}';\n`);
+  fs.appendFileSync("./src/data/index.ts", `export * as ${resourceName}Repository from './${resourceName}Repository';\n`);
 };
 
 const createController = (resourceName) => {
   const sourcePath = "./scripts/templates/controller";
-  const disPath = `./src/controllers/${resourceName}.ts`;
+  const disPath = `./src/controllers/${resourceName}Controller.ts`;
   const fileModifier = (source) => source.replace(/<resource_name>/g, resourceName);
   createFile(sourcePath, disPath, fileModifier);
-  fs.appendFileSync("./src/controllers/index.ts", `export * as ${resourceName} from './${resourceName}';\n`);
+  fs.appendFileSync("./src/controllers/index.ts", `export * as ${resourceName}Controller from './${resourceName}Controller';\n`);
 };
 
 const createRouter = (resourceName) => {
   const sourcePath = "./scripts/templates/router";
-  const disPath = `./src/routers/${resourceName}.ts`;
+  const disPath = `./src/routers/${resourceName}Router.ts`;
   const fileModifier = (source) => source.replace(/<resource_name>/g, resourceName);
   createFile(sourcePath, disPath, fileModifier);
-  fs.appendFileSync("./src/routers/index.ts", `export * as ${resourceName} from './${resourceName}';\n`);
+  fs.appendFileSync("./src/routers/index.ts", `export * as ${resourceName}Router from './${resourceName}Router';\n`);
 };
 
 (() => {

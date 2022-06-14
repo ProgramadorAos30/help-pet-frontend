@@ -36,5 +36,6 @@ export class Logger {
 }
 
 export const getLoggerInstance = (): Logger => {
-  return new Logger(LogLevel.INFO);
+  const logLevel = Number(process.env.LOG_LEVEL) ?? LogLevel.INFO;
+  return new Logger(logLevel);
 };

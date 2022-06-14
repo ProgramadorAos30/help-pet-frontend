@@ -1,11 +1,14 @@
 import * as Routes from "./routers/index";
+import { setupEnvironmentVariables } from "./setup";
 
 import express from "express";
 
+setupEnvironmentVariables();
 const app = express();
 
-app.use("/example", Routes.Example.setup());
+app.use("/example", Routes.ExampleRouter.setup());
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");
+  console.log("http://localhost:5000/");
 });

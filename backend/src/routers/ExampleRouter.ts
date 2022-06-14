@@ -1,9 +1,9 @@
-import { <resource_name>Controller } from "../controllers/index";
+import { ExampleController } from "../controllers/index";
 import { Router } from "express";
 
 const setup = () => {
   const router = Router();
-  router.get("/", <resource_name>Controller.foo);
+  router.get("/", ExampleController.foo);
   return router;
 };
 
