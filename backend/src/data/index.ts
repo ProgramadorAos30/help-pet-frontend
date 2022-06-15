@@ -1,1 +1,1 @@
-export * as ExampleRepository from "./ExampleRepository";
+export * as AuthRepository from './AuthRepository';

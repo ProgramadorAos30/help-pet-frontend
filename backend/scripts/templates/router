@@ -1,9 +1,11 @@
 import { <resource_name>Controller } from "../controllers/index";
 import { Router } from "express";
+import { Endpoint } from "../middlewares/";
+import { PERMISSIONS } from "../utils/Permissions";
 
 const setup = () => {
   const router = Router();
-  router.get("/", <resource_name>Controller.foo);
+  router.get("/", (req, res) => Endpoint(req, res, <resource_name>Controller.foo, PERMISSIONS.USER));
   return router;
 };
 
