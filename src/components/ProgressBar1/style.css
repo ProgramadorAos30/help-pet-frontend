@@ -1,0 +1,32 @@
+.progress-bar {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 60px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.max {
+    width: 25px;
+    height: 8px;
+    background: linear-gradient(180deg, #FDD153 0%, #F5C02D 100%);
+    border-radius: 10px;
+}
+
+.mid {
+    width: 15px;
+    height: 8px;
+    background: var(--color-grey-1);
+    border-radius: 10px;
+}
+
+.min {
+    width: 10px;
+    height: 8px;
+    background: var(--color-grey-1);
+    border-radius: 10px;
+}

@@ -1,0 +1,22 @@
+html,
+body {
+  height: 100%;
+  font-size: 10px;
+
+}
+
+body {
+  background-color: var(--color-white-1);
+  max-width: 390px;
+  max-height: 840px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Roboto', sans-serif;
+  border: 1px solid;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: center;
+}

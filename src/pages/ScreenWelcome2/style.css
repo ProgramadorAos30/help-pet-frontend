@@ -1,0 +1,49 @@
+.screenWelcome2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: center;
+}
+
+.screenWelcome2>img {
+    width: 90%;
+    padding-top: 2%;
+}
+
+.screenWelcome2>h1 {
+    color: var(--color-blue-3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 3.1rem;
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+}
+
+.screenWelcome2>h1>strong {
+    color: var(--color-blue-4);
+}
+
+.screenWelcome2>p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15.6589px;
+    line-height: 130%;
+    text-align: center;
+    padding: 10% 20%;
+}
+
+.positionButton1 {
+    padding: 2%;
+}
+
+.positionProgressBar1 {
+    padding-top: 1%;
+}
+
+.positionButton2 {
+    padding-top: 4%;
+}
