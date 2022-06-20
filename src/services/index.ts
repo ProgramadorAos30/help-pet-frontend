@@ -10,11 +10,16 @@ export {
 export { convertDate } from './functions/index';
 
 export {
+    useService,
+    postService, 
+    putService,
+    deleteService,
+    useSources,
+    postSource,
+    deleteSource,
     useUf,
     useCity,
     useUsers,
-    useService,
     useOccurrences,
-    useUploads,
-    useSources
+    useUploads
 } from './hooks/index';

@@ -79,7 +79,6 @@ const CustomSelect:React.FC <IProps> = (props) => {
                     labelId={props.id}
                     id={props.id}
                     disableUnderline
-                    defaultValue="" 
                     onChange={props.onChange}
                     onBlur={props.onBlur}
                 >

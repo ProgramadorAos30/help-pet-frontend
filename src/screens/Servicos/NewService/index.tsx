@@ -38,7 +38,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
     const [ sourcesList, setSourcesList ] = useState<any>([]);
     const [ successMsg, setSuccessMsg ] = useState(false);
     const [ errMsg, setErrMsg ] = useState(false);
-    const [ otherOptions, setOtherOptions ] = useState<boolean>(false);
+    const [ otherOptions, setOtherOptions ] = useState(false);
 
     const refSubmit = useRef<any>(null);
 

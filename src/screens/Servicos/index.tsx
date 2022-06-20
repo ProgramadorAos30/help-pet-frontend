@@ -45,9 +45,6 @@ const Servicos: React.FC = () => {
             <S.Head>
                 <h1>Serviços</h1>
                 <div>
-                    <button>
-                        Adicionar fonte
-                    </button>
                     <button
                         id='new_service'
                         type='button'

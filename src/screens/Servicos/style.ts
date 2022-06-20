@@ -36,16 +36,6 @@ export const Head = styled.div`
             font-weight: 600;
             font-size: 16px;
             line-height: 19px;
-        }
-
-        >button:nth-child(1){
-            border: 1px solid ${props => props.theme.colors.blue};
-            color: ${props => props.theme.colors.blue};
-            background: ${props => props.theme.colors.white};
-            margin-right: 24px;
-        }
-
-        >button:nth-child(2){
             border: none;
             color: ${props => props.theme.colors.white};
             background: #0A3466;

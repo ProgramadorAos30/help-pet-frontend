@@ -9,7 +9,8 @@ interface IProps {
     value: boolean, 
     onChange: (e: any) => any,
     onBlur: (e: any) => any,
-    id?: string
+    id?: string,
+    defaultValue?: any
 }
 
 const CustomSwitch: React.FC <IProps> = (props) => {
@@ -68,6 +69,7 @@ const CustomSwitch: React.FC <IProps> = (props) => {
                         value={props.value}
                         onChange={handleChange}
                         onBlur={props.onBlur}
+                        defaultChecked={props.defaultValue}
                     />
                 <S.CheckedActive checked={props.value} htmlFor="switch">{props.rightLabel}</S.CheckedActive>
             </S.Container>
