@@ -44,6 +44,7 @@ const Header: React.FC = () => {
                             onClick={() => {
                                 setOpen(!open)
                             }}  
+                            id="logout"
                         >
                             <img src={logOut} alt="" />
                         </S.Link>
@@ -60,6 +61,7 @@ const Header: React.FC = () => {
                         <h1>Deseja mesmo sair da conta?</h1>
                         <div>
                             <button
+                                id='back'
                                 onClick={() => {
                                     setOpen(false)
                                 }}
@@ -67,6 +69,7 @@ const Header: React.FC = () => {
                                 Não, voltar
                             </button>
                             <S.LogOut
+                                id="to_singup"
                                 to="/singup"
                                 onClick={() => {
                                     dispatch({type: USER, user: {}})

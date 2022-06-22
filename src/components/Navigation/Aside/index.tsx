@@ -31,7 +31,10 @@ const Aside: React.FC = () => {
             <S.Navigation>
                 {link.map((id: any) => {
                     return (
-                        <S.Link to={id.to}>
+                        <S.Link 
+                            to={id.to}
+                            id={id.label}
+                        >
                             <img src={id.icon} alt="" />
                             {id.label}
                         </S.Link>

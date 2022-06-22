@@ -38,6 +38,7 @@ const CardService: React.FC <IProps> = (props) => {
                     {(popupState) => (
                             <>
                                 <button
+                                    id="open_triger"
                                     type='button'
                                     {...bindTrigger(popupState)}
                                 >   

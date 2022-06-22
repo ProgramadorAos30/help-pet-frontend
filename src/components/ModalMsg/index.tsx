@@ -84,6 +84,7 @@ const ModalMsg: React.FC <IProps> = (props) => {
                     <img src={props.status == 'success' ? trusted : alertRed} alt="" />
                     <p>{props.mensage}</p>
                     <button
+                        id="close_modal"
                         type="button"
                         onClick={props.onClose}
                     >
