@@ -96,12 +96,14 @@ const ModalDelete: React.FC <IProps> = (props) => {
                     <p>{props.mensage}</p>
                     <div>
                         <button
+                            id="back"
                             type="button"
                             onClick={props.onClose}
                         >
                             Não, voltar
                         </button>
                         <button 
+                            id="close_modal"
                             type='button'
                             onClick={props.onDelete}
                         >

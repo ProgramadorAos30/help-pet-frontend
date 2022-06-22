@@ -65,12 +65,14 @@ const CardService: React.FC <IProps> = (props) => {
                                         <button 
                                             onClick={props.onEdit}
                                             type='button'
+                                            id="edit_service"
                                         >
                                             Editar
                                         </button>
                                         <button 
                                             onClick={props.onDelete}
                                             type='button'
+                                            id="delete_service"
                                         >
                                             Excluir
                                         </button>
