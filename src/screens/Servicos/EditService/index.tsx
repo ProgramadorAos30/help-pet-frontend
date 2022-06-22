@@ -27,6 +27,7 @@ import { useMutation } from 'react-query';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { BACKGROUND_COLOR } from '../../../constants/backgroundColor';
 
 interface IProps {
     isModal: boolean;
@@ -172,20 +173,9 @@ const EditService: React.FC <IProps> = ({ isModal, onHide, service }) => {
           setSourcesList([])
         }
     }, [isModal, reset]);
-    
-    const colors = [
-        {label: 'Laranja', value: '#FF954E'},
-        {label: 'Ciano', value: '#47DED0'},
-        {label: 'Lilas', value: '#9D86ED'},
-        {label: 'Rosa', value: '#FF77F1'},
-        {label: 'Verde', value: '#B8D335'},
-        {label: 'Amarelro escuro', value: '#E59724'},
-        {label: 'Azul', value: '#4A7EE4'},
-        {label: 'Amarelo', value: '#FFB906'}
-    ];
 
     useEffect(() => {
-        colors.map((id) => {
+        BACKGROUND_COLOR.map((id) => {
             if(id.value === service?.background_color){
                 setBackgroundColor(id.label)
             }
@@ -193,6 +183,12 @@ const EditService: React.FC <IProps> = ({ isModal, onHide, service }) => {
     }, [service]);
 
     console.log(source);
+
+    useEffect(() => {
+        // sources.forEach((id) => {
+
+        // })
+    }, [])
     
     
     return (
@@ -231,7 +227,7 @@ const EditService: React.FC <IProps> = ({ isModal, onHide, service }) => {
                                     render={({field: {onChange, onBlur, value}}) => (
                                         <CustomSelect
                                             width={254}
-                                            list={colors}
+                                            list={BACKGROUND_COLOR}
                                             value={value}
                                             label="Cor de background"
                                             defaultValue={value}

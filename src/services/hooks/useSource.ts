@@ -16,7 +16,16 @@ export const useSources = <T>(token: string):UseQueryResult<Soucers[]> => {
 }
 
 export const postSource = async (token: string, dados: SourceFormData) => {
-    const resp = api.post(`/sources`, dados, {
+    const resp = await api.post(`/sources`, dados, {
+        'headers': {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    return resp
+};
+
+export const putSource = async (token: string, id: string, dados: SourceFormData) => {
+    const resp = await api.post(`/sources/${id}`, dados, {
         'headers': {
             'Authorization': `Bearer ${token}`
         }

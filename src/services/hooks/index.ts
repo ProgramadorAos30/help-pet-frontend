@@ -10,6 +10,7 @@ export {
 export { 
     useSources,
     postSource,
+    putSource,
     deleteSource
 } from './useSource';
 export { useOccurrences } from './useOccurences';

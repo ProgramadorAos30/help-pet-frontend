@@ -19,11 +19,16 @@ import {
     Services,
     SourceFormData, 
 } from '../../../@types';
-import { api, queryClient, useSources } from '../../../services';
+import { 
+    api, 
+    queryClient, 
+    useSources 
+} from '../../../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores';
 import { alertRed } from '../../../assets';
 import { useMutation } from 'react-query';
+import { BACKGROUND_COLOR } from '../../../constants/backgroundColor';
 
 interface IProps {
     isModal: boolean;
@@ -155,16 +160,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
         }
     }, [isModal, reset]);
 
-    const colors = [
-        {label: 'Laranja', value: '#FF954E'},
-        {label: 'Ciano', value: '#47DED0'},
-        {label: 'Lilas', value: '#9D86ED'},
-        {label: 'Rosa', value: '#FF77F1'},
-        {label: 'Verde', value: '#B8D335'},
-        {label: 'Amarelro escuro', value: '#E59724'},
-        {label: 'Azul', value: '#4A7EE4'},
-        {label: 'Amarelo', value: '#FFB906'}
-    ];
+    console.log(fontsFieldArray?.fields, isFontSelected, 'source')
     
     return(
         <PersonalModal 
@@ -202,7 +198,7 @@ const NewService: React.FC <IProps> = ({ isModal, onHide }) => {
                                         <CustomSelect
                                             width={254}
                                             label='Cor de background'
-                                            list={colors}
+                                            list={BACKGROUND_COLOR}
                                             value={value}
                                             labelDefault='Cor de background'
                                             onChange={onChange}

@@ -16,6 +16,7 @@ export {
     deleteService,
     useSources,
     postSource,
+    putSource,
     deleteSource,
     useUf,
     useCity,

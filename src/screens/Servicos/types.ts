@@ -10,7 +10,7 @@ import {
 export interface IPropsSources {
     onDelete(): void;
     register: UseFormRegister<FormData>;
-    errors: FieldErrors<Soucers>;
+    errors?: FieldErrors<Soucers>;
     watch: UseFormWatch<FormData>;
     setValue: UseFormSetValue<FormData>;
     control: Control<FormData>; 
