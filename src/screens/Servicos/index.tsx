@@ -11,10 +11,12 @@ import {
 import NewService from './NewService';
 import { useMutation } from 'react-query';
 import EditService from './EditService';
+import Form from './Form';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
+    const [ serviceTemp, setServiceTemp ] = useState<any>(null);
     const [ idService, setIdService ] = useState<string>('')
     const [ newService, setNewService ] = useState(false);
     const [ editService, setEditService ] = useState(false);
@@ -39,6 +41,8 @@ const Servicos: React.FC = () => {
           setShowSuccess(true)
         }
     });
+
+    console.log(serviceTemp, 'service temp')
 
     return (
         <>
@@ -67,9 +71,11 @@ const Servicos: React.FC = () => {
                                 setShowDelete(true)
                             }}
                             onEdit={() => {
-                                setEditService(true)
-                                setServiceObj(id)
+                                setServiceTemp(id)
+                                setIdService(id.id)
+                                setNewService(!newService)
                             }}
+                            key={id.id}
                             serviceName={id.name} 
                             status={id.active} 
                             image={id.image}
@@ -79,15 +85,13 @@ const Servicos: React.FC = () => {
                 })}
             </S.Container>
             
-            <NewService
+            <Form
                 isModal={newService}
-                onHide={() => setNewService(!newService)}
-            />
-
-            <EditService 
-                isModal={editService}
-                onHide={() => setEditService(!editService)}
-                service={serviceObj}
+                itemEdit={serviceTemp}
+                onHide={() => {
+                    setNewService(!newService)
+                    setServiceTemp(null)
+                }}
             />
 
             <ModalDelete 

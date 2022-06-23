@@ -180,16 +180,7 @@ const EditService: React.FC <IProps> = ({ isModal, onHide, service }) => {
                 setBackgroundColor(id.label)
             }
         })
-    }, [service]);
-
-    console.log(source);
-
-    useEffect(() => {
-        // sources.forEach((id) => {
-
-        // })
-    }, [])
-    
+    }, [service]);    
     
     return (
         <>

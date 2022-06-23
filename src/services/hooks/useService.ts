@@ -10,28 +10,26 @@ const getServices = async <T>(token: string):Promise<Services[]> => {
         }
     })
     return data;
-}
+};
 
 export const useService = <T>(token: string):UseQueryResult<Services[]> => {
     return useQuery('services', () => getServices(token))
-}
-
-export const postService = async (token: string, dados: ServiceFormData) => {
-    const {data: resp} = await api.post('/services', dados, {
-        'headers': {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    return resp;
 };
 
-export const putService = async (token: string, id: string, dados: ServiceFormData) => {
-    const {data: resp} = await api.post(`/services/${id}`, dados, {
-        'headers': {
+export function postService(token: string, { id, ...dados }: any){
+    return api.post(`/services`, dados, { 
+        headers: {
             'Authorization': `Bearer ${token}`
         }
-    });
-    return resp;
+    })
+};
+
+export function putService(token: string, id: string, dados: any){
+    return api.put(`/services/${id}`, dados, { 
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
 };
 
 export const deleteService = async (token: string, id: string) => {
