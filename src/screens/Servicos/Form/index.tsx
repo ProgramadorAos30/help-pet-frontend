@@ -40,13 +40,14 @@ import { AxiosResponse } from 'axios';
 
 const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
     const { token } = useSelector((state : RootState) => state.clickState);
-    const { data: sources } = useSources(token);
-
     const [ isSourceConfirm, setSourceConfirm ] = useState(false);
     const [ isVisibleModal, setVisibleModal ] = useState<string | false >(false);
     const [ service, setService ] = useState<IServices>();
     const [ successMsg, setSuccessMsg ] = useState(false);
+    const [ serviceId, setServiceId ] = useState('');
+    const [ sourcesId, setSourceId ] = useState('');
     const [ errMsg, setErrMsg ] = useState(false);
+    const [ defaultColor, setDefaultColor ] = useState('');
     const [ isSourceSelected, setSourceSelected ] = useState<{ 
         name: string,
         index: number,
@@ -104,7 +105,8 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
         
         return await method
             .then((resp) => {
-                console.log(resp.data);
+                console.log(resp.data.id);
+                setServiceId(resp.data.id);
                 return resp.data
             })
             .catch((error) => {
@@ -115,6 +117,8 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
 
     async function handleOnSubmit(values: FormData){
         try {
+            console.log('values', values)
+
             const _service: IServices = await registerService(values);
             setService(_service);
 
@@ -124,35 +128,34 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                 ...(values?.sources || [])
             ];
 
-            for await (let item of arraySources) {
-                let data: any = {
-                    services: _service.id
-                };
+            
 
-                Object.keys(item).map((keys) => {
-                    let key = keys as keyof unknown;
-                    if(item[key] !== '') data[key] = item[key];
-                    else data[key] = null;
-                });
-
-                if(!!data){
-                    const method = !!data?.id
-                        ? putSource(token, data?.id, data)
-                        : postSource(token, data);
-                    
-                    await method
-                        .then((resp) => {
-                            console.log(resp.data);
-                            setSuccessMsg(true)
-                            return resp.data
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            setErrMsg(true)
-                            return error
-                        });
-                }
-            }
+                // Object.keys(item).map((keys) => {
+                //     let key = keys as keyof unknown;
+                //     if (item[key] !== "") {
+                //         return data[key] = item[key]
+                //     } else {
+                //         return data[key] = null
+                //     };
+                // });
+                
+            await postSource(token, _service).then((resp) => {
+                setSuccessMsg(true)
+                putSource(token, resp.data.id, {
+                    "service": serviceId
+                }).then(() => {
+                    putService(token, serviceId, {
+                        "sources": [
+                            resp.data.id
+                        ]
+                    })
+                })
+                return resp.data
+            }).catch((error) => {
+                console.log(error);
+                setErrMsg(true)
+                return error
+            });
         }
         catch(error){
             console.log('error')
@@ -164,9 +167,11 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
 
         const { name, index } = isSourceSelected;
         const fieldArray: any =
-            name === "source" ? sourceFieldArray : null;
+            name === "sources" ? sourceFieldArray : sourceFieldArray;
         const id = watch(`${name}.${index}.id` as any);
-
+        
+        console.log(id,'id source')
+        
         if (!id) return removeField(fieldArray, index);
 
         try {
@@ -191,19 +196,24 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
     };
 
     useEffect(() => {
+        handleDeleteSource()
+    }, [isSourceSelected])
+
+    useEffect(() => {
         if (!isModal) {
             reset();
         }
     }, [isModal, reset]);
 
     useEffect(() => {
-        if(itemEdit !== undefined || itemEdit !== null) {
-            reset(itemEdit)
-        }
-    }, [itemEdit])
+        BACKGROUND_COLOR.forEach((id) => {
+            if(itemEdit?.background_color === id?.value){
+                setDefaultColor(id.label)
+            }
+        })
+    }, [defaultColor])
 
-    console.log(sourceFieldArray?.fields);
-    
+    console.log(sourceFieldArray.fields, 'item');
 
     return (
         <PersonalModal 
@@ -214,7 +224,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
             width={861}        
         >
             <S.Container>
-                <h1>Cadastrar serviço</h1>
+                <h1>{itemEdit === null ? "Cadastrar serviço" : "Editar serviço"}</h1>
                 <S.Form onSubmit={handleSubmit(handleOnSubmit)}>
                     <input type="hidden" {...register(`id`)}/>
                     <S.Header>
@@ -243,7 +253,8 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                                         width={254}
                                         label='Cor de background'
                                         list={BACKGROUND_COLOR}
-                                        value={value}
+                                        value={value == '' ? '#FF954E' : value}
+                                        defaultValue={defaultColor}
                                         labelDefault='Cor de background'
                                         onChange={onChange}
                                         onBlur={onBlur}
@@ -311,8 +322,6 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                         {sourceFieldArray?.fields?.map((field, index) => {
                             return (
                                 <S.Item>
-                                    <input type="hidden" {...register(`sources.${index}.id`)}/>
-                                    <input type="hidden" {...register(`sources.${index}._id`)}/>
                                     {field.name}
                                     <button
                                         id='remove-source'
@@ -320,7 +329,6 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                                         onClick={() => {
                                             if(!watch(`sources.${index}.id`)){
                                                 removeField(sourceFieldArray as any, index);
-                                                handleDeleteSource()
                                             } else {
                                                 setSourceConfirm(true)
                                                 setSourceSelected({
@@ -355,10 +363,21 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                             id='submit-service'
                             type='submit'
                         >
-                            {isSubmitting ? (
-                                "Cadastrando ..."
-                            ) : (
-                                "Finalizar cadastro"
+                            {itemEdit === null && (
+                                <>
+                                    {isSubmitting
+                                        ? "Cadastrando ..." 
+                                        : "Finalizar cadastro"
+                                    }
+                                </>
+                            )}
+                            {itemEdit !== null && (
+                                <>
+                                    {isSubmitting 
+                                        ? "Editando..."
+                                        : "Finalizar edição"
+                                    }
+                                </>
                             )}
                         </button>
                     </S.ContainerBtn>
@@ -367,7 +386,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
             <ModalMsg
                 height='312px'
                 modalBackground={false} 
-                mensage='O serviço foi cadastrado com sucesso!'
+                mensage={itemEdit !== null 
+                    ?'O serviço foi editado com sucesso!'
+                    :'O serviço foi cadastrado com sucesso!'
+                }
                 onClose={() => {
                     setSuccessMsg(!successMsg)
                     onHide()

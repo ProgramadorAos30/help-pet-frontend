@@ -275,12 +275,12 @@ export interface Occurrences_map {
 };
 
 export interface Services {
-    image: string,
-    name: string,
-    background_color: string,
-    active: boolean,
-    other_option: boolean,
-    sources: Soucers[],
+    image?: string,
+    name?: string,
+    background_color?: string,
+    active?: boolean,
+    other_option?: boolean,
+    sources?: Soucers[],
     id?: string
 };
 
@@ -296,7 +296,7 @@ export type ServiceFormData = {
 
 export type SourceFormData = {
   service?: string,
-  name: string,
+  name?: string,
   id?: string
   _id?: string
 }

@@ -81,6 +81,7 @@ const CustomSelect:React.FC <IProps> = (props) => {
                     disableUnderline
                     onChange={props.onChange}
                     onBlur={props.onBlur}
+                    defaultValue={props.defaultValue}
                 >
                     <MenuItem disabled value="">
                         <em>{props.labelDefault}</em>

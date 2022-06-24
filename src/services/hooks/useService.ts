@@ -17,19 +17,23 @@ export const useService = <T>(token: string):UseQueryResult<Services[]> => {
 };
 
 export function postService(token: string, { id, ...dados }: any){
-    return api.post(`/services`, dados, { 
+    const resp =  api.post(`/services`, dados, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
+    
+    return resp
 };
 
-export function putService(token: string, id: string, dados: any){
-    return api.put(`/services/${id}`, dados, { 
+export const putService = async (token: string, id: string, dados: any) => {
+    const resp =  await api.put(`/services/${id}`, dados, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
+    getServices(token)
+    return resp
 };
 
 export const deleteService = async (token: string, id: string) => {
@@ -38,6 +42,6 @@ export const deleteService = async (token: string, id: string) => {
             'Authorization': `Bearer ${token}`
         }
     })
-
+    getServices(token)
     return data
 };

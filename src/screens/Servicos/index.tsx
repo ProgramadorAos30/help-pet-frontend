@@ -8,19 +8,15 @@ import {
     ModalDelete,
     ModalMsg
 } from '../../components';
-import NewService from './NewService';
 import { useMutation } from 'react-query';
-import EditService from './EditService';
 import Form from './Form';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
-    const { data: services } = useService(token);
+    const { data: services, refetch } = useService(token);
     const [ serviceTemp, setServiceTemp ] = useState<any>(null);
     const [ idService, setIdService ] = useState<string>('')
     const [ newService, setNewService ] = useState(false);
-    const [ editService, setEditService ] = useState(false);
-    const [ serviceObj, setServiceObj ] = useState<any>();
     const [ showDelete, setShowDelete ] = useState(false);
     const [ showSuccess, setShowSuccess ] = useState(false);
 
@@ -91,13 +87,17 @@ const Servicos: React.FC = () => {
                 onHide={() => {
                     setNewService(!newService)
                     setServiceTemp(null)
+                    refetch()
                 }}
             />
 
             <ModalDelete 
                 mensage='Deseja mesmo excluir este serviço?'
                 onClose={() => setShowDelete(false)}
-                onDelete={() => {mutate(idService)}}
+                onDelete={() => {
+                    mutate(idService)
+                    refetch()
+                }}
                 open={showDelete}
                 width={469}
                 buttonText={isLoading == false ? 'Sim, excluir' : 'Excluindo...' }
@@ -110,6 +110,7 @@ const Servicos: React.FC = () => {
                 onClose={() => {
                     setShowSuccess(false)
                     setShowDelete(false)
+                    refetch()
                 }}
                 open={showSuccess}
                 status=""
