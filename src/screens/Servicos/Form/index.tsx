@@ -107,6 +107,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
             .then((resp) => {
                 console.log(resp.data.id);
                 setServiceId(resp.data.id);
+                setSuccessMsg(!successMsg)
                 return resp.data
             })
             .catch((error) => {
@@ -141,25 +142,15 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                         return data[key] = null
                     };
                 });
-            }
-                
-            await postSource(token, _service).then((resp) => {
-                setSuccessMsg(true)
-                putSource(token, resp.data.id, {
-                    "service": serviceId
-                }).then(() => {
-                    putService(token, serviceId, {
-                        "sources": [
-                            resp.data.id
-                        ]
+
+                if (!!data) {
+                    await postSource(token, data).then((resp) => {
+                        putSource(token, resp.data.id, {
+                            "service": _service.id
+                        })
                     })
-                })
-                return resp.data
-            }).catch((error) => {
-                console.log(error);
-                setErrMsg(true)
-                return error
-            });
+                  }
+            }
         }
         catch(error){
             console.log('error')
@@ -216,9 +207,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                 setDefaultColor(id.label)
             }
         })
-    }, [defaultColor])
+    }, [defaultColor]);
 
-    console.log(defaultColor, 'bg');
+    console.log(sourceFieldArray.fields);
+    
 
     return (
         <PersonalModal 
