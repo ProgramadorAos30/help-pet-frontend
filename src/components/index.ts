@@ -21,3 +21,4 @@ export { default as CardService } from './CardService/index';
 export { default as InputIcon } from './InputIcon/index';
 export { default as ModalMsg } from './ModalMsg/index';
 export { default as ModalDelete } from './ModalDelete/index';
+export { default as Pagination } from './Pagination/index';
