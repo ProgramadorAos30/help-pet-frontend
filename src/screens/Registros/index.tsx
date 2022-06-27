@@ -381,8 +381,8 @@ const Registros: React.FC = () => {
                                                 </td>
                                                 <S.User>
                                                     <span>
-                                                        {id.user.name}
-                                                        <TolltipRigth trusted={id.user.trusted}/>
+                                                        {id?.user?.name}
+                                                        <TolltipRigth trusted={id?.user?.trusted}/>
                                                     </span>
                                                 </S.User>
                                                 <td style={{width: '179px'}}>

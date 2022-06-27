@@ -128,16 +128,20 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                 ...(values?.sources || [])
             ];
 
-            
+            for await (let item of arraySources){
+                let data: any = {
+                    service: _service.id,
+                };
 
-                // Object.keys(item).map((keys) => {
-                //     let key = keys as keyof unknown;
-                //     if (item[key] !== "") {
-                //         return data[key] = item[key]
-                //     } else {
-                //         return data[key] = null
-                //     };
-                // });
+                Object.keys(item).map((keys) => {
+                    let key = keys as keyof unknown;
+                    if (item[key] !== "") {
+                        return data[key] = item[key]
+                    } else {
+                        return data[key] = null
+                    };
+                });
+            }
                 
             await postSource(token, _service).then((resp) => {
                 setSuccessMsg(true)
@@ -201,6 +205,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
 
     useEffect(() => {
         if (!isModal) {
+            setDefaultColor("")
             reset();
         }
     }, [isModal, reset]);
@@ -213,7 +218,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
         })
     }, [defaultColor])
 
-    console.log(sourceFieldArray.fields, 'item');
+    console.log(defaultColor, 'bg');
 
     return (
         <PersonalModal 
@@ -254,8 +259,8 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                                         label='Cor de background'
                                         list={BACKGROUND_COLOR}
                                         value={value == '' ? '#FF954E' : value}
-                                        defaultValue={defaultColor}
-                                        labelDefault='Cor de background'
+                                        defaultValue={value}
+                                        labelDefault="Cor de background"
                                         onChange={onChange}
                                         onBlur={onBlur}
                                         id="background_color"
@@ -274,9 +279,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                                     <CustomSwitch
                                         leftLabel="Inativo"
                                         rightLabel="Ativo"
-                                        value={value?.toString() === "false"}
+                                        value={value}
                                         onChange={onChange}
                                         onBlur={onBlur}
+                                        defaultValue={value}
                                     />
                                 )}
                             />
