@@ -77,9 +77,11 @@ const CardGraficArea: React.FC <IProps> = (props) => {
                         <p>Percentual de ocorrências por</p>
                         <h1>{props.title}</h1>
                     </div>
-                    <MultSelect 
+                    <MultSelect
+                        width={228}
                         onChange={props.onChange}
-                        valueItem={props.valueItem}
+                        valueItem={props.valueItem} 
+                        list={undefined}
                     />
                 </div>
                 <S.Values>

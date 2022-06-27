@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@hookform/resolvers": "^2.8.10",
     "@mui/material": "^5.7.0",
     "@mui/styled-engine-sc": "^5.7.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -15,18 +16,23 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "axios": "^0.27.2",
+    "material-ui-popup-state": "^3.1.1",
+    "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.31.1",
+    "react-input-verification-code": "^1.0.1",
     "react-query": "^3.39.0",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-switch": "^7.0.0",
     "recharts": "^2.1.9",
     "redux": "^4.2.0",
     "styled-components": "^5.3.5",
     "typescript": "^4.6.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

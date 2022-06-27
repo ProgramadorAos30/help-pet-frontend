@@ -50,7 +50,10 @@ interface IProps {
     onBlur: (e: any) => any,
     type: string,
     value: any,
-    width: number
+    width: number,
+    ref? : any,
+    id?: string,
+    name?: string
 }
 
 const CustomInput: React.FC <IProps> = (props) => {
@@ -60,12 +63,14 @@ const CustomInput: React.FC <IProps> = (props) => {
                 variant="filled" 
                 sx={{ width: props.width, height: 56, background: '#FFF  !important', borderRadius: '8px !important', border:'none'}}
             >
-                <TextField 
+                <TextField
+                    name={props.name} 
                     variant="filled" 
-                    id="filled-basic" 
                     type={props.type}
                     label={props.label}
                     value={props.value}
+                    id={props.id}
+                    ref={props.ref}
                     InputProps={{
                         disableUnderline: true,
                         style: {

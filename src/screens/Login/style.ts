@@ -45,26 +45,44 @@ export const Container = styled.div`
 
         > form {
 
-            > p {
-                text-align: right;
-                border-bottom: 1px solid #0A3466;
-                color: #0A3466;
-                cursor: pointer;
-                margin-bottom: 51px;
-                float: right;
+
+            > fieldset {
+                margin-bottom: 24px;
+
+                span { 
+                    color: red;
+                }
             }
 
-            > button {
-                width: 100%;
-                height: 48px;
-                border: none;
-                color: ${props => props.theme.colors.white};
-                background: ${props => props.theme.colors.gradient};
-            }
 
             > div {
                 margin-bottom: 24px;
             }
         }
+    }
+`;
+
+export const Button = styled.button <{ disabled: boolean }>`
+        width: 100%;
+        height: 48px;
+        border: none;
+        border-radius: 8px;
+        color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
+        background: ${props => props.disabled == false ? props.theme.colors.gradient : '#C7C7C7'};
+`;
+
+export const RemeberPassword = styled.button`
+    text-align: right;
+    border-bottom: 1px solid #0A3466;
+    color: #0A3466;
+    cursor: pointer;
+    margin-bottom: 51px;
+    float: right;
+    cursor: pointer;
+    background: none;
+    border: none;
+
+    :hover {
+        background: none;
     }
 `;

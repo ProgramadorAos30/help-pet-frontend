@@ -19,6 +19,16 @@ import starIcon from './starIcon.svg';
 import whaterIcon from './whaterIcon.svg';
 import wifiIcon from './wifiIcon.svg';
 import loginBg from './login.png';
+import blueAlert from './blueAlert.svg';
+import search from './search.svg';
+import options from './options.svg';
+import trusted from './trusted.svg';
+import noTrusted from './noTrusted.svg';
+import logoPng from './logo.png';
+import uploadIcon from './uploadIcon.svg';
+import alertRed from './alertRed.svg';
+import orangeAlert from './orangeAlert.svg'
+import alertDark from './alertDark.svg';
 
 export {
     logOut,
@@ -42,4 +52,14 @@ export {
     whaterIcon,
     wifiIcon,
     loginBg,
+    blueAlert,
+    search,
+    options,
+    trusted,
+    noTrusted,
+    logoPng,
+    uploadIcon,
+    alertRed,
+    orangeAlert,
+    alertDark
 }

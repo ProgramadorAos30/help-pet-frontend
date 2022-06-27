@@ -7,7 +7,20 @@ export {
     queryClient
 } from './queryClient';
 
+export { convertDate } from './functions/index';
+
 export {
+    useService,
+    postService, 
+    putService,
+    deleteService,
+    useSources,
+    postSource,
+    putSource,
+    deleteSource,
     useUf,
-    useCity
+    useCity,
+    useUsers,
+    useOccurrences,
+    useUploads
 } from './hooks/index';

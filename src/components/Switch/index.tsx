@@ -1,20 +1,23 @@
 import React from 'react';
 import * as S from './style';
-import Switch from '@mui/material/Switch';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { styled } from '@mui/system';
+import Switch from '@mui/material/Switch';
 
 interface IProps {
     leftLabel: string,
     rightLabel: string,
     value: boolean, 
     onChange: (e: any) => any,
-    onBlur: (e: any) => any
+    onBlur: (e: any) => any,
+    id?: string,
+    defaultValue?: any
 }
 
 const CustomSwitch: React.FC <IProps> = (props) => {
-    console.log(props.value);
-    
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      props.onChange(event.target.checked);
+    };
+
     const theme = createTheme({
         components: {
             MuiSwitch: {
@@ -38,37 +41,37 @@ const CustomSwitch: React.FC <IProps> = (props) => {
                           // Controls checked color for the track
                           backgroundColor: "#fff",
                           border: '3px solid #AFAFAF',
-                        }
-                      }
+                        },
+
+                      },
+                      root: {
+                        '& .MuiSwitch-switchBase.Mui-checked': {
+                            color: ' #3EA849',
+                        },
+                        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                            backgroundColor: '#fff',
+                            borderColor: '#3EA849',
+                            borderWidth: '3px'
+                        },
+                    }
                 }
             }
         }
     });
     
-    const GreenSwitch = styled(Switch)(({ theme }) => ({
-        '& .MuiSwitch-switchBase.Mui-checked': {
-          color: ' #3EA849',
-        },
-        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-          backgroundColor: '#fff',
-          borderColor: '#3EA849',
-          borderWidth: '3px'
-        },
-    }));
-    
     return (
         <ThemeProvider theme={theme}>
             <S.Container >
-                <label htmlFor="switch">{props.leftLabel}</label>
-                    <GreenSwitch 
+                <S.CheckedInative checked={props.value} htmlFor="switch">{props.leftLabel}</S.CheckedInative>
+                    <Switch 
                         id='switch'
                         name="switch"
                         value={props.value}
-                        onChange={props.onChange}
+                        onChange={handleChange}
                         onBlur={props.onBlur}
+                        defaultChecked={props.defaultValue}
                     />
-                <label 
-                    htmlFor="switch">{props.rightLabel}</label>
+                <S.CheckedActive checked={props.value} htmlFor="switch">{props.rightLabel}</S.CheckedActive>
             </S.Container>
         </ThemeProvider>
     );
