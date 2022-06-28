@@ -42,3 +42,13 @@ export const deleteSource = async (token: string, id: any) => {
 
     return resp
 };
+
+export const getSourceById = async (token: string, id: any) => {
+    const resp = await api.get(`/sources/${id}`, {
+        'headers': {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
+    return resp
+};

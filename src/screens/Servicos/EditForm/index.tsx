@@ -27,7 +27,8 @@ import {
     putService, 
     putSource, 
     queryClient, 
-    useSources 
+    useSources,
+    getSourceById
 } from '../../../services';
 import { 
     FormData,
@@ -37,17 +38,15 @@ import {
     IServices
 } from './types';
 import { AxiosResponse } from 'axios';
-import { schema } from './validation-schema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from './validation-schema';
 
-const FormService: React.FC<IProps> = ({onHide, isModal}) => {
+const EditForm: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const [ isSourceConfirm, setSourceConfirm ] = useState(false);
     const [ isVisibleModal, setVisibleModal ] = useState<string | false >(false);
     const [ service, setService ] = useState<IServices>();
     const [ successMsg, setSuccessMsg ] = useState(false);
-    const [ serviceId, setServiceId ] = useState('');
-    const [ sourcesId, setSourceId ] = useState('');
     const [ errMsg, setErrMsg ] = useState(false);
     const [ defaultColor, setDefaultColor ] = useState('');
     const [ isSourceSelected, setSourceSelected ] = useState<{ 
@@ -56,7 +55,6 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
     }>();
 
     const {
-        formState: { errors, isSubmitting, isDirty, isValid },
         control,
         register,
         handleSubmit,
@@ -64,26 +62,31 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
         setValue,
         reset,
         getValues,
+        formState: { errors, isSubmitting, isDirty, isValid },
     } = useForm<FormData>({
         mode: "onChange",
         resolver: yupResolver(schema)
     });
 
+    const { fields, append, remove, insert, update } = useFieldArray({
+        control,
+        keyName: 'id_source',
+        name: 'sources'
+    })
+
     const watchName = watch('name');
     const watchBg = watch('background_color');
+    const watchId = watch('id');
+    const watchSources = watch('sources');
 
-    const sourceFieldArray = useFieldArray({
-        control,
-        name: "sources"
-    });
+    useEffect(() => {
+        if(!itemEdit) return;
 
-    const addField = (field: UseFieldArrayReturn, values?: any) => {
-        field.append(values || {});
-    };
-
-    const removeField = (field: UseFieldArrayReturn, index?: number) => {
-        field.remove(index)
-    };
+        Object.keys(itemEdit).map((keys) => {
+            let key = keys as keyof unknown;
+            setValue(key as any, itemEdit[key] as any)
+        })
+    }, [itemEdit, setValue]);
 
     async function registerService(values: FormData){
         const { sources, ...item } = values;
@@ -105,7 +108,6 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
         return await method
             .then((resp) => {
                 console.log(resp.data.id);
-                setServiceId(resp.data.id);
                 setSuccessMsg(!successMsg)
                 return resp.data
             })
@@ -118,68 +120,38 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
     async function handleOnSubmit(values: FormData){
         try {
             console.log('values', values)
+            
+            let _data = [
+                ...(fields || [])
+            ];
+            
+            _data?.forEach((id, index) => {
+                if(id.id === null || id.id === undefined || id.id === ""){
+                    postSource(token, {
+                        name: id.name, 
+                        service: id.service
+                    }).then((resp) => {
+                        update(index, resp.data)
+                    })
+                } else {
+                    update(index, id)
+                }
+            })
 
+            let temp: any = getValues();
+
+            delete temp.sources
+            
             const _service: IServices = await registerService(values);
             setService(_service);
-
-            if(!_service.id) return;
-
-            let arraySources = [
-                ...(values?.sources || [])
-            ];
-
-            for await (let item of arraySources){
-                let data: any = {
-                    service: _service.id,
-                };
-
-                Object.keys(item).map((keys) => {
-                    let key = keys as keyof unknown;
-                    if (item[key] !== "") {
-                        return data[key] = item[key]
-                    } else {
-                        return data[key] = null
-                    };
-                });
-
-                if (!!data) {
-                    await postSource(token, data).then((resp) => {
-                        putSource(token, resp.data.id, {
-                            "service": _service.id
-                        })
-                    })
-                  }
-            }
+            
+            console.log(temp, 'VALUES FFFF');
+            
         }
         catch(error){
             console.log('error')
         }
     };
-
-    async function handleDeleteSource(){
-        if(!isSourceSelected) return;
-
-        const { name, index } = isSourceSelected;
-        const fieldArray: any =
-            name === "sources" ? sourceFieldArray : sourceFieldArray;
-        const id = watch(`${name}.${index}.id` as any);
-        
-        console.log(id,'id source')
-        
-        if (!id) return removeField(fieldArray, index);
-
-        try {
-            await deleteSource(token, id);
-            removeField(fieldArray, index);
-            
-          } catch (error) {
-            setVisibleModal("error");
-          }
-    };
-
-    useEffect(() => {
-        handleDeleteSource()
-    }, [isSourceSelected])
 
     useEffect(() => {
         if (!isModal) {
@@ -187,6 +159,15 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
             reset();
         }
     }, [isModal, reset]);
+
+    useEffect(() => {
+        BACKGROUND_COLOR.forEach((id) => {
+            if(itemEdit?.background_color === id?.value){
+                setDefaultColor(id.label)
+            }
+        })
+    }, [defaultColor]);
+
 
     return (
         <PersonalModal 
@@ -197,7 +178,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
             width={861}        
         >
             <S.Container>
-                <h1>Cadastrar serviço</h1>
+                <h1>Editar serviço</h1>
                 <S.Form onSubmit={handleSubmit(handleOnSubmit)}>
                     <input type="hidden" {...register(`id`)}/>
                     <S.Header>
@@ -252,7 +233,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                         </div>
                         <fieldset>
                             <label htmlFor="">
-                                Status do serviço:
+                                Status do serviço
                             </label>
                             <Controller 
                                 name='active'
@@ -294,8 +275,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                                             id='submit-source' 
                                             type="button"
                                             onClick={() => {
-                                                addField(sourceFieldArray as any, {
-                                                    name: value
+                                                append({
+                                                    //@ts-ignore
+                                                    name: value,
+                                                    service: watchId
                                                 })
                                                 setValue(name, '')
                                             }}
@@ -308,7 +291,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                         </div>
                     </S.Fonts>
                     <S.ItemsList>
-                        {sourceFieldArray?.fields?.map((field, index) => {
+                        {fields.map((field, index) => {
                             return (
                                 <S.Item>
                                     {field.name}
@@ -316,15 +299,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                                         id='remove-source'
                                         type='button'
                                         onClick={() => {
-                                            if(!watch(`sources.${index}.id`)){
-                                                removeField(sourceFieldArray as any, index);
-                                            } else {
-                                                setSourceConfirm(true)
-                                                setSourceSelected({
-                                                    index,
-                                                    name: 'sources'
-                                                })
+                                            if(field.id !== null && field.id !== undefined && field.id !== ""){
+                                                deleteSource(token, field.id)
                                             }
+                                            remove(index)
                                         }}
                                     >
                                         <img src={alertRed} alt="" />
@@ -344,19 +322,23 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                     <S.ContainerBtn>
                         <button 
                             id='close-modal'
-                            type="button"
-                            onClick={() => onHide()} 
+                            type="button" 
+                            onClick={() => {
+                                reset()
+                                onHide()
+                            }}
                         >
                             Cancelar
                         </button>
-                        <S.ButtonSubmit 
+                        <S.ButtonSubmit
+                            disabled={!isDirty || !isValid}
                             id='submit-service'
                             type='submit'
-                            disabled={!isDirty || !isValid}
                         >
-                            {isSubmitting
-                                ? "Cadastrando ..." 
-                                : "Finalizar cadastro"
+                            
+                            {isSubmitting 
+                                ? "Editando..."
+                                : "Finalizar edição"
                             }
                         </S.ButtonSubmit>
                     </S.ContainerBtn>
@@ -365,8 +347,12 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
             <ModalMsg
                 height='312px'
                 modalBackground={false} 
-                mensage='O serviço foi editado com sucesso!'
+                mensage={itemEdit !== null 
+                    ?'O serviço foi editado com sucesso!'
+                    :'O serviço foi cadastrado com sucesso!'
+                }
                 onClose={() => {
+                    reset()
                     setSuccessMsg(!successMsg)
                     onHide()
                 }}
@@ -379,6 +365,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                 modalBackground={false}
                 mensage='Falaha ao cadastrar serviço!'
                 onClose={() => {
+                    reset()
                     setErrMsg(!errMsg)
                     onHide()
                 }}
@@ -390,4 +377,4 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
     );
 };
 
-export default FormService;
+export default EditForm;

@@ -1,4 +1,4 @@
-export interface IProps {
+export interface FormData {
     service: string,
     source: string,
     source_name: string,
@@ -22,4 +22,10 @@ export interface IProps {
     longitude: string,
     status: string,
     finished_status: string
+}
+
+export interface IProps {
+    isModal: boolean;
+    onHide: () => void;
+    itemEdit?: any;
 }
