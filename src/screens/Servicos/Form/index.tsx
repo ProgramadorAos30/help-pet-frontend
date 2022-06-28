@@ -107,6 +107,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
             .then((resp) => {
                 console.log(resp.data.id);
                 setServiceId(resp.data.id);
+                setSuccessMsg(!successMsg)
                 return resp.data
             })
             .catch((error) => {
@@ -128,34 +129,28 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                 ...(values?.sources || [])
             ];
 
-            
+            for await (let item of arraySources){
+                let data: any = {
+                    service: _service.id,
+                };
 
-                // Object.keys(item).map((keys) => {
-                //     let key = keys as keyof unknown;
-                //     if (item[key] !== "") {
-                //         return data[key] = item[key]
-                //     } else {
-                //         return data[key] = null
-                //     };
-                // });
-                
-            await postSource(token, _service).then((resp) => {
-                setSuccessMsg(true)
-                putSource(token, resp.data.id, {
-                    "service": serviceId
-                }).then(() => {
-                    putService(token, serviceId, {
-                        "sources": [
-                            resp.data.id
-                        ]
+                Object.keys(item).map((keys) => {
+                    let key = keys as keyof unknown;
+                    if (item[key] !== "") {
+                        return data[key] = item[key]
+                    } else {
+                        return data[key] = null
+                    };
+                });
+
+                if (!!data) {
+                    await postSource(token, data).then((resp) => {
+                        putSource(token, resp.data.id, {
+                            "service": _service.id
+                        })
                     })
-                })
-                return resp.data
-            }).catch((error) => {
-                console.log(error);
-                setErrMsg(true)
-                return error
-            });
+                  }
+            }
         }
         catch(error){
             console.log('error')
@@ -201,6 +196,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
 
     useEffect(() => {
         if (!isModal) {
+            setDefaultColor("")
             reset();
         }
     }, [isModal, reset]);
@@ -211,9 +207,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                 setDefaultColor(id.label)
             }
         })
-    }, [defaultColor])
+    }, [defaultColor]);
 
-    console.log(sourceFieldArray.fields, 'item');
+    console.log(sourceFieldArray.fields);
+    
 
     return (
         <PersonalModal 
@@ -254,8 +251,8 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                                         label='Cor de background'
                                         list={BACKGROUND_COLOR}
                                         value={value == '' ? '#FF954E' : value}
-                                        defaultValue={defaultColor}
-                                        labelDefault='Cor de background'
+                                        defaultValue={value}
+                                        labelDefault="Cor de background"
                                         onChange={onChange}
                                         onBlur={onBlur}
                                         id="background_color"
@@ -274,9 +271,10 @@ const FormService: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
                                     <CustomSwitch
                                         leftLabel="Inativo"
                                         rightLabel="Ativo"
-                                        value={value?.toString() === "false"}
+                                        value={value}
                                         onChange={onChange}
                                         onBlur={onBlur}
+                                        defaultValue={value}
                                     />
                                 )}
                             />
