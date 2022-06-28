@@ -268,7 +268,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                                             id="name-source"
                                         />
                                         <S.Button
-                                            disabled={value === "" ? true : false}
+                                            disabled={value === "" ? false : true}
                                             id='submit-source' 
                                             type="button"
                                             onClick={() => {
