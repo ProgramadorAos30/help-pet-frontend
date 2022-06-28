@@ -112,12 +112,6 @@ export const ContainerBtn = styled.div`
         border: 1px solid ${props => props.theme.colors.warning};
         color: ${props => props.theme.colors.warning};
     }
-
-    > button:nth-child(2){
-        border: none;
-        color: ${props => props.theme.colors.white};
-        background-color: ${props => props.theme.colors.blue};
-    }
 `;
 
 export const AnotherOptions = styled.fieldset`
@@ -129,4 +123,20 @@ export const AnotherOptions = styled.fieldset`
     > input {
         margin-right: 14px;
     }
+`;
+
+export const ButtonSubmit = styled.button<{ disabled: boolean }>`
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    width: 274px;
+    height: 48px;
+    border: none;
+    color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
+    background: ${props => props.disabled == false ? props.theme.colors.blue : '#C7C7C7'};
 `;

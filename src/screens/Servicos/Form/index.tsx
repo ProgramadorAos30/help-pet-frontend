@@ -37,6 +37,8 @@ import {
     IServices
 } from './types';
 import { AxiosResponse } from 'axios';
+import { schema } from './validation-schema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const FormService: React.FC<IProps> = ({onHide, isModal}) => {
     const { token } = useSelector((state : RootState) => state.clickState);
@@ -54,6 +56,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
     }>();
 
     const {
+        formState: { errors, isSubmitting, isDirty, isValid },
         control,
         register,
         handleSubmit,
@@ -61,8 +64,13 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
         setValue,
         reset,
         getValues,
-        formState: { errors, isSubmitting },
-    } = useForm<FormData>();
+    } = useForm<FormData>({
+        mode: "onChange",
+        resolver: yupResolver(schema)
+    });
+
+    const watchName = watch('name');
+    const watchBg = watch('background_color');
 
     const sourceFieldArray = useFieldArray({
         control,
@@ -199,32 +207,46 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                                 name='name'
                                 control={control}
                                 render={({field: {onChange, onBlur, value}}) => (
-                                    <CustomInput 
-                                        label='Digite o nome do serviço' 
-                                        type='Text' 
-                                        value={value} 
-                                        width={254}                            
-                                        onChange={onChange} 
-                                        onBlur={onBlur}
-                                        id="name_service" 
-                                    />
+                                    <>
+                                        <CustomInput 
+                                            label='Digite o nome do serviço' 
+                                            type='Text' 
+                                            value={value} 
+                                            width={254}                            
+                                            onChange={onChange} 
+                                            onBlur={onBlur}
+                                            id="name_service" 
+                                        />
+                                        {errors?.name && (
+                                            <p style={{color: 'red'}}>
+                                                Nome do serviço é obrigatório!
+                                            </p>
+                                        )}
+                                    </>
                                 )}
                             />
                             <Controller 
                                 name='background_color'
                                 control={control}
                                 render={({field: {onChange, onBlur, value}}) => (
-                                    <CustomSelect
-                                        width={254}
-                                        label='Cor de background'
-                                        list={BACKGROUND_COLOR}
-                                        value={value == '' ? '#FF954E' : value}
-                                        defaultValue={value}
-                                        labelDefault="Cor de background"
-                                        onChange={onChange}
-                                        onBlur={onBlur}
-                                        id="background_color"
-                                    />
+                                    <>
+                                        <CustomSelect
+                                            width={254}
+                                            label='Cor de background'
+                                            list={BACKGROUND_COLOR}
+                                            value={value == '' ? '#FF954E' : value}
+                                            defaultValue={value}
+                                            labelDefault="Cor de background"
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            id="background_color"
+                                        />
+                                        {errors?.background_color && (
+                                            <p style={{color: 'red'}}>
+                                                Cor do background é obrigatório!
+                                            </p>
+                                        )}
+                                    </>
                                 )}
                             />
                         </div>
@@ -327,15 +349,16 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                         >
                             Cancelar
                         </button>
-                        <button 
+                        <S.ButtonSubmit 
                             id='submit-service'
                             type='submit'
+                            disabled={!isDirty || !isValid}
                         >
                             {isSubmitting
                                 ? "Cadastrando ..." 
                                 : "Finalizar cadastro"
                             }
-                        </button>
+                        </S.ButtonSubmit>
                     </S.ContainerBtn>
                 </S.Form>
             </S.Container>
