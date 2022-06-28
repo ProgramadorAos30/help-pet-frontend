@@ -252,7 +252,7 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                         </div>
                         <fieldset>
                             <label htmlFor="">
-                                Status do serviço
+                                Status do serviço:
                             </label>
                             <Controller 
                                 name='active'

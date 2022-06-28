@@ -33,6 +33,7 @@ const Registros: React.FC = () => {
     const [ maps, setMaps ] = useState(true);
     const [ list, setList ] = useState(false);
     const [ open, setOpen ] = useState(false);
+    const [ newOccurence, setNewOccurence ] = useState(false);
     const [ listServices, setListServices ] = useState<any>();
     const [ page, setPage ] = useState<number>(1);
     const [ status, setStatus ] = useState<any>(undefined);
@@ -459,7 +460,11 @@ const Registros: React.FC = () => {
             )}
 
             <NewOccurence
-            
+                isModal={newOccurence}
+                onHide={() => {
+                    setNewOccurence(!newOccurence)
+                    fetchOccurrences()
+                }}
             />
 
             {/* <PersonalModal 

@@ -10,7 +10,8 @@ import {
     CustomInput, 
     CustomSelect, 
     CustomTextArea,
-    CustomTolltip 
+    CustomTolltip, 
+    PersonalModal
 } from '../../../components';
 import { blueAlert } from '../../../assets';
 import { 
@@ -19,12 +20,13 @@ import {
     Controller 
 } from "react-hook-form";
 import { 
-    FormData
+    FormData, 
+    IProps
 } from './types';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 
-const NewOccurence: React.FC = () => {
+const NewOccurence: React.FC <IProps> = ({onHide, isModal, itemEdit}) => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
 
@@ -86,159 +88,167 @@ const NewOccurence: React.FC = () => {
     ];
     
     return (
-        <S.Container>
-            <h1>Registrar ocorrência</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <S.FormTop>
-                    <S.FieldsetTopLeft>
-                        <label htmlFor="">Qual serviço esta indisponível?</label>
-                        <div>
+        <PersonalModal 
+            modalBackground={false}
+            onClose={onHide}
+            padding={4}
+            open={isModal}
+            width={861}        
+        >
+            <S.Container>
+                <h1>Registrar ocorrência</h1>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <S.FormTop>
+                        <S.FieldsetTopLeft>
+                            <label htmlFor="">Qual serviço esta indisponível?</label>
                             <div>
-                                <Controller 
-                                    control={control}
-                                    name="service"
-                                    render={({field: { onChange, onBlur, value }}) => (
-                                        <input 
-                                            type="radio" 
-                                            name='service' 
-                                            id='energi'
-                                            onChange={onChange}
-                                            onBlur={onBlur}
-                                            value={value}
-                                        />
-                                    )}
+                                <div>
+                                    <Controller 
+                                        control={control}
+                                        name="service"
+                                        render={({field: { onChange, onBlur, value }}) => (
+                                            <input 
+                                                type="radio" 
+                                                name='service' 
+                                                id='energi'
+                                                onChange={onChange}
+                                                onBlur={onBlur}
+                                                value={value}
+                                            />
+                                        )}
+                                    />
+                                    <label htmlFor="energi">Energia</label>
+                                </div>
+                                <div>
+                                    <input 
+                                        type="radio" 
+                                        name='service' 
+                                        id='whater'
+                                    />
+                                    <label htmlFor="whater">Água</label>
+                                </div>
+                                <CustomSelect 
+                                    onChange={function (e: any) {
+                                        throw new Error('Function not implemented.');
+                                    } } 
+                                    label='Fonte do serviço'
+                                    list={services} 
+                                    value=''                            
+                                    labelDefault='Fonte do serviço'
+                                    width={372}
                                 />
-                                <label htmlFor="energi">Energia</label>
+                            </div>
+                        </S.FieldsetTopLeft>
+                        <S.FieldsetTopCenter>
+                            <label htmlFor="">Data e hora da ocorrência:</label>
+                            <div>
+                                <CustomInput 
+                                    label='Data' 
+                                    onChange={function (e: any) {
+                                        throw new Error('Function not implemented.');
+                                    } } 
+                                    onBlur={function (e: any) {
+                                        throw new Error('Function not implemented.');
+                                    } } 
+                                    type='date' 
+                                    value={undefined} 
+                                    width={176}                        
+                                />
+                                <CustomInput 
+                                    label='Horário' 
+                                    onChange={function (e: any) {
+                                        throw new Error('Function not implemented.');
+                                    } } 
+                                    onBlur={function (e: any) {
+                                        throw new Error('Function not implemented.');
+                                    } } 
+                                    type='time' 
+                                    value={undefined} 
+                                    width={176}                        
+                                />
+                            </div>
+                        </S.FieldsetTopCenter>
+                        <S.FieldsetTopRight>
+                            <div>
+                                <label htmlFor="">A ocorrência é em uma localização especial?</label>
+                                <CustomTolltip 
+                                    title={<img src={blueAlert} alt="" />}
+                                    desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
+                                />
                             </div>
                             <div>
-                                <input 
-                                    type="radio" 
-                                    name='service' 
-                                    id='whater'
+                                <input type="radio" name='especial' id="yes"/>
+                                <label htmlFor="yes">Sim</label>
+                                <input type="radio" name='especial' id="no"/>
+                                <label htmlFor="no">Não</label>
+                                <input type="radio" name='especial' id="unknow"/>
+                                <label htmlFor="unknow">Não sei</label>
+                            </div>
+                        </S.FieldsetTopRight>
+                    </S.FormTop>
+                    <S.FormCenter>
+                        <div>
+                            <label htmlFor="">Endereço/Logradouro</label>
+                            <CustomInput 
+                                label='Digite o endereço ou logradouro' 
+                                onChange={function (e: any) {
+                                    throw new Error('Function not implemented.');
+                                } } 
+                                onBlur={function (e: any) {
+                                    throw new Error('Function not implemented.');
+                                } } 
+                                type='text' 
+                                value={undefined} 
+                                width={372}                        
+                            />
+                            <div>
+                                <label htmlFor="">Em que escala é a área afetada?</label>
+                                <CustomTolltip 
+                                    title={<img src={blueAlert} alt="" />}
+                                    desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
                                 />
-                                <label htmlFor="whater">Água</label>
                             </div>
                             <CustomSelect 
                                 onChange={function (e: any) {
                                     throw new Error('Function not implemented.');
                                 } } 
-                                label='Fonte do serviço'
-                                list={services} 
-                                value=''                            
-                                labelDefault='Fonte do serviço'
-                                width={372}
-                            />
-                        </div>
-                    </S.FieldsetTopLeft>
-                    <S.FieldsetTopCenter>
-                        <label htmlFor="">Data e hora da ocorrência:</label>
-                        <div>
-                            <CustomInput 
-                                label='Data' 
-                                onChange={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                } } 
-                                onBlur={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                } } 
-                                type='date' 
-                                value={undefined} 
-                                width={176}                        
-                            />
-                            <CustomInput 
-                                label='Horário' 
-                                onChange={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                } } 
-                                onBlur={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                } } 
-                                type='time' 
-                                value={undefined} 
-                                width={176}                        
-                            />
-                        </div>
-                    </S.FieldsetTopCenter>
-                    <S.FieldsetTopRight>
-                        <div>
-                            <label htmlFor="">A ocorrência é em uma localização especial?</label>
-                            <CustomTolltip 
-                                title={<img src={blueAlert} alt="" />}
-                                desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
+                                label='Selecione a área afetada' 
+                                labelDefault='Selecione a área afetada'
+                                list={area} 
+                                value='' 
+                                width={372}                       
                             />
                         </div>
                         <div>
-                            <input type="radio" name='especial' id="yes"/>
-                            <label htmlFor="yes">Sim</label>
-                            <input type="radio" name='especial' id="no"/>
-                            <label htmlFor="no">Não</label>
-                            <input type="radio" name='especial' id="unknow"/>
-                            <label htmlFor="unknow">Não sei</label>
+                            mapa
                         </div>
-                    </S.FieldsetTopRight>
-                </S.FormTop>
-                <S.FormCenter>
-                    <div>
-                        <label htmlFor="">Endereço/Logradouro</label>
-                        <CustomInput 
-                            label='Digite o endereço ou logradouro' 
+                    </S.FormCenter>
+                    <S.FormBottom>
+                        <label htmlFor="">Alguma observação sobre a ocorrência?</label>
+                        <CustomTextArea 
                             onChange={function (e: any) {
                                 throw new Error('Function not implemented.');
                             } } 
                             onBlur={function (e: any) {
                                 throw new Error('Function not implemented.');
                             } } 
-                            type='text' 
                             value={undefined} 
-                            width={372}                        
+                            placeholder='Digite sua observação (Opcional)' 
+                            width='1508px' 
+                            heigth='85px'                  
                         />
-                        <div>
-                            <label htmlFor="">Em que escala é a área afetada?</label>
-                            <CustomTolltip 
-                                title={<img src={blueAlert} alt="" />}
-                                desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
-                            />
-                        </div>
-                        <CustomSelect 
-                            onChange={function (e: any) {
-                                throw new Error('Function not implemented.');
-                            } } 
-                            label='Selecione a área afetada' 
-                            labelDefault='Selecione a área afetada'
-                            list={area} 
-                            value='' 
-                            width={372}                       
-                        />
-                    </div>
-                    <div>
-                        mapa
-                    </div>
-                </S.FormCenter>
-                <S.FormBottom>
-                    <label htmlFor="">Alguma observação sobre a ocorrência?</label>
-                    <CustomTextArea 
-                        onChange={function (e: any) {
-                            throw new Error('Function not implemented.');
-                        } } 
-                        onBlur={function (e: any) {
-                            throw new Error('Function not implemented.');
-                        } } 
-                        value={undefined} 
-                        placeholder='Digite sua observação (Opcional)' 
-                        width='1508px' 
-                        heigth='85px'                  
-                    />
-                </S.FormBottom>
-                <S.ContainerBtn>
-                    <button type='button'>
-                        Cancelar
-                    </button>
-                    <button type='submit'>
-                        Registrar ocorrência
-                    </button>
-                </S.ContainerBtn>
-            </form>
-        </S.Container>
+                    </S.FormBottom>
+                    <S.ContainerBtn>
+                        <button type='button'>
+                            Cancelar
+                        </button>
+                        <button type='submit'>
+                            Registrar ocorrência
+                        </button>
+                    </S.ContainerBtn>
+                </form>
+            </S.Container>
+        </PersonalModal>
     );
 };
 
