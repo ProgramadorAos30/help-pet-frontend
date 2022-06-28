@@ -9,6 +9,7 @@ export default {
         brownSeccondary: '#E59724',
         browTertiary: '#FF9800',
         blue: '#1773E2',
+        darkBlue: '#0A3466',
 
         //neutral colors
         white: '#FFFFFF',
@@ -23,7 +24,7 @@ export default {
         purple: '#9D86ED',
         green: '#B8D335',
         pink: '#FF77F1',
- 
+
         //alert
         warning: '#FA143B',
         success: '#3EA849',

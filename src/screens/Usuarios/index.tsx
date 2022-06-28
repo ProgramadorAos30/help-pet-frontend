@@ -9,6 +9,7 @@ import {
     PersonalModal,
     Search,
     Pagination,
+    CustomTolltip,
 } from '../../components';
 import { useUsers } from '../../services';
 import { useSelector } from 'react-redux';
@@ -33,13 +34,13 @@ const Usuarios: React.FC = () => {
     console.log(users);
 
     let lista = [
-        { label: 'Pesquisar 1', value: 'pesquisa1' },
-        { label: 'Pesquisar 2', value: 'pesquisa2' },
-        { label: 'Pesquisar 3', value: 'pesquisa3' },
-        { label: 'Pesquisar 4', value: 'pesquisa4' },
-        { label: 'Pesquisar 5', value: 'pesquisa5' },
-        { label: 'Pesquisar 6', value: 'pesquisa6' },
-    ];
+        { label: 'Pesquisar 1', value: 'pesquisa1', number: 1 },
+        { label: 'Pesquisar 2', value: 'pesquisa2', number: 2 },
+        { label: 'Pesquisar 3', value: 'pesquisa3', number: 3 },
+        { label: 'Pesquisar 4', value: 'pesquisa4', number: 4 },
+        { label: 'Pesquisar 5', value: 'pesquisa5', number: 5 },
+        { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
+    ]; //id.city, id.state,
 
 
     return (
@@ -169,7 +170,7 @@ const Usuarios: React.FC = () => {
                                         label='Estado'
                                         labelDefault='Estado'
                                         list={undefined}
-                                        value=''
+                                        value='Todos os Estados'
                                         width={176}
                                     />
                                 </div>
@@ -223,9 +224,12 @@ const Usuarios: React.FC = () => {
                                         <th>
                                             <span>
                                                 Confiabilidade
-                                                <button>
-                                                    <img src={alertDark} alt="" />
-                                                </button>
+                                                <span>
+                                                    <CustomTolltip
+                                                        title={<img src={alertDark} alt="" />}
+                                                        desciption="Usuários que são marcados como não confiáveis precisarão passar pela aprovação dos moderadores antes de serem publicadas"
+                                                    />
+                                                </span>
                                             </span>
                                         </th>
                                         <th>
@@ -297,135 +301,143 @@ const Usuarios: React.FC = () => {
 
                 {panel === true && (
                     <>
-                        <div>
-
-                        </div>
-                        <PersonalModal
-                            modalBackground={true}
-                            padding={4}
-                            width={858}
-                            open={open}
-                            onClose={() => setOpen(!open)}
-                            children={<NewUser />}
-                        />
-                        <S.Table>
-                            <S.TableHead>
-                                <tr>
-                                    <th>
-                                        <span>
-                                            Nome / Apelido
-                                            <button>
-                                                <img src={iconShow} alt="" />
-                                            </button>
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            Whatsapp
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            E-mail
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            Estado
-                                            <button>
-                                                <img src={iconShow} alt="" />
-                                            </button>
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            Cidade
-                                            <button>
-                                                <img src={iconShow} alt="" />
-                                            </button>
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            Status
-                                            <button>
-                                                <img src={iconShow} alt="" />
-                                            </button>
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            Confiabilidade
-                                            <button>
-                                                <img src={alertDark} alt="" />
-                                            </button>
-                                        </span>
-                                    </th>
-                                    <th>
-                                        <span>
-                                            Ações
-                                        </span>
-                                    </th>
-                                </tr>
-                            </S.TableHead>
-                            {users?.map((id: any) => {
-                                return (
-                                    <tbody>
-                                        {id.role === 'Administrador' && (
-                                            <tr>
-                                                <td>
-                                                    <span>
-                                                        {id.name}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        {id.phone_number}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        {id.email}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        {id.state}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        {id.city}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        {id.active}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        {id.trusted}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        <button>
-                                                            <img src={iconShow} alt="" />
-                                                        </button>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                )
-                            })}
-                        </S.Table>
+                        <S.ContainerListApp>
+                            <S.SearchInputs>
+                                <p>Usuários cadastrados no painel</p>
+                                <Search
+                                    onChange={(e) => {
+                                        console.log(e.target.value)
+                                    }}
+                                    width='822px'
+                                />
+                            </S.SearchInputs>
+                            <div>
+                            </div>
+                            <PersonalModal
+                                modalBackground={true}
+                                padding={4}
+                                width={858}
+                                open={open}
+                                onClose={() => setOpen(!open)}
+                                children={<NewUser />}
+                            />
+                            <S.Table>
+                                <S.TableHead>
+                                    <tr>
+                                        <th>
+                                            <span>
+                                                Nome do moderador
+                                                <button>
+                                                    <img src={iconShow} alt="" />
+                                                </button>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                Whatsapp
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                E-mail
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                Estado
+                                                <button>
+                                                    <img src={iconShow} alt="" />
+                                                </button>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                Cidade
+                                                <button>
+                                                    <img src={iconShow} alt="" />
+                                                </button>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                Tipo de acesso
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                Status
+                                                <button>
+                                                    <img src={iconShow} alt="" />
+                                                </button>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span>
+                                                Ações
+                                            </span>
+                                        </th>
+                                    </tr>
+                                </S.TableHead>
+                                {users?.map((id: any) => {
+                                    return (
+                                        <tbody>
+                                            {id.role === 'Administrador' && (
+                                                <tr>
+                                                    <td>
+                                                        <span>
+                                                            {id.name}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            {id.phone_number}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            {id.email}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            {id.state}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            {id.city}
+                                                        </span>
+                                                    </td>
+                                                    <S.Role role={id.role}>
+                                                        <span>
+                                                            {id.role === "Administrador" ? `${id.role}` : `${id.role}`}
+                                                        </span>
+                                                    </S.Role>
+                                                    <td>
+                                                        <S.Active active={id.active}>
+                                                            {id.active === true ? "Ativo" : "Inativo"}
+                                                        </S.Active>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <S.Options>
+                                                                <img src={options} alt="Opções" />
+                                                            </S.Options>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    )
+                                })}
+                            </S.Table>
+                        </S.ContainerListApp>
                     </>
                 )}
             </>
             <Pagination />
         </>
+
     )
 }
 

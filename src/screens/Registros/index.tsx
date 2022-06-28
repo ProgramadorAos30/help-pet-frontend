@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './style';
-import { 
+import {
     DoubleButton,
     DefaultButton,
     PersonalModal,
@@ -10,7 +10,8 @@ import {
     CustomInput,
     Search,
     TolltipRigth,
-    MultSelect
+    MultSelect,
+    Pagination,
 } from '../../components';
 import { convertDate, useCity, useOccurrences, useService, useUf } from '../../services/index';
 import NewOccurence from './newOccurence';
@@ -27,31 +28,31 @@ import {
 import { UseQueryResult } from 'react-query';
 
 const Registros: React.FC = () => {
-    const { token } = useSelector((state : RootState) => state.clickState);
+    const { token } = useSelector((state: RootState) => state.clickState);
 
-    const [ openList, setOpenList ] = useState(false);
-    const [ maps, setMaps ] = useState(true);
-    const [ list, setList ] = useState(false);
-    const [ open, setOpen ] = useState(false);
-    const [ listServices, setListServices ] = useState<any>();
-    const [ page, setPage ] = useState<number>(1);
-    const [ status, setStatus ] = useState<any>(undefined);
-    const [ service, setService ] = useState<string []>([]);
-    const [ address, setAddress ] = useState<any>();
-    const [ ufValue, setUfValue ] = useState<any>();
-    const [ cityValue, setCityValue ] = useState<any>();
-    const [ initialDate, setInitialDate ] = useState<any>(undefined);
-    const [ finalDate, setFinalDate ] = useState<any>(undefined)
+    const [openList, setOpenList] = useState(false);
+    const [maps, setMaps] = useState(true);
+    const [list, setList] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [listServices, setListServices] = useState<any>();
+    const [page, setPage] = useState<number>(1);
+    const [status, setStatus] = useState<any>(undefined);
+    const [service, setService] = useState<string[]>([]);
+    const [address, setAddress] = useState<any>();
+    const [ufValue, setUfValue] = useState<any>();
+    const [cityValue, setCityValue] = useState<any>();
+    const [initialDate, setInitialDate] = useState<any>(undefined);
+    const [finalDate, setFinalDate] = useState<any>(undefined)
 
-    const { 
-        data: occurrences, 
+    const {
+        data: occurrences,
         isLoading: loadOccurrences,
         refetch: fetchOccurrences,
         isFetched: isFetchedOccurence
     } = useOccurrences(
-        token, 
-        'DESC', 
-        page, 
+        token,
+        'DESC',
+        page,
         10,
         status,
         service,
@@ -67,20 +68,20 @@ const Registros: React.FC = () => {
     const { data: dataCity } = useCity(ufValue);
 
     let lista = [
-        {label: 'Pesquisar 1', value: 'pesquisa1'},
-        {label: 'Pesquisar 2', value: 'pesquisa2'},
-        {label: 'Pesquisar 3', value: 'pesquisa3'},
-        {label: 'Pesquisar 4', value: 'pesquisa4'},
-        {label: 'Pesquisar 5', value: 'pesquisa5'},
-        {label: 'Pesquisar 6', value: 'pesquisa6'},
+        { label: 'Pesquisar 1', value: 'pesquisa1' },
+        { label: 'Pesquisar 2', value: 'pesquisa2' },
+        { label: 'Pesquisar 3', value: 'pesquisa3' },
+        { label: 'Pesquisar 4', value: 'pesquisa4' },
+        { label: 'Pesquisar 5', value: 'pesquisa5' },
+        { label: 'Pesquisar 6', value: 'pesquisa6' },
     ];
 
-    function setStatusName(status: string){
-        if(status == "Waiting"){
+    function setStatusName(status: string) {
+        if (status == "Waiting") {
             return 'Aguardando aprovação'
-        } else if(status == "Approved"){
+        } else if (status == "Approved") {
             return 'Aprovado'
-        } else if(status == "Reproved"){
+        } else if (status == "Reproved") {
             return "Reprovado"
         } else {
             return status
@@ -93,11 +94,11 @@ const Registros: React.FC = () => {
             obj.push(id.name)
         })
         setListServices(obj)
-        
+
     }, [dataServices]);
-    
+
     console.log(initialDate, finalDate, 'date');
-    
+
 
     return (
         <>
@@ -120,7 +121,7 @@ const Registros: React.FC = () => {
                         }}
                     />
                 </div>
-                <DefaultButton 
+                <DefaultButton
                     onSelect={() => setOpen(!open)}
                     text="Registrar ocorrência"
                 />
@@ -133,7 +134,7 @@ const Registros: React.FC = () => {
             {list == true && (
                 <>
                     <S.CardsContainer>
-                        <CardInfo 
+                        <CardInfo
                             icon={ocurrenceIcon}
                             title="Total"
                             value={20}
@@ -143,7 +144,7 @@ const Registros: React.FC = () => {
                             open={openList}
                             setOpen={() => setOpenList(!openList)}
                         />
-                        <CardInfo 
+                        <CardInfo
                             title="Sul"
                             value={20}
                             type="list"
@@ -152,7 +153,7 @@ const Registros: React.FC = () => {
                             open={openList}
                             setOpen={() => setOpenList(!openList)}
                         />
-                        <CardInfo 
+                        <CardInfo
                             title="Norte"
                             value={20}
                             type="list"
@@ -161,7 +162,7 @@ const Registros: React.FC = () => {
                             open={openList}
                             setOpen={() => setOpenList(!openList)}
                         />
-                        <CardInfo 
+                        <CardInfo
                             title="Sudeste"
                             value={20}
                             type="list"
@@ -170,7 +171,7 @@ const Registros: React.FC = () => {
                             open={openList}
                             setOpen={() => setOpenList(!openList)}
                         />
-                        <CardInfo 
+                        <CardInfo
                             title="Nordeste"
                             value={20}
                             type="list"
@@ -179,7 +180,7 @@ const Registros: React.FC = () => {
                             open={openList}
                             setOpen={() => setOpenList(!openList)}
                         />
-                        <CardInfo 
+                        <CardInfo
                             title="Centro-Oeste"
                             value={20}
                             type="list"
@@ -196,116 +197,116 @@ const Registros: React.FC = () => {
                         <S.Container>
                             <h1>Ocorrências registradas no aplicativo</h1>
                             <S.FiltersTop>
-                                <CustomSelect 
+                                <CustomSelect
                                     onChange={(e) => {
                                         setUfValue(e.target.value)
                                         console.log(e.target.value);
-                                        
-                                    }} 
+
+                                    }}
                                     label='Selecione o Estado'
                                     labelDefault='Estado'
-                                    list={dataUf} 
+                                    list={dataUf}
                                     value={ufValue}
                                     width={254}
                                 />
-                                <CustomSelect 
+                                <CustomSelect
                                     onChange={(e) => {
                                         setCityValue(e.target.value)
-                                    }} 
+                                    }}
                                     label='Selecione a Cidade'
                                     labelDefault='Cidade'
-                                    list={dataCity} 
+                                    list={dataCity}
                                     value={cityValue}
                                     width={254}
                                 />
-                                <CustomSelect 
+                                <CustomSelect
                                     onChange={function (e: any) {
                                         throw new Error('Function not implemented.');
-                                    } } 
+                                    }}
                                     label='Selecione o Bairro'
                                     labelDefault='Bairro'
-                                    list={lista} 
+                                    list={lista}
                                     value=''
                                     width={254}
                                 />
-                                <MultSelect 
-                                    width={228} 
+                                <MultSelect
+                                    width={228}
                                     list={listServices}
                                     onChange={(e: any) => {
                                         setService(e)
                                     }}
                                     valueItem={service}
                                 />
-                                <CustomInput 
-                                    label='De' 
+                                <CustomInput
+                                    label='De'
                                     onChange={(e: any) => {
                                         setInitialDate(e.target.value)
                                         console.log(e.target.value)
-                                    }} 
-                                    onBlur={() => {}} 
+                                    }}
+                                    onBlur={() => { }}
                                     type='datetime-local'
-                                    value={initialDate} 
-                                    width={176}                                
+                                    value={initialDate}
+                                    width={176}
                                 />
-                                <CustomInput 
-                                    label='Até' 
+                                <CustomInput
+                                    label='Até'
                                     onChange={(e: any) => {
                                         setFinalDate(e.target.value)
-                                    }} 
+                                    }}
                                     onBlur={function (e: any) {
-                                    throw new Error('Function not implemented.');
-                                    } } 
+                                        throw new Error('Function not implemented.');
+                                    }}
                                     type='datetime-local'
-                                    value={finalDate} 
-                                    width={176}                                
+                                    value={finalDate}
+                                    width={176}
                                 />
                             </S.FiltersTop>
                             <S.FiltersBottom>
-                                <Search 
+                                <Search
                                     onChange={(e: any) => {
                                         setAddress(e.target.value);
-                                    }} 
+                                    }}
                                     width="400px"
                                 />
                                 <S.Radios>
                                     <p>Status:</p>
                                     <div>
-                                        <input 
+                                        <input
                                             onChange={() => setStatus(undefined)}
                                             value={status}
-                                            type="radio" 
-                                            name="status" 
-                                            id="todos" 
+                                            type="radio"
+                                            name="status"
+                                            id="todos"
                                             defaultChecked
                                         />
                                         <label htmlFor="todos" >Todos</label>
                                     </div>
                                     <div>
-                                        <input 
+                                        <input
                                             onChange={() => setStatus('Yes')}
                                             value={status}
-                                            type="radio" 
-                                            name="status" 
+                                            type="radio"
+                                            name="status"
                                             id="aproved"
                                         />
                                         <label htmlFor="aproved">Aprovado</label>
                                     </div>
                                     <div>
-                                        <input 
+                                        <input
                                             onChange={() => setStatus('No')}
                                             value={status}
-                                            type="radio" 
-                                            name="status" 
+                                            type="radio"
+                                            name="status"
                                             id="reproved"
                                         />
                                         <label htmlFor="reproved">Reprovado</label>
                                     </div>
                                     <div>
-                                        <input 
+                                        <input
                                             onChange={() => setStatus('Abandoned')}
                                             value={status}
-                                            type="radio" 
-                                            name="status" 
+                                            type="radio"
+                                            name="status"
                                             id="Abandoned"
                                         />
                                         <label htmlFor="Abandoned">Aguardando aprovação</label>
@@ -315,7 +316,7 @@ const Registros: React.FC = () => {
                             <S.Table>
                                 <S.TableHead>
                                     <tr>
-                                        <th style={{width: '218px'}}>
+                                        <th style={{ width: '218px' }}>
                                             <span>
                                                 Serviço interrompido
                                                 <button>
@@ -323,7 +324,7 @@ const Registros: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th style={{width: '218px'}}>
+                                        <th style={{ width: '218px' }}>
                                             <span>
                                                 Registrado por
                                                 <button>
@@ -331,17 +332,17 @@ const Registros: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th style={{width: '179px'}}>
+                                        <th style={{ width: '179px' }}>
                                             <span>
                                                 Horá da ocorrência
                                             </span>
                                         </th>
-                                        <th style={{width: '358px'}}>
+                                        <th style={{ width: '358px' }}>
                                             <span>
                                                 Endereço
                                             </span>
                                         </th>
-                                        <th style={{width: '207px'}}>
+                                        <th style={{ width: '207px' }}>
                                             <span>
                                                 Status ocorrência
                                                 <button>
@@ -349,17 +350,17 @@ const Registros: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th style={{width: '150px'}}>
+                                        <th style={{ width: '150px' }}>
                                             <span>
                                                 Já foi finalizada?
                                             </span>
                                         </th>
-                                        <th style={{width: '85px'}}>
+                                        <th style={{ width: '85px' }}>
                                             <span>
                                                 Ações
                                             </span>
                                         </th>
-                                        <th style={{width: '135px'}}>
+                                        <th style={{ width: '135px' }}>
                                             <span>
                                                 Ver no mapa
                                             </span>
@@ -371,10 +372,10 @@ const Registros: React.FC = () => {
                                     {occurrences?.data.map((id: any) => {
                                         return (
                                             <tr>
-                                                <td style={{width: '218px'}}>
+                                                <td style={{ width: '218px' }}>
                                                     <span>
                                                         <S.Icon backgroundColor={id.service.background_color}    >
-                                                            <img src={id.service.image}  alt="" />
+                                                            <img src={id.service.image} alt="" />
                                                         </S.Icon>
                                                         {id.service.name}
                                                     </span>
@@ -382,15 +383,15 @@ const Registros: React.FC = () => {
                                                 <S.User>
                                                     <span>
                                                         {id?.user?.name}
-                                                        <TolltipRigth trusted={id?.user?.trusted}/>
+                                                        <TolltipRigth trusted={id?.user?.trusted} />
                                                     </span>
                                                 </S.User>
-                                                <td style={{width: '179px'}}>
+                                                <td style={{ width: '179px' }}>
                                                     <span>
                                                         {convertDate(id.updatedAt)}
                                                     </span>
                                                 </td>
-                                                <td style={{width: '358px'}}>
+                                                <td style={{ width: '358px' }}>
                                                     <span>
                                                         {id.address}
                                                     </span>
@@ -409,14 +410,14 @@ const Registros: React.FC = () => {
                                                         </p>
                                                     </span>
                                                 </S.Finished>
-                                                <S.Button showOccurence={false} style={{width: '83px'}}>
+                                                <S.Button showOccurence={false} style={{ width: '83px' }}>
                                                     <span>
                                                         <button>
                                                             <img src={options} alt="" />
                                                         </button>
                                                     </span>
                                                 </S.Button>
-                                                <S.Button showOccurence={true} style={{width: '135px'}}>
+                                                <S.Button showOccurence={true} style={{ width: '135px' }}>
                                                     <span>
                                                         <button>
                                                             <img src={iconShow} alt="" />
@@ -430,41 +431,42 @@ const Registros: React.FC = () => {
                             </S.Table>
                         </S.Container>
                     </Box>
+                    <Pagination />
                     <S.ContainerBtn>
-                        <S.PrevNext 
+                        <S.PrevNext
                             to="prev"
                             onClick={() => {
                                 let cont = page - 1;
                                 setPage(cont);
                             }}
                             disabled={page === 1 ? true : false}
-                        > 
+                        >
                             <img src={iconShow} alt="" />
                         </S.PrevNext>
                         <S.AtualPage>{page}</S.AtualPage>
                         <S.Page>{page + 1}</S.Page>
                         <S.Page>{page + 2}</S.Page>
                         <S.Page>{page + 3}</S.Page>
-                        <S.PrevNext 
+                        <S.PrevNext
                             to="next"
                             onClick={() => {
                                 let cont = page + 1;
                                 setPage(cont);
                             }}
-                        > 
+                        >
                             <img src={iconShow} alt="" />
                         </S.PrevNext>
                     </S.ContainerBtn>
                 </>
             )}
 
-            <PersonalModal 
+            <PersonalModal
                 modalBackground={true}
                 width={1604}
                 padding={4}
                 open={open}
                 onClose={() => setOpen(!open)}
-                children={<NewOccurence/>}
+                children={<NewOccurence />}
             />
         </>
     )

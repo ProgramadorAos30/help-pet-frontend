@@ -7,7 +7,7 @@ interface TypeButtonProps {
     onSelect(): void;
 }
 
-const DefaultButton: React.FC <TypeButtonProps> = (props) => {
+const DefaultButton: React.FC<TypeButtonProps> = (props) => {
     return (
         <S.Container
             onClick={
@@ -16,8 +16,8 @@ const DefaultButton: React.FC <TypeButtonProps> = (props) => {
                     props.onSelect();
                 }
             }
-        >   
-            <img src={register} alt="" />
+        >
+            {/* <img src={register} alt="" /> */}
             {props.text}
         </S.Container>
     );

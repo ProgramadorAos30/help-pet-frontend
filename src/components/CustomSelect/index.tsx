@@ -12,7 +12,7 @@ type List = {
 };
 
 interface IProps {
-    onBlur?:(e: any) => any,
+    onBlur?: (e: any) => any,
     onChange: (e: any) => any,
     onClick?: () => void,
     label: string,
@@ -24,7 +24,7 @@ interface IProps {
     id?: string
 };
 
-const CustomSelect:React.FC <IProps> = (props) => {
+const CustomSelect: React.FC<IProps> = (props) => {
     const theme = createTheme({
         components: {
             MuiSelect: {
@@ -32,24 +32,24 @@ const CustomSelect:React.FC <IProps> = (props) => {
                     select: {
                         color: '#2C3941',
                         fontWeight: '700',
-                        fontFamily: 'Inter', 
+                        fontFamily: 'Inter',
                         border: '1px solid #AFAFAF !important',
-                        borderRadius: '8px', 
+                        borderRadius: '8px',
                         background: '#fff',
                         paddingTop: '25px',
                     },
-                    
+
                 }
             },
             MuiInputLabel: {
-                styleOverrides:{
+                styleOverrides: {
                     root: {
-                    color: '#AFAFAF',
-                    "&.Mui-focused": {
-                        "color": "#AFAFAF",
+                        color: '#AFAFAF',
+                        "&.Mui-focused": {
+                            "color": "#AFAFAF",
                         },
                     },
-                    
+
                 }
             },
             MuiFormControl: {
@@ -64,13 +64,13 @@ const CustomSelect:React.FC <IProps> = (props) => {
             }
         }
     });
-    
+
     const handleChange = (event: any) => props.onChange(event.target.value);
-    
+
     return (
         <ThemeProvider theme={theme} >
             <FormControl variant="filled" sx={{ width: props.width, height: 56 }}>
-                {props.value === '' ? 
+                {props.value === '' ?
                     <InputLabel>{props.labelDefault}</InputLabel>
                     :
                     <InputLabel>{props.label}</InputLabel>
@@ -83,16 +83,16 @@ const CustomSelect:React.FC <IProps> = (props) => {
                     onBlur={props.onBlur}
                     defaultValue={props.defaultValue}
                 >
-                    <MenuItem disabled value="">
+                    <MenuItem disabled value={props.value}>
                         <em>{props.labelDefault}</em>
                     </MenuItem>
                     {props.list?.map((id: any, index: number) => {
                         return (
-                            <MenuItem 
-                                key={index} 
+                            <MenuItem
+                                key={index}
                                 value={id.value || id.sigla || id.nome || id.name}
                             >
-                                {id.label || id.nome  || id.name}
+                                {id.label || id.nome || id.name}
                             </MenuItem>
                         )
                     })}
