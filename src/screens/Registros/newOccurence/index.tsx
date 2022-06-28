@@ -18,15 +18,17 @@ import {
     SubmitHandler, 
     Controller 
 } from "react-hook-form";
+import { 
+    FormData
+} from './types';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
-import { IProps } from './types';
 
 const NewOccurence: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
     const { data: services } = useService(token);
 
-    const postOccurence = async (data: IProps) => {
+    const postOccurence = async (data: FormData) => {
         const { data: response } = await api.post('/occurrences', data);
         return response.data;
     };
@@ -36,7 +38,7 @@ const NewOccurence: React.FC = () => {
         formState: { errors },
         control,
         watch
-    } = useForm<IProps>();
+    } = useForm<FormData>();
 
     const { mutate, isLoading } = useMutation(postOccurence, {
         onSuccess: () => {
@@ -44,7 +46,7 @@ const NewOccurence: React.FC = () => {
         }
     });
 
-    const onSubmit = (values: IProps) => {
+    const onSubmit = (values: FormData) => {
         const obj = {
             "service": values.service,
             "source": values.source,

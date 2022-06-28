@@ -458,14 +458,18 @@ const Registros: React.FC = () => {
                 </>
             )}
 
-            <PersonalModal 
+            <NewOccurence
+            
+            />
+
+            {/* <PersonalModal 
                 modalBackground={true}
                 width={1604}
                 padding={4}
                 open={open}
                 onClose={() => setOpen(!open)}
                 children={<NewOccurence/>}
-            />
+            /> */}
         </>
     )
 }
