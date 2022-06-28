@@ -37,9 +37,11 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
 
     const {
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isDirty, isValid },
         control,
-        watch
+        watch,
+        getValues,
+        setValue,
     } = useForm<FormData>();
 
     const { mutate, isLoading } = useMutation(postOccurence, {
@@ -93,7 +95,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             onClose={onHide}
             padding={4}
             open={isModal}
-            width={861}
+            width={1604}        
         >
             <S.Container>
                 <h1>Registrar ocorrência</h1>
@@ -243,7 +245,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             Cancelar
                         </button>
                         <button type='submit'>
-                            Registrar ocorrência
+                            { 
+                                isLoading ? 'Cadastrando...' : 'Registrar ocorrência'
+                            }
                         </button>
                     </S.ContainerBtn>
                 </form>

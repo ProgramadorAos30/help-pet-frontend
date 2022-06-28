@@ -122,8 +122,8 @@ const Registros: React.FC = () => {
                         }}
                     />
                 </div>
-                <DefaultButton
-                    onSelect={() => setOpen(!open)}
+                <DefaultButton 
+                    onSelect={() => setNewOccurence(!newOccurence)}
                     text="Registrar ocorrência"
                 />
             </S.Header>
@@ -468,15 +468,6 @@ const Registros: React.FC = () => {
                     fetchOccurrences()
                 }}
             />
-
-            {/* <PersonalModal 
-                modalBackground={true}
-                width={1604}
-                padding={4}
-                open={open}
-                onClose={() => setOpen(!open)}
-                children={<NewOccurence/>}
-            /> */}
         </>
     )
 }
