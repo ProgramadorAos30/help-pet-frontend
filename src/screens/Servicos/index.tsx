@@ -10,6 +10,7 @@ import {
 } from '../../components';
 import { useMutation } from 'react-query';
 import Form from './Form';
+import EditForm from './EditForm';
 
 const Servicos: React.FC = () => {
     const { token } = useSelector((state : RootState) => state.clickState);
@@ -17,6 +18,7 @@ const Servicos: React.FC = () => {
     const [ serviceTemp, setServiceTemp ] = useState<any>(null);
     const [ idService, setIdService ] = useState<string>('')
     const [ newService, setNewService ] = useState(false);
+    const [ editService, setEditService ] = useState(false);
     const [ showDelete, setShowDelete ] = useState(false);
     const [ showSuccess, setShowSuccess ] = useState(false);
 
@@ -69,7 +71,7 @@ const Servicos: React.FC = () => {
                             onEdit={() => {
                                 setServiceTemp(id)
                                 setIdService(id.id)
-                                setNewService(!newService)
+                                setEditService(!editService)
                             }}
                             key={id.id}
                             serviceName={id.name} 
@@ -83,9 +85,16 @@ const Servicos: React.FC = () => {
             
             <Form
                 isModal={newService}
-                itemEdit={serviceTemp}
                 onHide={() => {
                     setNewService(!newService)
+                    refetch()
+                }}
+            />
+            <EditForm 
+                isModal={editService}
+                itemEdit={serviceTemp}
+                onHide={() => {
+                    setEditService(!editService)
                     setServiceTemp(null)
                     refetch()
                 }}

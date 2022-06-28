@@ -5,13 +5,15 @@ export {
     useService,
     postService, 
     deleteService,
-    putService
+    putService,
+    getServiceById
 } from './useService';
 export { 
     useSources,
     postSource,
     putSource,
-    deleteSource
+    deleteSource,
+    getSourceById
 } from './useSource';
 export { useOccurrences } from './useOccurences';
 export { useUploads } from './useUploads';

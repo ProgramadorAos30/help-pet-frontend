@@ -45,3 +45,12 @@ export const deleteService = async (token: string, id: string) => {
     getServices(token)
     return data
 };
+
+export const getServiceById = async (token: string, id: string) => {
+    const data = await api.get(`/services/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    return data
+};
