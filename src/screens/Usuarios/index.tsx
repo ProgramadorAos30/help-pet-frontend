@@ -46,7 +46,8 @@ const Usuarios: React.FC = () => {
         <>
             <S.Nav>
                 <div>
-                    <DoubleButton id="UsuarioApp"
+                    <DoubleButton 
+                        id="ButtonUsuarioApp"
                         text='Usuários do aplicativo'
                         selected={app}
                         onSelect={() => {
@@ -54,7 +55,8 @@ const Usuarios: React.FC = () => {
                             setPanel(false)
                         }}
                     />
-                    <DoubleButton id="UsuarioPainel"
+                    <DoubleButton 
+                        id="ButtonUsuarioPainel"
                         text='Usuários do painel'
                         selected={panel}
                         onSelect={() => {
@@ -64,7 +66,8 @@ const Usuarios: React.FC = () => {
                     />
                 </div>
                 {panel === true && (
-                    <DefaultButton id="Cadastrar"
+                    <DefaultButton 
+                        id="ButtonCadastrarMod"
                         onSelect={() => setOpen(!open)}
                         text="Cadastrar moderador"
                     />

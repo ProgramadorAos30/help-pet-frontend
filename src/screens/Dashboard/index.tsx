@@ -430,7 +430,9 @@ const Dashboard: React.FC = () => {
     return (
         <>
             <S.Navigation>
+                <div>
                 <DoubleButton
+                    id="ButtonDashboardOcorrencias"
                     text='Ocorrências'
                     selected={map}
                     onSelect={() => {
@@ -439,6 +441,7 @@ const Dashboard: React.FC = () => {
                     }}
                 />
                 <DoubleButton
+                    id="ButtonDashBoardUsuarios"
                     text='Usuários'
                     selected={users}
                     onSelect={() => {
@@ -446,6 +449,7 @@ const Dashboard: React.FC = () => {
                         setUsers(true)
                     }}
                 />
+                </div>
             </S.Navigation>
             <S.Container>
                 {map == true && (

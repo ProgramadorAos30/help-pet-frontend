@@ -5,6 +5,18 @@ export const Container = styled.div`
 
 export const Navigation = styled.nav`
     margin-bottom: 24px;
+
+    div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.theme.colors.white};
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 448px;
+    height: 40px; 
+    margin: 2px 0px;
+    }
 `;
 
 export const Header = styled.div`
