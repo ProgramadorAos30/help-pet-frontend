@@ -5,11 +5,13 @@ interface TypeButtonProps {
     text: string;
     selected: boolean;
     onSelect(): void;
+    id?: string;
 }
 
 const DoubleButton: React.FC <TypeButtonProps> = (props) => {
     return (
         <S.Container
+            id = {props.id}
             selected={ props.selected }
             onClick={
                 event => {

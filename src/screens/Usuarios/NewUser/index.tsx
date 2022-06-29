@@ -20,7 +20,8 @@ const NewUser: React.FC = () => {
         handleSubmit,
         formState: { errors },
         control,
-        watch
+        watch,
+        setValue,
     } = useForm<IProps>();
 
     const { mutate, isLoading } = useMutation(postUser, {
@@ -37,7 +38,7 @@ const NewUser: React.FC = () => {
             "state": values.state,
             "city": values.city,
             "active": values.active,
-            "role": values.role,
+            "role": "Administrador",
             "password": values.password,
         }
         mutate(obj);
@@ -70,26 +71,23 @@ const NewUser: React.FC = () => {
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
-
                                 />
                             )}
                         />  
                         <Controller
                             control={control}
-                            name="role"
-                            defaultValue=""
-                            render={({field: { onChange, onBlur, value }}) => ( 
-                                <CustomSelect 
-                                    list={role}
-                                    label="Tipo de acesso"
-                                    labelDefault="Tipo de acesso"
+                            name="password"
+                            render={({field: { onChange, onBlur, value }}) => (
+                                <CustomInput
+                                    width={372} 
+                                    label="Senha do moderador"
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
-                                    width={372}
+                                    type="password"
                                 />
                             )}
-                        />
+                        />                  
                     </fieldset>
                     <fieldset>
                         <Controller
@@ -105,7 +103,7 @@ const NewUser: React.FC = () => {
                                     onBlur={onBlur}
                                 />
                             )}
-                        />  
+                        /> 
                         <Controller
                             control={control}
                             name="email"
@@ -122,7 +120,7 @@ const NewUser: React.FC = () => {
                         />
                     </fieldset>
                     <fieldset>
-                        <Controller
+                    <Controller
                             control={control}
                             name="state"
                             defaultValue=""
@@ -138,7 +136,6 @@ const NewUser: React.FC = () => {
                                 />
                             )}
                         />
-
                         <Controller
                             control={control}
                             name="city"
@@ -157,20 +154,22 @@ const NewUser: React.FC = () => {
                         />
                     </fieldset>
                     <fieldset>
-                        <Controller
+                        {/* <Controller
                             control={control}
-                            name="password"
-                            render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372} 
-                                    label="Senha do moderador"
+                            name="role"
+                            defaultValue=""
+                            render={({field: { onChange, onBlur, value }}) => ( 
+                                <CustomSelect 
+                                    list={role}
+                                    label="Tipo de acesso"
+                                    labelDefault="Tipo de acesso"
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
-                                    type="password"
+                                    width={372}
                                 />
                             )}
-                        />
+                        /> */}
                     </fieldset>
                     <fieldset>
                         <div>

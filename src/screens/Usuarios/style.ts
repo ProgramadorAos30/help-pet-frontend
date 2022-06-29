@@ -5,6 +5,18 @@ export const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+
+    div {
+    background-color: ${props => props.theme.colors.white};
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+        button :active {
+            Height: 44px,
+        }
+        button :noActive {
+
+        }
+
+    }
 `;
 
 export const CardList = styled.div`
@@ -135,33 +147,33 @@ export const Trusted = styled.span <{ trusted: boolean }> `
     }}
 `;
 
-export const Role = styled.td <{ role: string }> `
-    display: flex;
-    align-items: center;
-    border-style: none;
+// export const Role = styled.td <{ role: string }> `
+//     display: flex;
+//     align-items: center;
+//     border-style: none;
           
-    > span {
-        font-size: 12px;
-        font-weight: 600;
-        height: 31px;
-        padding: 4px 12px;
-        border-radius: 20px;
+//     > span {
+//         font-size: 12px;
+//         font-weight: 600;
+//         height: 31px;
+//         padding: 4px 12px;
+//         border-radius: 20px;
 
-        ${props => {
-        if (props.role === "Administrador") {
-            return `
-                background: rgba(62, 168, 73, 0.1);
-                color: #3EA849;
-            `
-        } else {
-            return `
-                background: rgba(71, 222, 208, 0.1);
-                color: #47DED0;
-            `
-        }
-    }}
-    }
-`;
+//         ${props => {
+//         if (props.role === "Administrador") {
+//             return `
+//                 background: rgba(62, 168, 73, 0.1);
+//                 color: #3EA849;
+//             `
+//         } else {
+//             return `
+//                 background: rgba(71, 222, 208, 0.1);
+//                 color: #47DED0;
+//             `
+//         }
+//     }}
+//     }
+// `;
 
 export const Options = styled.button`
 display: flex;

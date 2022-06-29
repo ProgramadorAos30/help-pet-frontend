@@ -42,12 +42,11 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
     ]; //id.city, id.state,
 
-
     return (
         <>
             <S.Nav>
                 <div>
-                    <DoubleButton
+                    <DoubleButton id="UsuarioApp"
                         text='Usuários do aplicativo'
                         selected={app}
                         onSelect={() => {
@@ -55,7 +54,7 @@ const Usuarios: React.FC = () => {
                             setPanel(false)
                         }}
                     />
-                    <DoubleButton
+                    <DoubleButton id="UsuarioPainel"
                         text='Usuários do painel'
                         selected={panel}
                         onSelect={() => {
@@ -65,7 +64,7 @@ const Usuarios: React.FC = () => {
                     />
                 </div>
                 {panel === true && (
-                    <DefaultButton
+                    <DefaultButton id="Cadastrar"
                         onSelect={() => setOpen(!open)}
                         text="Cadastrar moderador"
                     />
@@ -178,26 +177,26 @@ const Usuarios: React.FC = () => {
 
                             <S.Table>
                                 <S.TableHead>
-                                    <tr>
-                                        <th>
-                                            <span>
+                                    <tr>    
+                                        <th style={{ width: '246px',}}>
+                                            <span style={{marginLeft: '24px'}}>
                                                 Nome / Apelido
                                                 <button>
                                                     <img src={iconShow} alt="" />
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '173px',}}>
                                             <span>
                                                 Whatsapp
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '216px',}}>
                                             <span>
                                                 E-mail
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '192px',}}>
                                             <span>
                                                 Estado
                                                 <button>
@@ -205,15 +204,15 @@ const Usuarios: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
-                                            <span>
+                                        <th style={{ width: '195px', }}>
+                                            <span >
                                                 Cidade
                                                 <button>
                                                     <img src={iconShow} alt="" />
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '191px', }}>
                                             <span>
                                                 Status
                                                 <button>
@@ -221,7 +220,7 @@ const Usuarios: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '209px', }}>
                                             <span>
                                                 Confiabilidade
                                                 <span>
@@ -232,8 +231,8 @@ const Usuarios: React.FC = () => {
                                                 </span>
                                             </span>
                                         </th>
-                                        <th>
-                                            <span>
+                                        <th style={{ width: 'auto' }}>
+                                            <span style={{ marginRight: '64px' }}>
                                                 Ações
                                             </span>
                                         </th>
@@ -244,43 +243,43 @@ const Usuarios: React.FC = () => {
                                         <tbody>
                                             {id.role === 'Mobile' && (
                                                 <tr>
-                                                    <td>
-                                                        <span>
+                                                    <td style={{ width: '246px', }}>
+                                                        <span style={{marginLeft: '24px'}}>
                                                             {id.name}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '173px', }}>
                                                         <span>
                                                             {id.phone_number}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '216px', }}>
                                                         <span>
                                                             {id.email}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '192px', }}>
                                                         <span>
                                                             {id.state}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '195px', }}>
                                                         <span>
                                                             {id.city}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '191px', }}>
                                                         <S.Active active={id.active}>
                                                             {id.active === true ? "Ativo" : "Inativo"}
                                                         </S.Active>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '209px', }}>
                                                         <S.Trusted trusted={id.trusted}>
                                                             <img width="20px" src={id.trusted === true ? trusted : noTrusted} alt={id.trusted === true ? "Confiável" : "Não confiável"} />
                                                             {id.trusted === true ? "Confiável" : "Não confiável"}
                                                         </S.Trusted>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: 'auto' }}>
                                                         <span>
                                                             <S.Options>
                                                                 <img src={options} alt="Opções" />
@@ -324,25 +323,25 @@ const Usuarios: React.FC = () => {
                             <S.Table>
                                 <S.TableHead>
                                     <tr>
-                                        <th>
-                                            <span>
+                                        <th style={{ width: '367px', }}>
+                                            <span style={{ marginLeft: '24px' }}>
                                                 Nome do moderador
                                                 <button>
                                                     <img src={iconShow} alt="" />
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '168px', }}>
                                             <span>
                                                 Whatsapp
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '362px', }}>
                                             <span>
                                                 E-mail
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '181px', }}>
                                             <span>
                                                 Estado
                                                 <button>
@@ -350,7 +349,7 @@ const Usuarios: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
+                                        <th style={{ width: '198px', }}>
                                             <span>
                                                 Cidade
                                                 <button>
@@ -358,12 +357,12 @@ const Usuarios: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
+                                        {/* <th style={{ width: '239px' }}>
                                             <span>
                                                 Tipo de acesso
                                             </span>
-                                        </th>
-                                        <th>
+                                        </th> */}
+                                        <th style={{ width: '147px', }}>
                                             <span>
                                                 Status
                                                 <button>
@@ -371,8 +370,8 @@ const Usuarios: React.FC = () => {
                                                 </button>
                                             </span>
                                         </th>
-                                        <th>
-                                            <span>
+                                        <th style={{ width: 'auto' }}>
+                                            <span style={{ marginRight: '64px' }}>
                                                 Ações
                                             </span>
                                         </th>
@@ -383,42 +382,42 @@ const Usuarios: React.FC = () => {
                                         <tbody>
                                             {id.role === 'Administrador' && (
                                                 <tr>
-                                                    <td>
-                                                        <span>
+                                                    <td style={{ width: '367px', }}>
+                                                        <span  style={{ marginLeft: '24px' }}>
                                                             {id.name}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '168px', }}>
                                                         <span>
                                                             {id.phone_number}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '358px', }}>
                                                         <span>
                                                             {id.email}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '181px', }}>
                                                         <span>
                                                             {id.state}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: '198px', }}>
                                                         <span>
                                                             {id.city}
                                                         </span>
                                                     </td>
-                                                    <S.Role role={id.role}>
+                                                    {/* <S.Role role={id.role}  style={{ width: '239px' }}>
                                                         <span>
                                                             {id.role === "Administrador" ? `${id.role}` : `${id.role}`}
                                                         </span>
-                                                    </S.Role>
-                                                    <td>
+                                                    </S.Role> */}
+                                                    <td style={{ width: '147px', }}>
                                                         <S.Active active={id.active}>
                                                             {id.active === true ? "Ativo" : "Inativo"}
                                                         </S.Active>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ width: 'auto' }}>
                                                         <span>
                                                             <S.Options>
                                                                 <img src={options} alt="Opções" />
