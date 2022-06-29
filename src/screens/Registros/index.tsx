@@ -375,10 +375,10 @@ const Registros: React.FC = () => {
                                             <tr>
                                                 <td style={{ width: '218px' }}>
                                                     <span>
-                                                        <S.Icon backgroundColor={id.service.background_color}    >
-                                                            <img src={id.service.image} alt="" />
+                                                        <S.Icon backgroundColor={id?.service?.background_color}    >
+                                                            <img src={id?.service?.image} alt="" />
                                                         </S.Icon>
-                                                        {id.service.name}
+                                                        {id?.service?.name}
                                                     </span>
                                                 </td>
                                                 <S.User>

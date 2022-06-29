@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style';
 import {
     useService,
-    api
+    api,
+    useSources
 } from '../../../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores';
@@ -23,12 +24,15 @@ import {
     FormData,
     IProps
 } from './types';
+import { AREA } from '../../../constants/index';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
+import MenuItem from '@mui/material/MenuItem';
 
 const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
     const { token } = useSelector((state: RootState) => state.clickState);
     const { data: services } = useService(token);
+    const { data: sources } = useSources(token);
 
     const postOccurence = async (data: FormData) => {
         const { data: response } = await api.post('/occurrences', data);
@@ -42,6 +46,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         watch,
         getValues,
         setValue,
+        reset
     } = useForm<FormData>();
 
     const { mutate, isLoading } = useMutation(postOccurence, {
@@ -80,14 +85,11 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         console.log(values, 'valores');
     };
 
-    const area = [
-        { label: 'Favela', value: 'Shantytown' },
-        { label: 'Comunidade', value: 'Community' },
-        { label: 'Ocupação', value: 'Occupation' },
-        { label: 'Quiombo', value: 'Quilombo' },
-        { label: 'Vila', value: 'Village' },
-        { label: 'Povoado', value: 'Settlement' }
-    ];
+    useEffect(() => {
+        if(!isModal){
+            reset()
+        }
+    }, [isModal, reset]);
 
     return (
         <PersonalModal
@@ -95,7 +97,8 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             onClose={onHide}
             padding={4}
             open={isModal}
-            width={1604}        
+            width={1920}  
+            register={true}     
         >
             <S.Container>
                 <h1>Registrar ocorrência</h1>
@@ -105,70 +108,157 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             <label htmlFor="">Qual serviço esta indisponível?</label>
                             <div>
                                 <div>
-                                    <Controller
+                                    <Controller 
+                                        name='service'
                                         control={control}
-                                        name="service"
-                                        render={({ field: { onChange, onBlur, value } }) => (
-                                            <input
-                                                type="radio"
-                                                name='service'
-                                                id='energi'
-                                                onChange={onChange}
-                                                onBlur={onBlur}
-                                                value={value}
-                                            />
-                                        )}
+                                        render={({field: { onChange, onBlur, value }}) => {
+                                            return (
+                                                <CustomSelect
+                                                    onChange={onChange}
+                                                    onBlur={onBlur}
+                                                    value={value}
+                                                    label='Serviço disponível'
+                                                    labelDefault='Serviço disponível'
+                                                    width={372}
+                                                    childrean={
+                                                        services?.map((id: any) => {
+                                                            return (
+                                                                <MenuItem value={id.id}>
+                                                                    {id.name}
+                                                                </MenuItem>
+                                                            )
+                                                        })
+                                                    }
+                                                />
+                                            )
+                                        }}
                                     />
-                                    <label htmlFor="energi">Energia</label>
+                                </div>
+                                {watch('service') !== undefined ? 
+                                    <div>
+                                        <Controller 
+                                            name="source"
+                                            control={control}
+                                            render={({field: { onChange, onBlur, value }}) => {
+                                                return (
+                                                    <CustomSelect
+                                                        onChange={onChange}
+                                                        onBlur={onBlur}
+                                                        value={value}
+                                                        label='Selecione a fonte'
+                                                        labelDefault='Selecione a fonte'
+                                                        width={372}
+                                                        childrean={
+                                                            sources?.map((id: any) => {
+                                                                if(watch('service') === id.service){
+                                                                    return (
+                                                                        <MenuItem value={id.id}>
+                                                                            {id.name}
+                                                                        </MenuItem>
+                                                                    )
+                                                                }
+                                                            })
+                                                        }
+                                                    />
+                                                )
+                                            }}
+                                        />
+                                    </div>
+                                    :
+                                    <div style={{display: 'none'}}/>
+                                }
+                                <div>
+                                    {sources?.map((id) => {
+                                        if(watch('source') === id.id){
+                                            if(id.name === "Outra fonte"){
+                                                return (
+                                                    <Controller 
+                                                        name="source_name"
+                                                        control={control}    
+                                                        render={({field: { onChange, onBlur, value }}) => {
+                                                            return (
+                                                                <CustomInput
+                                                                    label='Nome da fonte'
+                                                                    onChange={onChange}
+                                                                    onBlur={onBlur}
+                                                                    value={value}
+                                                                    type='text'
+                                                                    width={372}
+                                                                />
+                                                            )
+                                                        }}
+                                                    />
+                                                )
+                                            } else {
+                                                return <div style={{display: 'none'}}/>
+                                            }
+                                        }
+                                    })}
                                 </div>
                                 <div>
-                                    <input
-                                        type="radio"
-                                        name='service'
-                                        id='whater'
-                                    />
-                                    <label htmlFor="whater">Água</label>
+                                    {services?.map((id: any) => {
+                                        if(watch('service') === id.id){
+                                            if(id.name === 'Água'){
+                                                return (
+                                                    <Controller 
+                                                        name="have_hydrometer"
+                                                        control={control}
+                                                        render={({ field: { onChange, onBlur, value }}) => {
+                                                            return (
+                                                                <div>
+                                                                    <div>
+                                                                        <label htmlFor="">
+                                                                            O imóvel possui hidrômetro (relógio)?
+                                                                        </label>
+                                                                        <img src="" alt="" />
+                                                                    </div>
+                                                                    <div>
+                                                                        <div>
+                                                                            <input 
+                                                                                type="radio" 
+                                                                                name="have_hydrometer" 
+                                                                                id="have_hydrometer_yes"
+                                                                                value="Yes"
+                                                                            />
+                                                                            <label htmlFor="Yes">Sim</label>
+                                                                        </div>
+                                                                        <div>
+                                                                            <input 
+                                                                                type="radio" 
+                                                                                name="have_hydrometer" 
+                                                                                id="have_hydrometer_no"
+                                                                                value="No"
+                                                                            />
+                                                                            <label htmlFor="No">Não</label>
+                                                                        </div>
+                                                                        <div>
+                                                                            <input 
+                                                                                type="radio" 
+                                                                                name="have_hydrometer" 
+                                                                                id="have_hydrometer_notKnow"
+                                                                                value="NotKnow"
+                                                                            />
+                                                                            <label htmlFor="">Não sei dizer</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        }}
+                                                    />
+                                                )
+                                            } else if (id.name === 'Energia'){
+                                                return (
+                                                    <>
+                                                    </>
+                                                )
+                                            }
+                                        }
+                                    })}
                                 </div>
-                                <CustomSelect
-                                    onChange={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    }}
-                                    label='Fonte do serviço'
-                                    list={services}
-                                    value=''
-                                    labelDefault='Fonte do serviço'
-                                    width={372}
-                                />
                             </div>
                         </S.FieldsetTopLeft>
                         <S.FieldsetTopCenter>
-                            <label htmlFor="">Data e hora da ocorrência:</label>
-                            <div>
-                                <CustomInput
-                                    label='Data'
-                                    onChange={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    }}
-                                    onBlur={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    }}
-                                    type='date'
-                                    value={undefined}
-                                    width={176}
-                                />
-                                <CustomInput
-                                    label='Horário'
-                                    onChange={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    }}
-                                    onBlur={function (e: any) {
-                                        throw new Error('Function not implemented.');
-                                    }}
-                                    type='time'
-                                    value={undefined}
-                                    width={176}
-                                />
-                            </div>
+
                         </S.FieldsetTopCenter>
                         <S.FieldsetTopRight>
                             <div>
@@ -216,7 +306,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                 }}
                                 label='Selecione a área afetada'
                                 labelDefault='Selecione a área afetada'
-                                list={area}
+                                list={AREA}
                                 value=''
                                 width={372}
                             />
@@ -241,7 +331,12 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                         />
                     </S.FormBottom>
                     <S.ContainerBtn>
-                        <button type='button'>
+                        <button 
+                            type='button' 
+                            onClick={() => {
+                                onHide()
+                            }}
+                        >
                             Cancelar
                         </button>
                         <button type='submit'>

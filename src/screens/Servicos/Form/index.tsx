@@ -203,52 +203,54 @@ const FormService: React.FC<IProps> = ({onHide, isModal}) => {
                     <S.Header>
                         <InputIcon />
                         <div>
-                            <Controller 
-                                name='name'
-                                control={control}
-                                render={({field: {onChange, onBlur, value}}) => (
-                                    <>
-                                        <CustomInput 
-                                            label='Digite o nome do serviço' 
-                                            type='Text' 
-                                            value={value} 
-                                            width={254}                            
-                                            onChange={onChange} 
-                                            onBlur={onBlur}
-                                            id="name_service" 
-                                        />
-                                        {errors?.name && (
-                                            <p style={{color: 'red'}}>
-                                                Nome do serviço é obrigatório!
-                                            </p>
-                                        )}
-                                    </>
-                                )}
-                            />
-                            <Controller 
-                                name='background_color'
-                                control={control}
-                                render={({field: {onChange, onBlur, value}}) => (
-                                    <>
-                                        <CustomSelect
-                                            width={254}
-                                            label='Cor de background'
-                                            list={BACKGROUND_COLOR}
-                                            value={value == '' ? '#FF954E' : value}
-                                            defaultValue={value}
-                                            labelDefault="Cor de background"
-                                            onChange={onChange}
-                                            onBlur={onBlur}
-                                            id="background_color"
-                                        />
-                                        {errors?.background_color && (
-                                            <p style={{color: 'red'}}>
-                                                Cor do background é obrigatório!
-                                            </p>
-                                        )}
-                                    </>
-                                )}
-                            />
+                            <div>
+                                <Controller 
+                                    name='name'
+                                    control={control}
+                                    render={({field: {onChange, onBlur, value}}) => (
+                                        <>
+                                            <CustomInput 
+                                                label='Digite o nome do serviço' 
+                                                type='Text' 
+                                                value={value} 
+                                                width={254}                            
+                                                onChange={onChange} 
+                                                onBlur={onBlur}
+                                                id="name_service" 
+                                            />
+                                            {errors?.name && (
+                                                <p style={{color: 'red'}}>
+                                                    Nome do serviço é obrigatório!
+                                                </p>
+                                            )}
+                                        </>
+                                    )}
+                                />
+                                <Controller 
+                                    name='background_color'
+                                    control={control}
+                                    render={({field: {onChange, onBlur, value}}) => (
+                                        <>
+                                            <CustomSelect
+                                                width={254}
+                                                label='Cor de background'
+                                                list={BACKGROUND_COLOR}
+                                                value={value == '' ? '#FF954E' : value}
+                                                defaultValue={value}
+                                                labelDefault="Cor de background"
+                                                onChange={onChange}
+                                                onBlur={onBlur}
+                                                id="background_color"
+                                            />
+                                            {errors?.background_color && (
+                                                <p style={{color: 'red'}}>
+                                                    Cor do background é obrigatório!
+                                                </p>
+                                            )}
+                                        </>
+                                    )}
+                                />
+                            </div>
                         </div>
                         <fieldset>
                             <label htmlFor="">

@@ -8,23 +8,23 @@ interface IProps {
     children: any,
     width: number,
     padding: number,
-    modalBackground: boolean
+    modalBackground: boolean,
+    register?: boolean
 }
 
 const PersonalModal: React.FC <IProps> = (props) => {
     const style = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'absolute' as 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: props.width,
-      bgcolor: 'background.paper',
-      border: 'none',
-      p: props.padding,
-      borderRadius: '8px',
+        display: 'block',
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: props.width,
+        bgcolor: 'background.paper',
+        border: 'none',
+        p: props.padding,
+        borderRadius: '8px',
+        overflow:'scroll',
     };
     return (
         <Modal
@@ -32,9 +32,14 @@ const PersonalModal: React.FC <IProps> = (props) => {
             onClose={props.onClose}
             hideBackdrop={props.modalBackground}
         >
-            <Box sx={style}>
-                {props.children}
-            </Box>
+            {props.register === true ?
+                props.children
+                :
+                <Box sx={style}>
+                    {props.children}
+                </Box>
+
+            }
         </Modal>
     );
 };

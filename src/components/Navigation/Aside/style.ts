@@ -52,7 +52,7 @@ export const Link = styled(NavLink)`
 
     :hover, &.active {
         color: ${props => props.theme.colors.white};
-        background: ${props => props.theme.colors.gradient};
+        background: ${props => props.theme.colors.blue};
         font-style: normal;
         font-weight: 400;
         font-size: 18px;

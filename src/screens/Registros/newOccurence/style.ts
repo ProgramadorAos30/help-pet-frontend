@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     background-color: #FFF;
-    height: 740px;
+    overflow: scroll;
     > h1 {
         font-style: normal;
         font-weight: 600;
@@ -32,31 +32,12 @@ export const FieldsetTopLeft = styled.fieldset`
         color: ${props => props.theme.colors.dark};
     }
 
-    > div {
+    > div { 
         display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        margin-top: 24px;
-
-        > div:nth-child(1) {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-            > input {
-                margin-right: 15px;
-            }
-        }
-
-        > div:nth-child(2) {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            
-            > input {
-                margin-right: 15px;
-                margin-left: 15px;
-            }
+        flex-wrap: wrap;
+        > div {
+            margin-top: 24px;
+            margin-right: 15px;
         }
     }
 `;

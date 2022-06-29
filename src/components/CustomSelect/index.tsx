@@ -15,13 +15,16 @@ interface IProps {
     onBlur?: (e: any) => any,
     onChange: (e: any) => any,
     onClick?: () => void,
-    label: string,
-    list: List[] | listUf[] | listCity[] | Services[] | any,
-    value: string,
+    label?: string,
+    list?: List[] | listUf[] | listCity[] | Services[] | any,
+    value?: string,
     defaultValue?: string,
     width?: number,
     labelDefault?: string,
-    id?: string
+    id?: string,
+    another_options?: boolean,
+    childrean?: any,
+    disabled?: boolean
 };
 
 const CustomSelect: React.FC<IProps> = (props) => {
@@ -82,6 +85,7 @@ const CustomSelect: React.FC<IProps> = (props) => {
                     onChange={props.onChange}
                     onBlur={props.onBlur}
                     defaultValue={props.defaultValue}
+                    disabled={props.disabled}
                 >
                     <MenuItem disabled value={props.value}>
                         <em>{props.labelDefault}</em>
@@ -90,12 +94,13 @@ const CustomSelect: React.FC<IProps> = (props) => {
                         return (
                             <MenuItem
                                 key={index}
-                                value={id.value || id.sigla || id.nome || id.name}
+                                value={id.value || id.sigla || id.nome || id.name || id.id}
                             >
                                 {id.label || id.nome || id.name}
                             </MenuItem>
                         )
                     })}
+                    {props.childrean}
                 </Select>
             </FormControl>
         </ThemeProvider>
