@@ -37,6 +37,7 @@ const Dashboard: React.FC = () => {
         {label: 'Pesquisar 4', value: 'pesquisa4'},
         {label: 'Pesquisar 5', value: 'pesquisa5'},
         {label: 'Pesquisar 6', value: 'pesquisa6'},
+        
     ]
 
     const card = {

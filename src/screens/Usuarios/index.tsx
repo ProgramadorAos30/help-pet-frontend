@@ -40,6 +40,7 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 4', value: 'pesquisa4', number: 4 },
         { label: 'Pesquisar 5', value: 'pesquisa5', number: 5 },
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
+        
     ]; //id.city, id.state,
 
     return (

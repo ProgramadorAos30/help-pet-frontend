@@ -25,4 +25,5 @@ const DoubleButton: React.FC <TypeButtonProps> = (props) => {
     );
 };
 
+
 export default DoubleButton;

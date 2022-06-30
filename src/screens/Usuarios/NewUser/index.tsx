@@ -12,6 +12,7 @@ const postUser = async (data: IProps) => {
     return response.data;
 };
 
+
 const NewUser: React.FC = () => {
     const [ idUf, setIdUf ] = useState<any>(0);
     const { data: uf, isLoading: loadingUf } = useUf();

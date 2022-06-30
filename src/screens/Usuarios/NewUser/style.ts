@@ -9,6 +9,7 @@ export const Container = styled.div`
         text-align: center;
         margin-bottom: 32px;
     }
+    
     > form {
         div {
             > fieldset {

@@ -5,6 +5,7 @@ export const Container = styled.div`
 
 export const Navigation = styled.nav`
     margin-bottom: 24px;
+    
 
     div {
     display: flex;

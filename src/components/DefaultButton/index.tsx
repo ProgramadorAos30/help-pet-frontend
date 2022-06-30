@@ -25,4 +25,5 @@ const DefaultButton: React.FC<TypeButtonProps> = (props) => {
     );
 };
 
+
 export default DefaultButton;

@@ -14,4 +14,5 @@ export const Container = styled.button<{ selected: boolean; }>`
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
+    
 `;
