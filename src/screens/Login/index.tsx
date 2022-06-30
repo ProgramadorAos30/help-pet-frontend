@@ -115,7 +115,7 @@ const Login: React.FC = () => {
                         />
                         {errors?.password && (
                             <span>
-                                {errors?.password?.message}
+                                Senha é obrigatória
                             </span>
                         )}
                         </fieldset>

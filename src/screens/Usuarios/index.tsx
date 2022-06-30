@@ -34,7 +34,7 @@ const Usuarios: React.FC = () => {
     console.log(users);
 
     let lista = [
-        { label: 'Pesquisar 1', value: 'pesquisa1', number: 1 },
+        { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
         { label: 'Pesquisar 2', value: 'pesquisa2', number: 2 },
         { label: 'Pesquisar 3', value: 'pesquisa3', number: 3 },
         { label: 'Pesquisar 4', value: 'pesquisa4', number: 4 },
@@ -134,7 +134,6 @@ const Usuarios: React.FC = () => {
                                 setOpen={() => setOpenList(!openList)}
                             />
                         </S.CardList>
-
                         <S.ContainerListApp>
                             <S.SearchInputs>
                                 <p>Usuários cadastrados no aplicativo</p>
@@ -317,7 +316,7 @@ const Usuarios: React.FC = () => {
                             <div>
                             </div>
                             <PersonalModal
-                                modalBackground={true}
+                                modalBackground={false}
                                 padding={4}
                                 width={858}
                                 open={open}
