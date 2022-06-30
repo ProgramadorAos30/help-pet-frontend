@@ -9,7 +9,8 @@ interface IProps {
     onBlur: (e: any) => any,
     value: any,
     width: string,
-    heigth: string
+    heigth: string,
+    id?: string
 }
     const TextArea = styled.textarea< {width: string, heigth: string} >`
         width: ${props => props.width};
@@ -30,6 +31,7 @@ const CustomTextArea: React.FC <IProps> = (props) => {
 
     return (
         <TextArea 
+            id={props.id}
             heigth={props.heigth}
             width={props.width}
             placeholder={props.placeholder}

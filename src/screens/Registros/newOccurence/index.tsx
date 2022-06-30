@@ -14,7 +14,11 @@ import {
     CustomTolltip,
     PersonalModal
 } from '../../../components';
-import { blueAlert } from '../../../assets';
+import { 
+    blueAlert,
+    modalIconClose,
+    mapsDefault
+} from '../../../assets';
 import {
     useForm,
     SubmitHandler,
@@ -35,7 +39,11 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
     const { data: sources } = useSources(token);
 
     const postOccurence = async (data: FormData) => {
-        const { data: response } = await api.post('/occurrences', data);
+        const { data: response } = await api.post('/occurrences', data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         return response.data;
     };
 
@@ -44,6 +52,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         formState: { errors, isDirty, isValid },
         control,
         watch,
+        register,
         getValues,
         setValue,
         reset
@@ -81,7 +90,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             "status": values.status,
             "finished_status": values.finished_status
         }
-        //mutate(obj);
+        mutate(obj);
         console.log(values, 'valores');
     };
 
@@ -102,11 +111,19 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         >
             <S.Container>
                 <h1>Registrar ocorrência</h1>
+                <button
+                    type='button'
+                    onClick={() => {
+                        onHide()
+                    }}
+                >
+                    <img src={modalIconClose} alt="" />
+                </button>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <S.FormTop>
-                        <S.FieldsetTopLeft>
+                        <S.FieldsetTop>
                             <label htmlFor="">Qual serviço esta indisponível?</label>
-                            <div>
+                            <fieldset>
                                 <div>
                                     <Controller 
                                         name='service'
@@ -165,7 +182,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                         />
                                     </div>
                                     :
-                                    <div style={{display: 'none'}}/>
+                                    <div style={{display: 'none', width: '0px'}}/>
                                 }
                                 <div>
                                     {sources?.map((id) => {
@@ -190,7 +207,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     />
                                                 )
                                             } else {
-                                                return <div style={{display: 'none'}}/>
+                                                return <div style={{display: 'none', width: '0px'}}/>
                                             }
                                         }
                                     })}
@@ -200,86 +217,197 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                         if(watch('service') === id.id){
                                             if(id.name === 'Água'){
                                                 return (
-                                                    <Controller 
-                                                        name="have_hydrometer"
-                                                        control={control}
-                                                        render={({ field: { onChange, onBlur, value }}) => {
-                                                            return (
+                                                    <>
+                                                        <S.RadioFieldset>
+                                                            <fieldset>
+                                                                <p>
+                                                                    O imóvel possui hidrômetro (relógio)?
+                                                                </p>
+                                                                <img src="" alt="" />
+                                                            </fieldset>
+                                                            <fieldset>
                                                                 <div>
-                                                                    <div>
-                                                                        <label htmlFor="">
-                                                                            O imóvel possui hidrômetro (relógio)?
-                                                                        </label>
-                                                                        <img src="" alt="" />
-                                                                    </div>
-                                                                    <div>
-                                                                        <div>
-                                                                            <input 
-                                                                                type="radio" 
-                                                                                name="have_hydrometer" 
-                                                                                id="have_hydrometer_yes"
-                                                                                value="Yes"
-                                                                            />
-                                                                            <label htmlFor="Yes">Sim</label>
-                                                                        </div>
-                                                                        <div>
-                                                                            <input 
-                                                                                type="radio" 
-                                                                                name="have_hydrometer" 
-                                                                                id="have_hydrometer_no"
-                                                                                value="No"
-                                                                            />
-                                                                            <label htmlFor="No">Não</label>
-                                                                        </div>
-                                                                        <div>
-                                                                            <input 
-                                                                                type="radio" 
-                                                                                name="have_hydrometer" 
-                                                                                id="have_hydrometer_notKnow"
-                                                                                value="NotKnow"
-                                                                            />
-                                                                            <label htmlFor="">Não sei dizer</label>
-                                                                        </div>
-                                                                    </div>
+                                                                    <input 
+                                                                        {...register('have_hydrometer')}
+                                                                        type="radio" 
+                                                                        name="have_hydrometer" 
+                                                                        id="have_hydrometer_yes"
+                                                                        value="Yes"
+                                                                    />
+                                                                    <label htmlFor="Yes">Sim</label>
                                                                 </div>
-                                                            )
-                                                        }}
-                                                    />
+                                                                <div>
+                                                                    <input 
+                                                                        {...register('have_hydrometer')}
+                                                                        type="radio" 
+                                                                        name="have_hydrometer" 
+                                                                        id="have_hydrometer_no"
+                                                                        value="No"
+                                                                    />
+                                                                    <label htmlFor="No">Não</label>
+                                                                </div>
+                                                                <div>
+                                                                    <input 
+                                                                        {...register('have_hydrometer')}
+                                                                        type="radio" 
+                                                                        name="have_hydrometer" 
+                                                                        id="have_hydrometer_notKnow"
+                                                                        value="NotKnow"
+                                                                    />
+                                                                    <label htmlFor="">Não sei dizer</label>
+                                                                </div>
+                                                            </fieldset>
+                                                        </S.RadioFieldset>
+                                                        <S.RadioFieldset>
+                                                            <fieldset>
+                                                                <p>
+                                                                    Você também faz uso de um reservatório, cisterna ou caixa d'água para armazenamento?
+                                                                </p>
+                                                                <img src="" alt="" />
+                                                            </fieldset>
+                                                            <fieldset>
+                                                                <div>
+                                                                    <input 
+                                                                        {...register('have_reservoir')}
+                                                                        type="radio" 
+                                                                        name="have_reservoir" 
+                                                                        id="have_reservoir_yes"
+                                                                        value="Yes"
+                                                                    />
+                                                                    <label htmlFor="Yes">Sim</label>
+                                                                </div>
+                                                                <div>
+                                                                    <input 
+                                                                        {...register('have_reservoir')}
+                                                                        type="radio" 
+                                                                        name="have_reservoir" 
+                                                                        id="have_reservoir_no"
+                                                                        value="No"
+                                                                    />
+                                                                    <label htmlFor="No">Não</label>
+                                                                </div>
+                                                                <div>
+                                                                    <input 
+                                                                        {...register('have_reservoir')}
+                                                                        type="radio" 
+                                                                        name="have_reservoir" 
+                                                                        id="have_reservoir_notKnow"
+                                                                        value="NotKnow"
+                                                                    />
+                                                                    <label htmlFor="">Não sei dizer</label>
+                                                                </div>
+                                                            </fieldset>
+                                                        </S.RadioFieldset>
+
+                                                    </>
                                                 )
                                             } else if (id.name === 'Energia'){
                                                 return (
-                                                    <>
-                                                    </>
+                                                    <S.RadioFieldset>
+                                                        <fieldset>
+                                                            <p>
+                                                                O imóvel possui medidor de energia elétrica?
+                                                            </p>
+                                                            <img src="" alt="" />
+                                                        </fieldset>
+                                                        <fieldset>
+                                                            <div>
+                                                                <input 
+                                                                    {...register('have_energy_meter')}
+                                                                    type="radio" 
+                                                                    name="have_energy_meter" 
+                                                                    id="have_energy_meter_yes"
+                                                                    value="Yes"
+                                                                />
+                                                                <label htmlFor="Yes">Sim</label>
+                                                            </div>
+                                                            <div>
+                                                                <input 
+                                                                    {...register('have_energy_meter')}
+                                                                    type="radio" 
+                                                                    name="have_energy_meter" 
+                                                                    id="have_energy_meter_no"
+                                                                    value="No"
+                                                                />
+                                                                <label htmlFor="No">Não</label>
+                                                            </div>
+                                                            <div>
+                                                                <input 
+                                                                    {...register('have_energy_meter')}
+                                                                    type="radio" 
+                                                                    name="have_energy_meter" 
+                                                                    id="have_energy_meter_notKnow"
+                                                                    value="NotKnow"
+                                                                />
+                                                                <label htmlFor="">Não sei dizer</label>
+                                                            </div>
+                                                        </fieldset>
+                                                    </S.RadioFieldset>
                                                 )
                                             }
                                         }
                                     })}
                                 </div>
-                            </div>
-                        </S.FieldsetTopLeft>
-                        <S.FieldsetTopCenter>
-
-                        </S.FieldsetTopCenter>
-                        <S.FieldsetTopRight>
-                            <div>
-                                <label htmlFor="">A ocorrência é em uma localização especial?</label>
-                                <CustomTolltip
-                                    title={<img src={blueAlert} alt="" />}
-                                    desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
-                                />
-                            </div>
-                            <div>
-                                <input type="radio" name='especial' id="yes" />
-                                <label htmlFor="yes">Sim</label>
-                                <input type="radio" name='especial' id="no" />
-                                <label htmlFor="no">Não</label>
-                                <input type="radio" name='especial' id="unknow" />
-                                <label htmlFor="unknow">Não sei</label>
-                            </div>
-                        </S.FieldsetTopRight>
+                                <fieldset>
+                                    <fieldset>
+                                        <label htmlFor="">Data e hora da ocorrencia:</label>
+                                        <Controller 
+                                            name="date"
+                                            control={control}
+                                            render={({ field: { onChange, onBlur, value }}) => {
+                                                return (
+                                                    <CustomInput 
+                                                        label='Data e hora'
+                                                        onBlur={onBlur}
+                                                        onChange={onChange}
+                                                        type="datetime-local"
+                                                        value={value}
+                                                        width={254}
+                                                        id='date_time'
+                                                    />
+                                                )
+                                            }}
+                                        />
+                                    </fieldset>
+                                    <fieldset>
+                                        <div>
+                                            <label htmlFor="">A ocorrência é em uma localização especial?</label>
+                                            <CustomTolltip
+                                                title={<img src={blueAlert} alt="" />}
+                                                desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
+                                            />
+                                        </div>
+                                        <div>
+                                            <input 
+                                                type="radio" 
+                                                id="special_place_yes" 
+                                                value="Yes"
+                                                {...register('special_place')}
+                                            />
+                                            <label htmlFor="yes">Sim</label>
+                                            <input 
+                                                type="radio" 
+                                                id="special_place_no" 
+                                                value="No"
+                                                {...register('special_place')}
+                                            />
+                                            <label htmlFor="no">Não</label>
+                                            <input 
+                                                type="radio" 
+                                                id="special_place_unknow" 
+                                                value="NotKnow"
+                                                {...register('special_place')}
+                                            />
+                                            <label htmlFor="unknow">Não sei</label>
+                                        </div>
+                                    </fieldset>
+                                </fieldset>
+                            </fieldset>
+                        </S.FieldsetTop>
                     </S.FormTop>
                     <S.FormCenter>
-                        <div>
+                        
+                        {/* <div>
                             <label htmlFor="">Endereço/Logradouro</label>
                             <CustomInput
                                 label='Digite o endereço ou logradouro'
@@ -310,25 +438,110 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                 value=''
                                 width={372}
                             />
-                        </div>
+                        </div> */}
+                        <fieldset>
+                            <fieldset>
+                                <label htmlFor="">Endereço/Logradouro</label>
+                                <Controller 
+                                    name="address"
+                                    control={control}
+                                    render={({ field: { onChange, onBlur, value }}) => {
+                                        return (
+                                            <CustomInput 
+                                                label='Endereço/Logradouro'
+                                                onBlur={onBlur}
+                                                onChange={onChange}
+                                                type="text"
+                                                value={value}
+                                                width={254}
+                                                id='date_time'
+                                            />
+                                        )
+                                    }}
+                                />
+                            </fieldset>
+                            <fieldset>
+                                <label htmlFor="">Em que escala é a área afetada?</label>
+                                <Controller 
+                                    name='area'
+                                    control={control}
+                                    render={({field: { onChange, onBlur, value }}) => {
+                                        return (
+                                            <CustomSelect
+                                                onChange={onChange}
+                                                onBlur={onBlur}
+                                                value={value}
+                                                label='Área afetada'
+                                                labelDefault='Área afetada'
+                                                width={372}
+                                                list={AREA}
+                                            />
+                                        )
+                                    }}
+                                />
+                            </fieldset>
+
+                        </fieldset>
                         <div>
-                            mapa
+                            <img src={mapsDefault} alt="" />
                         </div>
+                        <fieldset>
+                            <label htmlFor="">Alguma observação sobre a ocorrência?</label>
+                            <Controller 
+                                name="description"
+                                control={control}
+                                render={({ field: { onChange, onBlur, value }}) => {
+                                    return (
+                                        <CustomTextArea
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            value={value}
+                                            placeholder='Digite sua observação (Opcional)'
+                                            width='408px'
+                                            heigth='340px'
+                                            id="description"
+                                        />
+                                    )
+                                }}
+                            />
+                        </fieldset>
                     </S.FormCenter>
                     <S.FormBottom>
-                        <label htmlFor="">Alguma observação sobre a ocorrência?</label>
-                        <CustomTextArea
-                            onChange={function (e: any) {
-                                throw new Error('Function not implemented.');
-                            }}
-                            onBlur={function (e: any) {
-                                throw new Error('Function not implemented.');
-                            }}
-                            value={undefined}
-                            placeholder='Digite sua observação (Opcional)'
-                            width='1508px'
-                            heigth='85px'
-                        />
+                        <label htmlFor="">
+                            Caso entrem outras queixas da sua região, você autoriza que as informações da sua reclamação sejam juntadas à elas e compartilhadas com as autoridades competentes para solicitar que o abastecimento da sua residência seja feito pelas agências competentes.
+                        </label>
+                        <fieldset>
+                            <div>
+                                <input 
+                                    //{...register('agree_share')}
+                                    type="radio" 
+                                    name="agree_share" 
+                                    id="agree_share_yes"
+                                    value="true"
+                                />
+                                <label htmlFor="Yes">Sim</label>
+                            </div>
+                            <div>
+                                <input 
+                                    //{...register('agree_share')}
+                                    type="radio" 
+                                    name="agree_share" 
+                                    id="agree_share_no"
+                                    value="No"
+                                />
+                                <label htmlFor="No">Não</label>
+                            </div>
+                            <div>
+                                <input 
+                                    //{...register('agree_share')}
+                                    type="radio" 
+                                    name="agree_share" 
+                                    id="agree_share_notKnow"
+                                    value="NotKnow"
+                                />
+                                <label htmlFor="">Não sei dizer</label>
+                            </div>
+                        </fieldset>
                     </S.FormBottom>
                     <S.ContainerBtn>
                         <button 

@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const Container = styled.div`
     background-color: #FFF;
     overflow: scroll;
+    height: 100vh;
+    padding: 60px;
+    position: relative;
+
     > h1 {
         font-style: normal;
         font-weight: 600;
@@ -13,6 +17,14 @@ export const Container = styled.div`
         margin-bottom: 48px;
     }
 
+    > button {
+        background: none;
+        border: none;
+        position: absolute;
+        right: 60px;
+        top: 60px;
+    }
+
 `;
 
 export const FormTop = styled.div`
@@ -21,8 +33,8 @@ export const FormTop = styled.div`
     justify-content: space-between;
 `;
 
-export const FieldsetTopLeft = styled.fieldset`
-    width: 592px;
+export const FieldsetTop = styled.fieldset`
+    width: 100%;
 
     > label {
         font-style: normal;
@@ -32,12 +44,39 @@ export const FieldsetTopLeft = styled.fieldset`
         color: ${props => props.theme.colors.dark};
     }
 
-    > div { 
+    > fieldset { 
         display: flex;
         flex-wrap: wrap;
+
         > div {
             margin-top: 24px;
             margin-right: 15px;
+        }
+    }
+`;
+
+export const RadioFieldset = styled.fieldset`
+    > fieldset:nth-child(1){
+        display: flex;
+        align-items: center;
+        margin-bottom: 26px;
+        > p {
+            margin: 0 !important;
+            font-weight: 700;
+        }
+    }
+
+    > fieldset:nth-child(2){
+        display: flex;
+
+        > div {
+            display: flex;
+            align-items: center;
+            margin-right: 24px;
+
+            > label {
+                margin-left: 6px;
+            }
         }
     }
 `;
@@ -94,7 +133,7 @@ export const FieldsetTopRight = styled.fieldset`
 `;
 
 export const FormCenter = styled.div`
-    height: 239px;
+    width: 100%;
     margin-top: 40px;
     display: flex;
     justify-content: space-between;
@@ -102,7 +141,6 @@ export const FormCenter = styled.div`
     > div:nth-child(1) {
         display: flex;
         flex-direction: column;
-        width: 372px;
 
         > label {
             margin-bottom: 24px;
@@ -112,31 +150,10 @@ export const FormCenter = styled.div`
             line-height: 19px;
             color: ${props => props.theme.colors.dark};
         }
-
-        > div:nth-child(3){
-            display: flex;
-            align-items: center;
-            margin-top: 41px;
-            margin-bottom: 22px;
-
-            > img {
-                margin-left: 15px;
-            }
-
-            > label {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 19px;
-            color: ${props => props.theme.colors.dark};
-        }
-        }
     }
 
     > div:nth-child(2) {
-        border: 1px solid blue;
-        width: 1096px;
-        height: 239px;
+        
     }
 `;
 

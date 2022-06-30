@@ -52,7 +52,7 @@ const Registros: React.FC = () => {
         isFetched: isFetchedOccurence
     } = useOccurrences(
         token,
-        'DESC',
+        'ASC',
         page,
         10,
         status,
