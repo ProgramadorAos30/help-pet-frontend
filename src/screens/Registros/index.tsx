@@ -432,7 +432,7 @@ const Registros: React.FC = () => {
                             </S.Table>
                         </S.Container>
                     </Box>
-                    <Pagination />
+                    {/* <Pagination /> */}
                     <S.ContainerBtn>
                         <S.PrevNext
                             to="prev"

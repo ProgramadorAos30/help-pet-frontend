@@ -4,7 +4,7 @@ export const Container = styled.div`
     background-color: #FFF;
     overflow: scroll;
     height: 100vh;
-    padding: 60px;
+    padding: 40px;
     position: relative;
 
     > h1 {
@@ -35,47 +35,73 @@ export const FormTop = styled.div`
 
 export const FieldsetTop = styled.fieldset`
     width: 100%;
+    display: flex;
+    margin-bottom: 48px;
 
-    > label {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 19px;
-        color: ${props => props.theme.colors.dark};
-    }
-
-    > fieldset { 
+    > div {
         display: flex;
-        flex-wrap: wrap;
-
-        > div {
-            margin-top: 24px;
-            margin-right: 15px;
+        
+        > fieldset { 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100px;
+            margin-right: 25px;
+        
+            > label {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 19px;
+                color: ${props => props.theme.colors.dark};
+                
+                 > div {
+                 }
+            }
         }
     }
+    
 `;
 
-export const RadioFieldset = styled.fieldset`
+export const FieldMid = styled.fieldset`
+    display: flex;
+
+    > fieldset {
+        margin-right: 70px;
+        height: 100px;
+    }
+
     > fieldset:nth-child(1){
         display: flex;
-        align-items: center;
-        margin-bottom: 26px;
-        > p {
-            margin: 0 !important;
-            font-weight: 700;
-        }
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     > fieldset:nth-child(2){
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-        > div {
+        > p {
+            width: 439px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+            color: #2C3941;
+            opacity: 0.6;
+        }
+
+        > fieldset {
             display: flex;
             align-items: center;
-            margin-right: 24px;
 
             > label {
-                margin-left: 6px;
+                margin-right: 24px;
+            }
+
+            > input {
+                margin-right: 8px;
             }
         }
     }
@@ -132,28 +158,57 @@ export const FieldsetTopRight = styled.fieldset`
     }
 `;
 
-export const FormCenter = styled.div`
+export const FormCenter = styled.fieldset`
     width: 100%;
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-
-    > div:nth-child(1) {
+    > div {
+        margin-top: 40px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
 
-        > label {
-            margin-bottom: 24px;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 19px;
-            color: ${props => props.theme.colors.dark};
+        > fieldset:nth-child(1) {
+            margin-right: 60px;
+            > fieldset {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100px;
+                margin-bottom: 24px;
+            }
+        }
+    }
+`;
+
+export const FieldTextArea = styled.fieldset`
+    margin-left: 60px;
+    > div {
+        margin-top: 24px !important;
+    }
+`;
+
+export const RadioFieldset = styled.fieldset`
+    > fieldset:nth-child(1){
+        display: flex;
+        align-items: center;
+        margin-bottom: 26px;
+        > p {
+            margin: 0 !important;
+            font-weight: 700;
         }
     }
 
-    > div:nth-child(2) {
-        
+    > fieldset:nth-child(2){
+        display: flex;
+
+        > div {
+            display: flex;
+            align-items: center;
+            margin-right: 24px;
+
+            > label {
+                margin-left: 6px;
+            }
+        }
     }
 `;
 
@@ -167,9 +222,19 @@ export const FormBottom = styled.fieldset`
         line-height: 19px;
         color: ${props => props.theme.colors.dark};
     }
-
-    > textarea {
+    
+    > fieldset {
+        display: flex;
+        align-items: center;
         margin-top: 24px;
+
+        > label {
+            margin-right: 10px;
+        }
+
+        > input {
+            margin-right: 8px;
+        }
     }
 `;
 

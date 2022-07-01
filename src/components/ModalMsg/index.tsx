@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import * as S from './style'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import {
@@ -14,48 +14,10 @@ interface IProps {
     status: string,
     mensage: string
     modalBackground: boolean,
-    height: string
+    height: string,
+    occurence?: boolean
+    finishOccurence?: () => void
 }
-
-const Container = styled.div<{ height: string }>`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: ${props => props.height == '' ? '312px' : props.height};
-
-    > img {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 24px;
-    }
-
-    > p {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 34px;
-        color: #2C3941;
-        text-align: center;
-        margin-bottom: 32px;
-    }
-
-    > button {
-        border: none;
-        border-radius: 8px;
-        color: #FFF;
-        background-color: #1773E2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 19px;
-        width: 311px;
-        height: 48px;
-    }
-`;
 
 const ModalMsg: React.FC <IProps> = (props) => {
     const style = {
@@ -80,7 +42,7 @@ const ModalMsg: React.FC <IProps> = (props) => {
             hideBackdrop={props.modalBackground}
         >
             <Box sx={style}>
-                <Container height={props.height}>
+                <S.Container height={props.height}>
                     <img src={props.status == 'success' ? trusted : alertRed} alt="" />
                     <p>{props.mensage}</p>
                     <button
@@ -90,7 +52,19 @@ const ModalMsg: React.FC <IProps> = (props) => {
                     >
                         Fechar
                     </button>
-                </Container>
+                    {props.occurence === true && 
+                        <S.ContainerOccurence>
+                            <hr />
+                            <p>Caso o serviço já tenha sido restabelecido, clique no botão abaixo para registrar.</p>
+                            <button
+                                type="button"
+                                onClick={props.finishOccurence}
+                            >
+                                Finalizar ocorrência
+                            </button>
+                        </S.ContainerOccurence>
+                    }
+                </S.Container>
             </Box>
         </Modal>
     );

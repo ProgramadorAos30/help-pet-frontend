@@ -17,7 +17,7 @@ export interface FormData {
     area: string,
     description: string,
     restoration_description: string,
-    agree_share: boolean,
+    agree_share: any,
     latitude: string,
     longitude: string,
     status: string,
