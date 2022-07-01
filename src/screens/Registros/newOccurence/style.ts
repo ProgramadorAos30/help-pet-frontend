@@ -24,7 +24,6 @@ export const Container = styled.div`
         right: 60px;
         top: 60px;
     }
-
 `;
 
 export const FormTop = styled.div`
@@ -75,12 +74,35 @@ export const FieldMid = styled.fieldset`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        > label {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 19px;
+            color: ${props => props.theme.colors.dark};
+        }
     }
 
     > fieldset:nth-child(2){
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    
+        > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            > label {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 19px;
+                color: ${props => props.theme.colors.dark};
+                margin-right: 10px;
+            }
+        }
 
         > p {
             width: 439px;
@@ -194,6 +216,9 @@ export const RadioFieldset = styled.fieldset`
         > p {
             margin: 0 !important;
             font-weight: 700;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
     }
 
@@ -221,6 +246,12 @@ export const FormBottom = styled.fieldset`
         font-size: 16px;
         line-height: 19px;
         color: ${props => props.theme.colors.dark};
+        display: flex;
+        align-items: flex-start;
+
+        > p {
+            width: 1138px;
+        }
     }
     
     > fieldset {

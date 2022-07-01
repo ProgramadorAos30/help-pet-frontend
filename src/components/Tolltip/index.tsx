@@ -1,33 +1,45 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-
-const TolltipDown = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: '#2C3941',
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#2C3941',
-      fontSize: '12px',
-      fontWeight: '400',
-      lineHeight: '18px',
-    },
-  }));
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
+import styled from 'styled-components';
 
 interface IProps {
     title: any,
     desciption: any
 }
 
+const Button = styled.button`
+  border: none;
+  background: none;
+`;
+
 const CustomTolltip: React.FC <IProps> = (props) => {
+  const theme = createTheme({
+    components: {
+      MuiTooltip: {
+        styleOverrides: {
+          tooltipArrow: {
+            color: '#2C3941'
+          },
+          tooltip: {
+            backgroundColor: '#2C3941',
+            fontSize: '12px',
+            fontWeight: '400',
+            lineHeight: '18px',
+          }
+        }
+      }
+    }
+  })
+
     return (
-        <TolltipDown title={props.desciption}>
+      <ThemeProvider theme={theme}>
+        <Tooltip title={props.desciption} placement="top">
+          <Button type="button">
             {props.title}
-        </TolltipDown>
+          </Button>
+        </Tooltip>
+      </ThemeProvider>
     );
 };
 

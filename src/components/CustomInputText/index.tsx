@@ -8,7 +8,8 @@ interface IProps {
     value?: string,
     placeholder?: string,
     type: string,
-    width: string
+    width: string,
+    id?: string
 };
 
 const CustomInputText:React.FC <IProps> = (props) => {
@@ -26,7 +27,7 @@ const CustomInputText:React.FC <IProps> = (props) => {
             >{props.label}</label>
             <input 
                 name='date'
-                id='date'
+                id={props.id}
                 type={props.type} 
                 value={props.value}
                 onChange={props.onChange}

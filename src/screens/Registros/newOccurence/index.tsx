@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores';
 import {
     CustomInput,
+    CustomInputData,
     CustomSelect,
     CustomTextArea,
     CustomTolltip,
@@ -148,6 +149,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                 render={({field: { onChange, onBlur, value }}) => {
                                                     return (
                                                         <CustomSelect
+                                                            id='service'
                                                             onChange={onChange}
                                                             onBlur={onBlur}
                                                             value={value}
@@ -179,6 +181,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     render={({field: { onChange, onBlur, value }}) => {
                                                         return (
                                                             <CustomSelect
+                                                                id="source"
                                                                 onChange={onChange}
                                                                 onBlur={onBlur}
                                                                 value={value}
@@ -218,6 +221,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                 render={({field: { onChange, onBlur, value }}) => {
                                                                     return (
                                                                         <CustomInput
+                                                                            id='source_name'
                                                                             label='Nome da fonte'
                                                                             onChange={onChange}
                                                                             onBlur={onBlur}
@@ -247,6 +251,10 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                             <fieldset>
                                                                 <p>
                                                                     O imóvel possui hidrômetro (relógio)?
+                                                                    <CustomTolltip
+                                                                        title={<img src={blueAlert} alt="" />}
+                                                                        desciption="Texto em falta"
+                                                                    />
                                                                 </p>
                                                                 <img src="" alt="" />
                                                             </fieldset>
@@ -332,6 +340,10 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         <fieldset>
                                                             <p>
                                                                 O imóvel possui medidor de energia elétrica?
+                                                                <CustomTolltip
+                                                                    title={<img src={blueAlert} alt="" />}
+                                                                    desciption="Texto em falta"
+                                                                />
                                                             </p>
                                                             <img src="" alt="" />
                                                         </fieldset>
@@ -384,13 +396,13 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                         control={control}
                                         render={({ field: { onChange, onBlur, value }}) => {
                                             return (
-                                                <CustomInput 
+                                                <CustomInputData 
                                                     label='Data e hora'
                                                     onBlur={onBlur}
                                                     onChange={onChange}
                                                     type="datetime-local"
                                                     value={value}
-                                                    width={254}
+                                                    width="254px"
                                                     id='date_time'
                                                 />
                                             )
@@ -508,7 +520,13 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                         </S.FormCenter>
                         <S.FormBottom>
                             <label htmlFor="">
-                                Caso entrem outras queixas da sua região, você autoriza que as informações da sua reclamação sejam juntadas à elas e compartilhadas com as autoridades competentes para solicitar que o abastecimento da sua residência seja feito pelas agências competentes.
+                                <p>
+                                    Caso entrem outras queixas da sua região, você autoriza que as informações da sua reclamação sejam juntadas à elas e compartilhadas com as autoridades competentes para solicitar que o abastecimento da sua residência seja feito pelas agências competentes.
+                                </p>
+                                <CustomTolltip
+                                    title={<img src={blueAlert} alt="" />}
+                                    desciption="Texto em falta"
+                                />
                             </label>
                             <fieldset>
                                 <input 
