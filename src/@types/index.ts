@@ -46,6 +46,46 @@ export interface User {
     updatedAt: string
 };
 
+export interface AllUsers {
+  data:[{
+    name: string,
+    age: string,
+    phone_number: string,
+    email: string,
+    password: string,
+    state: string,
+    city: string,
+    genre: string,
+    breed: string,
+    active: true,
+    trusted: false,
+    role: string,
+    first_access: boolean,
+    settings: {
+      user: string,
+      service_notifications: [
+        string
+      ],
+      all_notifications: boolean,
+      push_token: string,
+      _id: string
+    },
+    _id: string,
+    createdAt: string,
+    updatedAt: string
+  }],
+  meta:[{
+    page: any,
+    take: any,
+    itemCount: any,
+    pageCount: any,
+    hasPreviousPage: any,
+    hasNextPage: any
+
+  }]
+
+}
+
 export interface User_setings {
     user: string,
     service_notifications: [

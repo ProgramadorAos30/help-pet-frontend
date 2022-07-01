@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div <{ width: string }>`
-    max-width: 392px;
+    max-width: 392px;   
 `;
 
 export const Card = styled.div`
@@ -68,6 +68,7 @@ export const List = styled.div <{ width: string }>`
         justify-content: space-between;
         align-items: center;  
         height: 19px;
+        margin-bottom: 9px;
 
         > h1 {
             font-style: normal;
