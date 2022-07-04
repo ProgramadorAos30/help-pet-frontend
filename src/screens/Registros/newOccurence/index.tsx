@@ -253,14 +253,15 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     <>
                                                         <S.RadioFieldset>
                                                             <fieldset>
-                                                                <p>
+                                                                <label>
                                                                     O imóvel possui hidrômetro (relógio)?
-                                                                    <CustomTolltip
-                                                                        title={<img src={blueAlert} alt="" />}
-                                                                        desciption="Texto em falta"
-                                                                    />
-                                                                </p>
-                                                                <img src="" alt="" />
+                                                                    <div>
+                                                                        <CustomTolltip
+                                                                            title={<img src={blueAlert} alt="" />}
+                                                                            desciption="Texto em falta"
+                                                                        />
+                                                                    </div>
+                                                                </label>
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div>
@@ -342,13 +343,15 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                 return (
                                                     <S.RadioFieldset>
                                                         <fieldset>
-                                                            <p>
+                                                            <label>
                                                                 O imóvel possui medidor de energia elétrica?
-                                                                <CustomTolltip
-                                                                    title={<img src={blueAlert} alt="" />}
-                                                                    desciption="Texto em falta"
-                                                                />
-                                                            </p>
+                                                                <div>
+                                                                    <CustomTolltip
+                                                                        title={<img src={blueAlert} alt="" />}
+                                                                        desciption="Texto em falta"
+                                                                    />
+                                                                </div>
+                                                            </label>
                                                             <img src="" alt="" />
                                                         </fieldset>
                                                         <fieldset>
@@ -417,10 +420,6 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             <fieldset>
                                 <div>
                                     <label htmlFor="">A ocorrência é em uma localização especial?</label>
-                                    <CustomTolltip
-                                        title={<img src={blueAlert} alt="" />}
-                                        desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
-                                    />
                                 </div>
                                 <p>
                                     Se enquadram em localizações especiais: favelas, comunidades, ocupações, quilombos, aldeias, assentamento e etc."
@@ -501,7 +500,13 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                         />
                                     </fieldset>
                                     <fieldset>
-                                        <label htmlFor="">Em que escala é a área afetada?</label>
+                                        <div>
+                                            <label htmlFor="">Em que escala é a área afetada?</label>
+                                            <CustomTolltip
+                                                title={<img src={blueAlert} alt="" />}
+                                                desciption="Se enquadram como localizações especiais lugares como comunidades de assentamento, favelas, quilombos, entre outros"
+                                            />
+                                        </div>
                                         <Controller 
                                             name='area'
                                             control={control}

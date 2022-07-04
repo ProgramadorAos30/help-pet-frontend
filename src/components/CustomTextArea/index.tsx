@@ -21,7 +21,7 @@ interface IProps {
         background-color: #FFF;
         resize: none;
         font-style: normal;
-        font-weight: 600;
+        font-weight: 400;
         font-size: 16px;
         line-height: 19px;
         color: #2C3941;

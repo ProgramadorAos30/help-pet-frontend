@@ -209,6 +209,15 @@ export const FormCenter = styled.fieldset`
                 height: 91px;
                 margin-bottom: 24px !important;
             }
+
+            > fieldset:nth-child(2) {
+                > div {
+                    display: flex;
+                    > label {
+                        margin-right: 5px;
+                    }
+                }
+            }
         }
 
         > fieldset:nth-child(2) {
@@ -229,15 +238,21 @@ export const FieldTextArea = styled.fieldset`
 
 export const RadioFieldset = styled.fieldset`
     > fieldset:nth-child(1){
+        width: 325px;
         display: flex;
         align-items: center;
         margin-bottom: 26px;
-        > p {
+        margin-right: 10px;
+
+        > label {
+            display: flex;
+            align-items: center;
             margin: 0 !important;
             font-weight: 700;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
+
+            > div {
+                margin-left: 5px;
+            }
         }
     }
 
@@ -315,6 +330,7 @@ export const ContainerBtn = styled.fieldset`
     }
 
     > button:nth-child(2){
+        border: none;
         background: ${props => props.theme.colors.blue};
         color: ${props => props.theme.colors.white};
     }
