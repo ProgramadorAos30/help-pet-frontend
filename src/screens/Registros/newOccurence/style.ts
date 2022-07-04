@@ -4,7 +4,7 @@ export const Container = styled.div`
     background-color: #FFF;
     overflow: scroll;
     height: 100vh;
-    padding: 40px;
+    padding: 20px 40px 20px 40px;
     position: relative;
 
     > h1 {

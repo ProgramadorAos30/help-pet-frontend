@@ -159,7 +159,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                             value={value}
                                                             label='Serviço disponível'
                                                             labelDefault='Serviço disponível'
-                                                            width={372}
+                                                            width={254}
                                                             childrean={
                                                                 services?.map((id: any) => {
                                                                     return (
@@ -191,7 +191,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                 value={value}
                                                                 label='Selecione a fonte'
                                                                 labelDefault='Selecione a fonte'
-                                                                width={372}
+                                                                width={254}
                                                                 childrean={
                                                                     sources?.map((id: any) => {
                                                                         if(watch('service') === id.service){
