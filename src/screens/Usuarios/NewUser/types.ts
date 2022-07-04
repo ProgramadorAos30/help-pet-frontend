@@ -1,4 +1,4 @@
-export type IProps = {
+export type FormData = {
     "name": string,
     "phone_number": string,
     "email": string,
@@ -7,4 +7,9 @@ export type IProps = {
     "active": boolean,
     "role": string,
     "password": string
+}
+
+export interface IProps {
+    onClose: () => void;
+    isModal: boolean;
 }

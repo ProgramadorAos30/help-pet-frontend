@@ -41,6 +41,7 @@ const Usuarios: React.FC = () => {
     const [app, setApp] = useState(true);
     const [panel, setPanel] = useState(false);
     const [ allUsersList, setAllUsersList ] = useState<any>([])
+    const [region_list, setRegion_list] = useState(false);
 
     let lista = [
         { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
@@ -51,32 +52,37 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
         
     ];
-    let ExTotal= [{label: 'total', number: 300, region: [
-        { 
-            label: 'sul', number: 100, state: [
-            {
-                label: "rio grande do sul",
-                number: 50,
-                sigla: "RS",
-            },{
-                state: "parana",
-                number: 20,
-                sigla: "PR",
-            }],       
-        }, 
-        { 
-            label: 'suldeste', number: 200, state: [
-            {
-                label: "rio de janeiro",
-                number: 50,
-                sigla: "RJ",
-            },{
-                label: "são paulo",
-                number: 20,
-                sigla: "SP",
-            }],       
-        }],
-}];
+
+    // let region_list: [{
+    //         name: 'sul',
+    //         state_list: [
+    //         {
+    //             name: 'Rio Grande do Sul',
+    //             user_total: 100, 
+    //         },
+    //         {
+    //             name: 'Santa Catarina',
+    //             user_total: 200,
+    //         },
+    //         {
+    //             name: 'Parana',
+    //             user_total: 300,
+    //         }]},
+    //         {
+    //         name: 'Sudeste',
+    //         state_list: [{
+    //             name: 'Rio de Janeiro',
+    //             user_total: 400, 
+    //         },
+    //         {
+    //             name: 'São Paulo',
+    //             user_total: 500,
+    //         },
+    //         {
+    //             name: 'Minas Gerais',
+    //             user_total: 600,
+    //         }],
+    //     }],
 
     // macro
     // fazer uma lista de todos os estados com todas quantidades, incluido o total
@@ -87,6 +93,28 @@ const Usuarios: React.FC = () => {
     //mini
     // fazer a quantidade de cada estado
     // separar os estados com as regiões
+
+    // useEffect(() =>{
+
+    //     let spam:any = []
+
+    //     region_list?.forEach((r) =>{
+    //         console.log(r.name + "teste")
+    //         spam.push({
+    //             estado: r.name,
+    //         })
+    //     })
+
+    //     // passar por todo o array, e pegar os dados
+
+    //     //pegar o nome da regiao + a quantidade total
+
+    //     //pegar o nome do estado + a quantidade
+
+    //     //devolver em um array
+
+    //     setMapEstadoUserQTD(spam)
+    // },[])
 
     const [ mapEstados, setMapEstados ] = useState<any>()
  
@@ -100,7 +128,8 @@ const Usuarios: React.FC = () => {
 
     //setMapEstados
         useEffect(() =>{ 
-        let spam: any = []
+            let spam: any = []
+
             uf?.forEach((e) =>{
                 spam.push({
                     estado: e.nome,
@@ -109,197 +138,93 @@ const Usuarios: React.FC = () => {
                     qtd: 1
                 })
             })
-        setMapEstados(spam)
 
+            setMapEstados(spam)
     }, [])
 
     // setMapRegiao
-    useEffect(() =>{ 
-        
-        let spam: any = []
-        uf?.forEach((e) =>{
-            spam.push({
-                regiao: e.regiao.nome,
-                qtd: 1
-            })
-        })
-
-        let novoLista = [];
-        let m = new Map();
-
-        //para todas as regiões repetidas...
-        for(let reg of spam){
-            //verifica se indice contiver a chave reg.regiao...
-            if (m.has(reg.regiao)){
-                //no item indexado por reg.registro no array novaLista incrementa na lista
-                novoLista[m.get(reg.regiao)].qtd += reg.qtd;
-            } else {
-                //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
-                m.set(reg.regiao, novoLista.push({
-                    regiao:reg.regiao,
-                    qtd:reg.qtd}) - 1);
-            }
-        }
-        setMapRegiao(novoLista)
-    }, [])
-
-    //setMapEstadoUser
-    useEffect(()=>{
-        let estadoUser: any = []
-        users?.forEach((u) =>{
-            estadoUser.push({
-                estado: "",
-                estadoSigla: u.state,
-                regiao: "",
-                qtd: 1
-            })
-        })
-        let novoLista = [];
-        let m = new Map();
-        //Para todos os elementos de listaProdutos...
-        for(let prod of estadoUser){
-            //Verifica se índice contiver a chave prod.nome...
-            if (m.has(prod.estadoSigla)){
-                //No item indexado por prod.nome no array novoLista incrementa o preço registrado com o novo preço.
-                 novoLista[m.get(prod.estadoSigla)].qtd += prod.qtd;                          
-            } else {
-                //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
-                m.set(prod.estadoSigla, novoLista.push({
-                    estadoSigla:prod.estadoSigla,
-                    qtd:prod.qtd}) - 1); 
-          }
-        } 
-        setMapEstadoUser(novoLista)    
-
-        let estado: any = []
-            uf?.forEach((e) =>{
-                estado.push({
-                    estado: e.nome,
-                    estadoSigla: e.sigla,
-                    regiao: e.regiao.nome,
-                    qtd: 1
-                })
-            })
-
-        setMapEstados(estado) 
-
-        const estado
-        
-        const estadoUser = [].concat(estado)
-
-        estadoUser.push(mapEstadoUser)
-
-        console.log(arr1) //[ {fruta:"abacaxi"}, {fruta:"damasco"}, {fruta:"cereja"} ]
-
-        console.log(arr2)
-        setMapEstadoUserQTD(jsonResult)
-
-    },[])  
-
-    useEffect (() => {
-        let estadoUser = mapEstadoUser
-        let estado = estadoUser
-
-
-        const arr2 = [].concat(mapEstados)
-
-        arr2.push(mapEstadoUser)
-
-        
-
-        console.log(arr1) //[ {fruta:"abacaxi"}, {fruta:"damasco"}, {fruta:"cereja"} ]
-
-        console.log(arr2)
-    })
-
-// useEffect(() =>{
-    //     let estado: any = []
-    //     let estadoUser: any = []
-
-    //     mapEstados?.forEach((e : any) =>{
-    //         estado.push({
-    //             estado: e.estado,
-    //             estadoSigla: e.estadoSigla,
-    //             regiao: e.regiao,
-    //             qtd: e.qtd,
-    //         })
-    //     }) 
-    //     mapEstadoUser?.forEach((u: any) =>{
-    //         estadoUser.push({
-    //             estado: u.estado,
-    //             estadoSigla: u.estadoSigla,
-    //             regiao: u.regiao,
-    //             qtd: u.qtd,
-    //         })
-    //     })
-        
-    //     //se o estado tiver quantidade
-
-    
-
-    //     let jsonResult = estado.concat( estadoUser );
-
-    //     // let novaLista = JSON.stringify( jsonResult )
-    //     // let Lista = [];
-        
-    //     // let m = new Map();
-
-    //     // //para todas as regiões repetidas...
-    //     // for(let new of novaLista){
-    //     //     //verifica se indice contiver a chave reg.regiao...
-    //     //     if (m.has(new.estado)){
-    //     //         //no item indexado por reg.registro no array Lista incrementa na lista
-    //     //         Lista[m.get(new.estado)].qtd += new.qtd;
-    //     //     } else {
-    //     //         //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
-    //     //         m.set(new.estado, Lista.push({
-    //     //             estado:new.estado,
-    //     //             estadoSigla:new.estadoSigla,
-    //     //             regiao: new.regiao,
-    //     //             qtd:new.qtd}) - 1);
-    //     //     }
-    //     // }
-
-    //     setMapEstadoUserQTD(jsonResult)
-
-    // },[])
-
     // useEffect(() =>{ 
+        
     //     let spam: any = []
-    //     let temp: any = ''
-    //     let cont: any = 0
-
-    //     users?.forEach((user) =>{
-    //         if(user.state === 'RS'){
-    //             temp = user.state
-    //         }
-    //     })
-
-    //     mapEstadoUser.forEach((state: any) => {
-    //         if(state.estadoSigla === "RS"){
-    //             cont = state.qtd
-    //         } else if (state.estadoSigla === "SC"){
-
-    //         }
-    //     })
-
     //     uf?.forEach((e) =>{
-    //         if(e.sigla === 'RS'){
-    //             spam.push({
+    //         spam.push({
+    //             regiao: e.regiao.nome,
+    //             qtd: 1
+    //         })
+    //     })
+
+    //     let novoLista = [];
+    //     let m = new Map();
+
+    //     //para todas as regiões repetidas...
+    //     for(let reg of spam){
+    //         //verifica se indice contiver a chave reg.regiao...
+    //         if (m.has(reg.regiao)){
+    //             //no item indexado por reg.registro no array novaLista incrementa na lista
+    //             novoLista[m.get(reg.regiao)].qtd += reg.qtd;
+    //         } else {
+    //             //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
+    //             m.set(reg.regiao, novoLista.push({
+    //                 regiao:reg.regiao,
+    //                 qtd:reg.qtd}) - 1);
+    //         }
+    //     }
+    //     setMapRegiao(novoLista)
+    // }, [])
+
+    // //setMapEstadoUser
+    // useEffect(()=>{
+    //     let estadoUser: any = []
+    //     users?.forEach((u) =>{
+    //         estadoUser.push({
+    //             estado: "",
+    //             estadoSigla: u.state,
+    //             regiao: "",
+    //             qtd: 1
+    //         })
+    //     })
+    //     let novoLista = [];
+    //     let m = new Map();
+    //     //Para todos os elementos de listaProdutos...
+    //     for(let prod of estadoUser){
+    //         //Verifica se índice contiver a chave prod.nome...
+    //         if (m.has(prod.estadoSigla)){
+    //             //No item indexado por prod.nome no array novoLista incrementa o preço registrado com o novo preço.
+    //              novoLista[m.get(prod.estadoSigla)].qtd += prod.qtd;                          
+    //         } else {
+    //             //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
+    //             m.set(prod.estadoSigla, novoLista.push({
+    //                 estadoSigla:prod.estadoSigla,
+    //                 qtd:prod.qtd}) - 1); 
+    //       }
+    //     } 
+    //     setMapEstadoUser(novoLista)    
+
+    //     let estado: any = []
+    //         uf?.forEach((e) =>{
+    //             estado.push({
     //                 estado: e.nome,
     //                 estadoSigla: e.sigla,
     //                 regiao: e.regiao.nome,
-    //                 qtd: 0,
-    //                 list_users: {
-    //                     sigla: temp,
-    //                     qtd: cont
-    //                 }
+    //                 qtd: 1
     //             })
+    //         })
 
-    //         }
-    //     })
-    //     setMapEstados(spam)
-    // }, [])
+    //     setMapEstados(estado) 
+
+    //     const estado
+        
+    //     const estadoUser = [].concat(estado)
+
+    //     estadoUser.push(mapEstadoUser)
+
+    //     console.log(arr1) //[ {fruta:"abacaxi"}, {fruta:"damasco"}, {fruta:"cereja"} ]
+
+    //     console.log(arr2)
+    //     setMapEstadoUserQTD(jsonResult)
+
+    // },[])  
+
 
     return (
         <>
@@ -342,7 +267,7 @@ const Usuarios: React.FC = () => {
                                 value={20/*ExTotal.number*/}
                                 type="list"
                                 width='273px'
-                                list={ExTotal}
+                                list={lista}
                                 open={openTotalList}
                                 setOpen={() => setOpenTotalList(!openTotalList)}
                             />
@@ -573,14 +498,7 @@ const Usuarios: React.FC = () => {
                             </S.SearchInputs>
                             <div>
                             </div>
-                            <PersonalModal
-                                modalBackground={false}
-                                padding={4}
-                                width={858}
-                                open={open}
-                                onClose={() => setOpen(!open)}
-                                children={<NewUser />}
-                            />
+                            
                             <S.Table>
                                 <S.TableHead>
                                     <tr>
@@ -692,10 +610,16 @@ const Usuarios: React.FC = () => {
                                 })}
                             </S.Table>
                         </S.ContainerListApp>
+
                     </>
                 )}
             </>
+        
             <Pagination />
+            <NewUser 
+            isModal={open}
+            onClose={() => setOpen(!open)}
+            />
         </>
 
     )

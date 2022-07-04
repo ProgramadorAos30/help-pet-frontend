@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+    overflow: hidden;
+
     > h1 {
         font-style: normal;
         font-weight: 600;
@@ -52,4 +54,19 @@ export const ContainerBnt = styled.div`
         color: ${props => props.theme.colors.white};
         border: none;
     }
+`;
+
+export const Button = styled.button <{ disabled: boolean }>`
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 274px;
+        height:48px;
+        border-radius: 8px;
+        color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
+        background: ${props => props.disabled == false ? props.theme.colors.blue : '#C7C7C7'};
+        border: none;
 `;

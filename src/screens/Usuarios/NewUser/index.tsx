@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as S from './style';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { api, useUf, useCity } from "../../../services";
-import { CustomInput, CustomSelect, CustomSwitch } from '../../../components/index';
-import { IProps } from "./types";
+import { CustomInput, CustomSelect, CustomSwitch, ModalMsg, PersonalModal } from '../../../components/index';
+import { FormData, IProps } from "./types";
+import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 
-const postUser = async (data: IProps) => {
+async function postUser(data: FormData) {
     const { data: response } = await api.post('/signup', data);
     return response.data;
-};
+}
 
-
-const NewUser: React.FC = () => {
+const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
     const [ idUf, setIdUf ] = useState<any>(0);
     const { data: uf, isLoading: loadingUf } = useUf();
+    const ref = useRef<any>(null)
+    const [ open, setOpen ] = useState(false);
     
     const { 
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isDirty, isValid  },
         control,
         watch,
         setValue,
-    } = useForm<IProps>();
+        reset,
+    } = useForm<FormData>();
 
     const { mutate, isLoading } = useMutation(postUser, {
         onSuccess: () => {
           queryClient.invalidateQueries('users');
+          setOpen(true);
         }
     });
 
-    const onSubmit = (values: IProps) => {
+    const onSubmit = (values: FormData) => {
         const obj = {
             "name": values.name,
             "phone_number": values.phone_number,
@@ -55,7 +59,20 @@ const NewUser: React.FC = () => {
 
     const { data: city, isLoading: loadingCity } = useCity(watchUf);
 
+    useEffect(() => {
+        if (!isModal) {
+            reset()
+        }
+    },[isModal,reset])
+
     return (
+        <PersonalModal
+        modalBackground={false}
+        padding={4}
+        width={858}
+        open={isModal}
+        onClose={onClose}
+        >
         <S.Container>
             <h1>Novo usuário</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -192,11 +209,32 @@ const NewUser: React.FC = () => {
                     </fieldset>
                 </div>
                 <S.ContainerBnt>
-                    <button type="button">Cancelar</button>
-                    <button type="submit">Finalizar cadastro</button>
+                    <button type="button" onClick={onClose} >Cancelar</button>
+                    {/* <button type="submit">Finalizar cadastro</button> */}
+                    <S.Button
+                            id='submit' 
+                            type='submit'
+                            disabled={!isDirty || !isValid}
+                        >
+                            {isLoading == true ? 'Finalizando...' : 'Finalizar cadastro'}
+                        </S.Button>
+                        {/* <NavLink to="/" style={{display: 'none'}} ref={ref}/> */}
                 </S.ContainerBnt>
             </form>
+            <ModalMsg 
+                    height='312px'
+                    modalBackground={false}
+                    open={open} 
+                    onClose={() => {
+                        setOpen(!open)
+                        onClose()
+                    }} 
+                    width={375} 
+                    status={'success'} 
+                    mensage='O moderador foi cadastrado com sucesso!'            
+                />
         </S.Container>
+        </PersonalModal>
     );
 };
 
