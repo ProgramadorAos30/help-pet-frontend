@@ -210,6 +210,13 @@ export const FormCenter = styled.fieldset`
                 margin-bottom: 24px !important;
             }
         }
+
+        > fieldset:nth-child(2) {
+            > img {
+                height: 338px;
+                object-fit: cover;
+            }
+        }
     }
 `;
 
@@ -286,7 +293,7 @@ export const ContainerBtn = styled.fieldset`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 48px;
+    margin-top: 32px;
 
     button {
         display: flex;

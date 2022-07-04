@@ -560,7 +560,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         value={value}
                                                         placeholder='Digite sua observação (Opcional)'
                                                         width='408px'
-                                                        heigth='349px'
+                                                        heigth='303px'
                                                         id="description"
                                                     />
                                                 )
