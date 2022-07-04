@@ -85,6 +85,7 @@ export const FieldMid = styled.fieldset`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin-left: 20px;
     
         > div {
             display: flex;
@@ -126,7 +127,7 @@ export const FieldMid = styled.fieldset`
     }
 
     > fieldset:nth-child(3){
-        margin-left: 38px;
+        margin-left: 20px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
