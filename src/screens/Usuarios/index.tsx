@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './style';
 import NewUser from './NewUser';
+import EditUser from './EditUser';
 import {
     CardInfo,
     CustomSelect,
@@ -10,10 +11,14 @@ import {
     Search,
     Pagination,
     CustomTolltip,
+    Poppover,
+    ModalDelete,
+    ModalMsg,
 } from '../../components';
-import { useUf, useUsers } from '../../services';
+import { api, useUf, queryClient, useUsers } from '../../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../stores';
+import { useMutation } from 'react-query';
 import {
     iconShow,
     ocurrenceIcon,
@@ -29,7 +34,9 @@ import { number } from 'yup/lib/locale';
 
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
-    const { data: users } = useUsers(token);
+    const { data: users, refetch} = useUsers(token);
+    const [ idUser, setIdUser ] = useState<string>('')
+    
     const [openTotalList, setOpenTotalList] = useState(false);
     const [openSulList, setOpenSulList] = useState(false);
     const [openNorteList, setOpenNorteList] = useState(false);
@@ -39,6 +46,11 @@ const Usuarios: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [app, setApp] = useState(true);
     const [panel, setPanel] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [openModalDelete, setOpenModalDelete] = useState(false);
+    const [showDelete, setShowDelete ] = useState(false);
+    const [showSuccess, setShowSuccess ] = useState(false);
+
 
     let lista = [
         { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
@@ -47,8 +59,25 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 4', value: 'pesquisa4', number: 4 },
         { label: 'Pesquisar 5', value: 'pesquisa5', number: 5 },
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
-        
     ];
+
+    const deleteService = async (id: string) => {
+        // const data = await api.delete(`/services/${id}`, {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`
+        //     }
+        // })
+
+        // return data
+    };
+
+    const { mutate, isLoading } = useMutation(deleteService, {
+        onSuccess: () => {
+          queryClient.invalidateQueries('services');
+          setShowDelete(false)
+          setShowSuccess(true)
+        }
+    });
 
     return (
         <>
@@ -292,7 +321,11 @@ const Usuarios: React.FC = () => {
                                                     <td style={{ width: 'auto' }}>
                                                         <span>
                                                             <S.Options>
-                                                                <img src={options} alt="Opções" />
+                                                                <Poppover
+                                                                    onClick={() => {}}
+                                                                    onDelete={() => setShowDelete(!false)}
+                                                                    onEdit={() => setOpenModal(!openModal)} 
+                                                                /> 
                                                             </S.Options>
                                                         </span>
                                                     </td>
@@ -302,10 +335,8 @@ const Usuarios: React.FC = () => {
                                     )
                                 })}
                             </S.Table>
-
                         </S.ContainerListApp>
                     </>
-
                 )}
 
                 {panel === true && (
@@ -423,7 +454,11 @@ const Usuarios: React.FC = () => {
                                                     <td style={{ width: 'auto' }}>
                                                         <span>
                                                             <S.Options>
-                                                                <img src={options} alt="Opções" />
+                                                                <Poppover
+                                                                    onClick={() => {}}
+                                                                    onDelete={() => setShowDelete(!false)}
+                                                                    onEdit={() => setOpenModal(!openModal)} 
+                                                                />
                                                             </S.Options>
                                                         </span>
                                                     </td>
@@ -441,8 +476,36 @@ const Usuarios: React.FC = () => {
         
             <Pagination />
             <NewUser 
-            isModal={open}
-            onClose={() => setOpen(!open)}
+                isModal={open}
+                onClose={() => setOpen(!open)}
+            />
+            <EditUser 
+                isModal={openModal}
+                onClose={() => setOpenModal(!openModal)}
+            />
+            <ModalDelete
+                mensage='Deseja mesmo excluir este serviço?'
+                onClose={() => setShowDelete(false)}
+                onDelete={() => {
+                    mutate(idUser)
+                    refetch()
+                }}
+                open={showDelete}
+                width={469}
+                buttonText={isLoading == false ? 'Sim, excluir' : 'Excluindo...' }
+            />
+            <ModalMsg 
+                height='312px'
+                modalBackground={false}
+                mensage='O serviço foi excluido com sucesso!'
+                onClose={() => {
+                    setShowSuccess(false)
+                    setShowDelete(false)
+                    refetch()
+                }}
+                open={showSuccess}
+                status=""
+                width={469}
             />
         </>
 

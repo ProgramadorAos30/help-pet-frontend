@@ -175,13 +175,14 @@ export const Trusted = styled.span <{ trusted: boolean }> `
 //     }
 // `;
 
-export const Options = styled.button`
-display: flex;
-justify-content: center;
-border: none;
-background: none;
-width: 24px;
-margin-left: 10px;
+export const Options = styled.span`
+> button {
+    display: flex;
+    justify-content: center;
+    border: none;
+    background: none;
+    width: 24px;
+    margin-left: 10px;}
 `;
 
 export const TableHead = styled.thead`
