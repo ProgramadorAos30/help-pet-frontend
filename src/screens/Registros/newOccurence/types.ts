@@ -13,6 +13,7 @@ export interface FormData {
     have_energy_meter: string,
     have_hydrometer: string,
     have_reservoir: string,
+    number_residents?: number,
     type_place: string,
     area: string,
     description: string,

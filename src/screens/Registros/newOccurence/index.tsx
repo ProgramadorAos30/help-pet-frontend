@@ -31,7 +31,10 @@ import {
     FormData,
     IProps
 } from './types';
-import { AREA } from '../../../constants/index';
+import { 
+    TYPE_LOCAL,
+    AREA
+} from '../../../constants/index';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 import MenuItem from '@mui/material/MenuItem';
@@ -96,6 +99,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             "have_energy_meter": values.have_energy_meter,
             "have_hydrometer": values.have_hydrometer,
             "have_reservoir": values.have_reservoir,
+            "number_residents": values.number_residents,
             "type_place": values.type_place,
             "area": values.area,
             "description": values.description,
@@ -445,6 +449,33 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                     <label htmlFor="unknow">Não sei</label>
                                 </fieldset>
                             </fieldset>
+                            {watch('special_place') === 'Yes' && (
+                                <fieldset>
+                                    <div>
+                                        <label htmlFor="">
+                                            Qual é o tipo de localização especial
+                                        </label>
+                                    </div>
+                                    <Controller 
+                                        name='type_place'
+                                        control={control}
+                                        render={({field: { onChange, onBlur, value }}) => {
+                                            return (
+                                                <CustomSelect
+                                                    id="type_place"
+                                                    onChange={onChange}
+                                                    onBlur={onBlur}
+                                                    value={value}
+                                                    label='Localização especial'
+                                                    labelDefault='Localização especial'
+                                                    width={372}
+                                                    list={AREA}
+                                                />
+                                            )
+                                        }}
+                                    />
+                                </fieldset>
+                            )}
                         </S.FieldMid>
                         <S.FormCenter>
                             <div>
@@ -483,7 +514,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         label='Área afetada'
                                                         labelDefault='Área afetada'
                                                         width={372}
-                                                        list={AREA}
+                                                        list={TYPE_LOCAL}
                                                     />
                                                 )
                                             }}

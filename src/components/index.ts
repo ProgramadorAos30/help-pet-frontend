@@ -23,3 +23,4 @@ export { default as InputIcon } from './InputIcon/index';
 export { default as ModalMsg } from './ModalMsg/index';
 export { default as ModalDelete } from './ModalDelete/index';
 export { default as Pagination } from './Pagination/index';
+export { default as Poppover } from './Poppover/index';

@@ -12,6 +12,7 @@ import {
     TolltipRigth,
     MultSelect,
     Pagination,
+    Poppover,
 } from '../../components';
 import { convertDate, useCity, useOccurrences, useService, useUf } from '../../services/index';
 import NewOccurence from './newOccurence';
@@ -413,9 +414,11 @@ const Registros: React.FC = () => {
                                                 </S.Finished>
                                                 <S.Button showOccurence={false} style={{ width: '83px' }}>
                                                     <span>
-                                                        <button>
-                                                            <img src={options} alt="" />
-                                                        </button>
+                                                        <Poppover
+                                                            onClick={() => {}}
+                                                            onDelete={() => {}}
+                                                            onEdit={() => {}} 
+                                                        /> 
                                                     </span>
                                                 </S.Button>
                                                 <S.Button showOccurence={true} style={{ width: '135px' }}>
