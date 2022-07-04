@@ -298,10 +298,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         </S.RadioFieldset>
                                                         <S.RadioFieldset>
                                                             <fieldset>
-                                                                <p style={{width: '335px'}}>
+                                                                <label style={{width: '335px'}}>
                                                                     Você também faz uso de um reservatório, cisterna ou caixa d'água para armazenamento?
-                                                                </p>
-                                                                <img src="" alt="" />
+                                                                </label>
                                                             </fieldset>
                                                             <fieldset>
                                                                 <div>
