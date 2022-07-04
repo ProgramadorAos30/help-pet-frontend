@@ -74,7 +74,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         onClose={onClose}
         >
         <S.Container>
-            <h1>Novo usuário</h1>
+            <h1>Cadastrar moderador</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <fieldset>
@@ -115,7 +115,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <CustomInput
                                     width={372}
                                     type="text"
-                                    label="Numero do Whats"
+                                    label="Numero do celular"
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
@@ -129,7 +129,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <CustomInput
                                     width={372}
                                     type="text"
-                                    label="Digite o email"
+                                    label="Digite o e-mail"
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
@@ -146,7 +146,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <CustomSelect 
                                     list={uf}
                                     label="Estado"
-                                    labelDefault="Selecione o estado" 
+                                    labelDefault="Selecione o Estado" 
                                     value={value}
                                     onBlur={onBlur}
                                     onChange={onChange}
@@ -162,7 +162,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <CustomSelect 
                                     list={city}
                                     label="Cidade"
-                                    labelDefault="Selecione a cidade"
+                                    labelDefault="Selecione a Cidade"
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
