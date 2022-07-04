@@ -115,7 +115,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <CustomInput
                                     width={372}
                                     type="text"
-                                    label="Numero do celular"
+                                    label={value === "" ? 'Numero do celular' : 'Celular'}
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
@@ -129,10 +129,11 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <CustomInput
                                     width={372}
                                     type="text"
-                                    label="Digite o e-mail"
+                                    label={value === "" ? 'Digite seu e-mail' : 'E-mail'}
                                     value={value}
                                     onChange={onChange}
                                     onBlur={onBlur}
+
                                 />
                             )}
                         />

@@ -37,7 +37,7 @@ const CardInfo: React.FC<IProps> = (props) => {
                             </div>
                             {props.type == 'list' && (
                                 <button
-                                    onClick={props.setOpen}
+                                    onMouseEnter={props.setOpen}
                                 >
                                     {props.open == true ?
                                         <img src={iconShow} alt="" style={{
@@ -53,7 +53,7 @@ const CardInfo: React.FC<IProps> = (props) => {
 
                 </Box>
             </S.Container>
-            <S.ContainerList>
+            <S.ContainerList onMouseLeave={props.setOpen}>
                 {props.open == true && (
                     <S.List width={props.width}>
                         {props.list?.map((id: any) => {
