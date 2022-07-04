@@ -127,7 +127,6 @@ export const FieldMid = styled.fieldset`
     }
 
     > fieldset:nth-child(3){
-        margin-left: 20px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
