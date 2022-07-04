@@ -406,7 +406,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     onChange={onChange}
                                                     type="datetime-local"
                                                     value={value}
-                                                    width="254px"
+                                                    width="372px"
                                                     id='date_time'
                                                 />
                                             )
@@ -451,29 +451,29 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             </fieldset>
                             {watch('special_place') === 'Yes' && (
                                 <fieldset>
+                                    <label htmlFor="" style={{ marginBottom: '15px !important'}}>
+                                        Qual é o tipo de localização especial
+                                    </label>
                                     <div>
-                                        <label htmlFor="">
-                                            Qual é o tipo de localização especial
-                                        </label>
+                                        <Controller 
+                                            name='type_place'
+                                            control={control}
+                                            render={({field: { onChange, onBlur, value }}) => {
+                                                return (
+                                                    <CustomSelect
+                                                        id="type_place"
+                                                        onChange={onChange}
+                                                        onBlur={onBlur}
+                                                        value={value}
+                                                        label='Localização especial'
+                                                        labelDefault='Localização especial'
+                                                        width={372}
+                                                        list={AREA}
+                                                    />
+                                                )
+                                            }}
+                                        />
                                     </div>
-                                    <Controller 
-                                        name='type_place'
-                                        control={control}
-                                        render={({field: { onChange, onBlur, value }}) => {
-                                            return (
-                                                <CustomSelect
-                                                    id="type_place"
-                                                    onChange={onChange}
-                                                    onBlur={onBlur}
-                                                    value={value}
-                                                    label='Localização especial'
-                                                    labelDefault='Localização especial'
-                                                    width={372}
-                                                    list={AREA}
-                                                />
-                                            )
-                                        }}
-                                    />
                                 </fieldset>
                             )}
                         </S.FieldMid>
@@ -493,7 +493,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         onChange={onChange}
                                                         type="text"
                                                         value={value}
-                                                        width={254}
+                                                        width={372}
                                                         id='date_time'
                                                     />
                                                 )
@@ -520,7 +520,28 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                             }}
                                         />
                                     </fieldset>
-
+                                    {watch('area') === 'House' && (
+                                        <fieldset>
+                                            <label htmlFor="">Quantos moradores vivem no domicílio afetado?</label>
+                                            <Controller 
+                                                name='number_residents'
+                                                control={control}
+                                                render={({field: { onChange, onBlur, value }}) => {
+                                                    return (
+                                                        <CustomInput 
+                                                            label='Número de moradores'
+                                                            onBlur={onBlur}
+                                                            onChange={onChange}
+                                                            type="text"
+                                                            value={value}
+                                                            width={372}
+                                                            id='number_residents'
+                                                        />
+                                                    )
+                                                }}
+                                            />
+                                        </fieldset>
+                                    )}
                                 </fieldset>
                                 <fieldset>
                                     <img src={mapsDefault} alt="" />
