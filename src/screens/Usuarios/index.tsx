@@ -30,7 +30,6 @@ import { number } from 'yup/lib/locale';
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
     const { data: users } = useUsers(token);
-    const { data: uf } = useUf()
     const [openTotalList, setOpenTotalList] = useState(false);
     const [openSulList, setOpenSulList] = useState(false);
     const [openNorteList, setOpenNorteList] = useState(false);
@@ -40,8 +39,6 @@ const Usuarios: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [app, setApp] = useState(true);
     const [panel, setPanel] = useState(false);
-    const [ allUsersList, setAllUsersList ] = useState<any>([])
-    const [region_list, setRegion_list] = useState(false);
 
     let lista = [
         { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
@@ -52,179 +49,6 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
         
     ];
-
-    // let region_list: [{
-    //         name: 'sul',
-    //         state_list: [
-    //         {
-    //             name: 'Rio Grande do Sul',
-    //             user_total: 100, 
-    //         },
-    //         {
-    //             name: 'Santa Catarina',
-    //             user_total: 200,
-    //         },
-    //         {
-    //             name: 'Parana',
-    //             user_total: 300,
-    //         }]},
-    //         {
-    //         name: 'Sudeste',
-    //         state_list: [{
-    //             name: 'Rio de Janeiro',
-    //             user_total: 400, 
-    //         },
-    //         {
-    //             name: 'São Paulo',
-    //             user_total: 500,
-    //         },
-    //         {
-    //             name: 'Minas Gerais',
-    //             user_total: 600,
-    //         }],
-    //     }],
-
-    // macro
-    // fazer uma lista de todos os estados com todas quantidades, incluido o total
-    // fazer uma lista de cada região, apresentando cada estado da região e suas quantidades, incluido o total
-
-    // somar todos os estados iguais dos user antes de fazer a comparação com a do ibge
-
-    //mini
-    // fazer a quantidade de cada estado
-    // separar os estados com as regiões
-
-    // useEffect(() =>{
-
-    //     let spam:any = []
-
-    //     region_list?.forEach((r) =>{
-    //         console.log(r.name + "teste")
-    //         spam.push({
-    //             estado: r.name,
-    //         })
-    //     })
-
-    //     // passar por todo o array, e pegar os dados
-
-    //     //pegar o nome da regiao + a quantidade total
-
-    //     //pegar o nome do estado + a quantidade
-
-    //     //devolver em um array
-
-    //     setMapEstadoUserQTD(spam)
-    // },[])
-
-    const [ mapEstados, setMapEstados ] = useState<any>()
- 
-    const [ mapRegiao, setMapRegiao ] = useState<any>()
-   
-    const [ mapEstadoUser, setMapEstadoUser ] = useState<any>()
-  
-    const [ mapEstadoUserQTD, setMapEstadoUserQTD ] = useState<any>()
-
-    console.log(mapEstados,mapRegiao,mapEstadoUser,mapEstadoUserQTD , 'teste')
-
-    //setMapEstados
-        useEffect(() =>{ 
-            let spam: any = []
-
-            uf?.forEach((e) =>{
-                spam.push({
-                    estado: e.nome,
-                    estadoSigla: e.sigla,
-                    regiao: e.regiao.nome,
-                    qtd: 1
-                })
-            })
-
-            setMapEstados(spam)
-    }, [])
-
-    // setMapRegiao
-    // useEffect(() =>{ 
-        
-    //     let spam: any = []
-    //     uf?.forEach((e) =>{
-    //         spam.push({
-    //             regiao: e.regiao.nome,
-    //             qtd: 1
-    //         })
-    //     })
-
-    //     let novoLista = [];
-    //     let m = new Map();
-
-    //     //para todas as regiões repetidas...
-    //     for(let reg of spam){
-    //         //verifica se indice contiver a chave reg.regiao...
-    //         if (m.has(reg.regiao)){
-    //             //no item indexado por reg.registro no array novaLista incrementa na lista
-    //             novoLista[m.get(reg.regiao)].qtd += reg.qtd;
-    //         } else {
-    //             //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
-    //             m.set(reg.regiao, novoLista.push({
-    //                 regiao:reg.regiao,
-    //                 qtd:reg.qtd}) - 1);
-    //         }
-    //     }
-    //     setMapRegiao(novoLista)
-    // }, [])
-
-    // //setMapEstadoUser
-    // useEffect(()=>{
-    //     let estadoUser: any = []
-    //     users?.forEach((u) =>{
-    //         estadoUser.push({
-    //             estado: "",
-    //             estadoSigla: u.state,
-    //             regiao: "",
-    //             qtd: 1
-    //         })
-    //     })
-    //     let novoLista = [];
-    //     let m = new Map();
-    //     //Para todos os elementos de listaProdutos...
-    //     for(let prod of estadoUser){
-    //         //Verifica se índice contiver a chave prod.nome...
-    //         if (m.has(prod.estadoSigla)){
-    //             //No item indexado por prod.nome no array novoLista incrementa o preço registrado com o novo preço.
-    //              novoLista[m.get(prod.estadoSigla)].qtd += prod.qtd;                          
-    //         } else {
-    //             //Cria um índice nomeado pelo valor de prod.nome apontando para o mais novo elemento do array novoLista
-    //             m.set(prod.estadoSigla, novoLista.push({
-    //                 estadoSigla:prod.estadoSigla,
-    //                 qtd:prod.qtd}) - 1); 
-    //       }
-    //     } 
-    //     setMapEstadoUser(novoLista)    
-
-    //     let estado: any = []
-    //         uf?.forEach((e) =>{
-    //             estado.push({
-    //                 estado: e.nome,
-    //                 estadoSigla: e.sigla,
-    //                 regiao: e.regiao.nome,
-    //                 qtd: 1
-    //             })
-    //         })
-
-    //     setMapEstados(estado) 
-
-    //     const estado
-        
-    //     const estadoUser = [].concat(estado)
-
-    //     estadoUser.push(mapEstadoUser)
-
-    //     console.log(arr1) //[ {fruta:"abacaxi"}, {fruta:"damasco"}, {fruta:"cereja"} ]
-
-    //     console.log(arr2)
-    //     setMapEstadoUserQTD(jsonResult)
-
-    // },[])  
-
 
     return (
         <>
