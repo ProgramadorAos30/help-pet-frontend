@@ -13,7 +13,8 @@ interface IProps {
     placeholder?: string,
     type: string,
     width: string,
-    id: string
+    id: string,
+    max?: any
 };
 
 const CustomInputData:React.FC <IProps> = (props) => {
@@ -64,6 +65,7 @@ const CustomInputData:React.FC <IProps> = (props) => {
                 >{props.label}</label>
                 <input 
                     name='date'
+                    max={props.max}
                     id={props.id}
                     type={props.type} 
                     value={props.value}

@@ -14,6 +14,7 @@ import {
     CustomSelect,
     CustomTextArea,
     CustomTolltip,
+    ModalDelete,
     ModalMsg,
     PersonalModal
 } from '../../../components';
@@ -45,18 +46,22 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
     const { data: sources } = useSources(token);
     const [ idOccurrence, setIdOccurrence ] = useState('');
     const [ open, setOpen ] = useState(false);
+    const [ closeOccurrence, setCloseOccurrence ] = useState(false);
 
     const postOccurence = async (data: FormData) => {
-        const { data: response } = await api.post('/occurrences', data, {
+        const response  = await api.post('/occurrences', data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
+        }).then((resp) => {
+            console.log(resp.data, 'resp then')
+            setIdOccurrence(resp.data.id)
         });
-        return response.data;
+        return response;
     };
 
-    const putOccurence = async(data: any) => {
-        const { data: response } = await api.put(`/occurrences/${idOccurrence}`, data, {
+    const putOccurence = async(id: string, data: any) => {
+        const { data: response } = await api.put(`/occurrences/${id}`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -75,16 +80,18 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         reset
     } = useForm<FormData>();
 
-    const { mutate, isLoading } = useMutation(postOccurence, {
+    const { mutate, isLoading, isSuccess } = useMutation(postOccurence, {
         onSuccess: (resp) => {
             setOpen(true)
             queryClient.invalidateQueries('occurence');
             console.log(resp, 'onSuccess')
-        }
+        },
+
     });
 
     const onSubmit = (values: FormData) => {
         const obj = {
+            "id": values.id,
             "service": values.service,
             "source": values.source,
             "source_name": values.source_name,
@@ -119,6 +126,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             reset()
         }
     }, [isModal, reset]);
+    
 
     return (
         <>
@@ -135,7 +143,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                     <button
                         type='button'
                         onClick={() => {
-                            onHide()
+                            setCloseOccurrence(!closeOccurrence)
                         }}
                     >
                         <img src={modalIconClose} alt="" />
@@ -406,8 +414,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     label='Data e hora'
                                                     onBlur={onBlur}
                                                     onChange={onChange}
-                                                    type="datetime-local"
                                                     value={value}
+                                                    max={new Date().toISOString().slice(0, -8)}
+                                                    type="datetime-local"
                                                     width="372px"
                                                     id='date_time'
                                                 />
@@ -607,7 +616,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             <button 
                                 type='button' 
                                 onClick={() => {
-                                    onHide()
+                                    setCloseOccurrence(!closeOccurrence)
                                 }}
                             >
                                 Cancelar
@@ -634,10 +643,25 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                 width={496}
                 occurence={true}
                 finishOccurence={() => {
-                    putOccurence({
+                    putOccurence(idOccurrence, {
                         "finished_status": "Yes"
                     })
+                    setOpen(!open)
+                    onHide()
                 }}
+            />
+            <ModalDelete
+                buttonText="Sim, cancelar"
+                mensage='Deseja mesmo cancelar o registro desta ocorrência?'
+                onClose={() => {
+                    setCloseOccurrence(!closeOccurrence)
+                }}
+                onDelete={() => {
+                    setCloseOccurrence(!closeOccurrence)
+                    onHide()
+                }}
+                open={closeOccurrence}
+                width={469}
             />
         </>
     );
