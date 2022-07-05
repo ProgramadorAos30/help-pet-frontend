@@ -7,6 +7,7 @@ import { FormData, IProps } from "./types";
 import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
+import {regex, numberClean} from '../../../constants/regex'
 
 async function postUser(data: FormData) {
     const { data: response } = await api.post('/signup', data);
@@ -36,24 +37,17 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
     });
 
     const onSubmit = (values: FormData) => {
-        const obj = {
-            "name": values.name,
-            "phone_number": values.phone_number,
-            "email": values.email,
-            "state": values.state,
-            "city": values.city,
-            "active": values.active,
+        
+        let obj = Object.assign(values, { 
+            "phone_number": numberClean(values.phone_number),
             "role": "Administrador",
-            "password": values.password,
-        }
+        })
         mutate(obj);
-        console.log(values, 'valores');
+        console.log(obj, 'valores');
     };
 
-    const role = [
-        {label: 'Administrador', value: 'Administrador'},
-        {label: 'Mobile', value: 'Mobile'}
-    ];
+    const watchPhone = watch('phone_number');
+    console.log(watchPhone, 'teste')
 
     const watchUf = watch('state');
 
@@ -63,7 +57,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         if (!isModal) {
             reset()
         }
-    },[isModal,reset])
+    },[isModal,reset]) 
 
     return (
         <PersonalModal
@@ -117,8 +111,18 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                     type="text"
                                     label={value === "" ? 'Numero do celular' : 'Celular'}
                                     value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
+                                    onChange={(e: any) => {
+                                        let numero = regex(e?.target?.value)
+                                        if(numero.length <= 15){
+                                            onChange(numero)
+                                        }
+                                    }}
+                                    onBlur={(e: any) => {
+                                        let numero = regex(e?.target?.value)
+                                        if(numero.length <= 15){
+                                            onBlur()
+                                        }
+                                    }} 
                                 />
                             )}
                         /> 
@@ -211,7 +215,6 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                 </div>
                 <S.ContainerBnt>
                     <button type="button" onClick={onClose} >Cancelar</button>
-                    {/* <button type="submit">Finalizar cadastro</button> */}
                     <S.Button
                             id='submit' 
                             type='submit'
@@ -219,7 +222,6 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                         >
                             {isLoading == true ? 'Finalizando...' : 'Finalizar cadastro'}
                         </S.Button>
-                        {/* <NavLink to="/" style={{display: 'none'}} ref={ref}/> */}
                 </S.ContainerBnt>
             </form>
             <ModalMsg 
