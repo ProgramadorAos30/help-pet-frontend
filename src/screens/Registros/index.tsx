@@ -121,6 +121,16 @@ const Registros: React.FC = () => {
         return resp
     }
 
+    const putOccurrence = (id: string, dados: any) => {
+        const resp = api.put(`/occurrences/${id}`, dados, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        return resp
+    }
+
     const { mutate: onDelete } = useMutation(deleteOccurrence, {
         onSuccess: () => {
             queryClient.invalidateQueries('ocurrencces')
@@ -128,6 +138,13 @@ const Registros: React.FC = () => {
             fetchOccurrences()
         }
     })
+
+    // const { mutate: onEdit } = useMutation(putOccurrence, {
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries('ocurrencces')
+    //         fetchOccurrences()
+    //     }
+    // })
 
 
     return (
@@ -448,7 +465,12 @@ const Registros: React.FC = () => {
                                                             onEdit={() => {}} 
                                                             onView={() => {}}
                                                             onFinish={() => {}}
-                                                            onApprove={() => {}}
+                                                            onApprove={() => {
+                                                                let obj = {
+                                                                    "finished_status": "Yes"
+                                                                }
+                                                                //onEdit(id.id, obj)
+                                                            }}
                                                             onDelete={() => {
                                                                 setIdDelete(id.id)
                                                                 setOpenDelete(!openDelete)

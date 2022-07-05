@@ -6,6 +6,7 @@ import {
     useSources,
     useOccurrences
 } from '../../../services';
+import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores';
 import {
@@ -38,7 +39,8 @@ import {
 } from '../../../constants/index';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
-import MenuItem from '@mui/material/MenuItem';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from './schema';
 
 const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
     const { token } = useSelector((state: RootState) => state.clickState);
@@ -78,7 +80,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         getValues,
         setValue,
         reset
-    } = useForm<FormData>();
+    } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
 
     const { mutate, isLoading, isSuccess } = useMutation(postOccurence, {
         onSuccess: (resp) => {
@@ -126,7 +130,6 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             reset()
         }
     }, [isModal, reset]);
-    
 
     return (
         <>
@@ -181,6 +184,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     )
                                                 }}
                                             />
+                                            {errors.service && (
+                                                <p>{errors.address?.message}</p>
+                                            )}
                                         </div>
                                     </fieldset>
                                     {watch('service') !== undefined ? 
@@ -215,6 +221,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         )
                                                     }}
                                                 />
+                                                {errors.source && (
+                                                    <p>{errors.source.message}</p>
+                                                )}
                                             </div>
                                         </fieldset>
                                         :
@@ -244,6 +253,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                     )
                                                                 }}
                                                             />
+                                                            {errors.source_name && (
+                                                                <p>{errors.source_name.message}</p>
+                                                            )}
                                                         </div>
                                                     )
                                                 } else {

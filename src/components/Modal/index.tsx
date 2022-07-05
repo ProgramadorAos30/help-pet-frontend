@@ -24,7 +24,7 @@ const PersonalModal: React.FC <IProps> = (props) => {
         border: 'none',
         p: props.padding,
         borderRadius: '8px',
-        overflow:'scroll',
+        overflow:'hidden',
     };
     return (
         <Modal
