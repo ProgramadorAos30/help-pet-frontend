@@ -18,9 +18,27 @@ export const Container = styled.div`
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
-                border: none;
-                > div {
-                    margin-bottom: 20px;
+                border: none;                
+            
+                > span {  
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    margin-bottom: 24px;
+                    position: relative;
+                    > div {
+
+                    }
+                    > span { 
+                        padding-top: 5px;
+                        color: red;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 15px;
+                        position: absolute;
+                        margin-top: 56px;
+                    }
                 }
             }
         }
@@ -47,12 +65,6 @@ export const ContainerBnt = styled.div`
         color: ${props => props.theme.colors.warning};
         border: 1px solid ${props => props.theme.colors.warning};
         background: transparent;
-    }
-
-    >button:nth-child(2){
-        background: ${props => props.theme.colors.blue};        
-        color: ${props => props.theme.colors.white};
-        border: none;
     }
 `;
 

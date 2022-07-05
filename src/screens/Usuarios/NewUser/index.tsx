@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 import {regex, numberClean} from '../../../constants/regex'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../schema";
 
 async function postUser(data: FormData) {
     const { data: response } = await api.post('/signup', data);
@@ -27,7 +29,10 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         watch,
         setValue,
         reset,
-    } = useForm<FormData>();
+    } = useForm<FormData>({
+        mode: "onChange",
+        resolver: yupResolver(schema)
+    });
 
     const { mutate, isLoading } = useMutation(postUser, {
         onSuccess: () => {
@@ -40,7 +45,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         
         let obj = Object.assign(values, { 
             "phone_number": numberClean(values.phone_number),
-            "role": "Administrador",
+            "role": "Administrador"
         })
         mutate(obj);
         console.log(obj, 'valores');
@@ -76,28 +81,40 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                             control={control}
                             name="name"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372}
-                                    type="text"
-                                    label="Nome do moderador"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
+                                <span>
+                                    <CustomInput
+                                        width={372}
+                                        type="text"
+                                        label="Nome do moderador"
+                                        value={value}
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                    />
+                                    {errors.name && (
+                                        <span>{errors.name.message}</span>
+                                    )}                                    
+                                </span>
                             )}
-                        />  
+                        />                     
                         <Controller
                             control={control}
                             name="password"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372} 
-                                    label="Senha do moderador"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                    type="password"
-                                />
+                                <span>
+                                    <div>
+                                        <CustomInput
+                                            width={372} 
+                                            label="Senha do moderador"
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            type="password"
+                                        />
+                                    </div>                                    
+                                    {errors.password && (
+                                        <span>{errors.password.message}</span>
+                                    )}
+                                </span>
                             )}
                         />                  
                     </fieldset>
@@ -106,39 +123,52 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                             control={control}
                             name="phone_number"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372}
-                                    type="text"
-                                    label={value === "" ? 'Numero do celular' : 'Celular'}
-                                    value={value}
-                                    onChange={(e: any) => {
-                                        let numero = regex(e?.target?.value)
-                                        if(numero.length <= 15){
-                                            onChange(numero)
-                                        }
-                                    }}
-                                    onBlur={(e: any) => {
-                                        let numero = regex(e?.target?.value)
-                                        if(numero.length <= 15){
-                                            onBlur()
-                                        }
-                                    }} 
-                                />
+                                <span>
+                                    <div>
+                                        <CustomInput
+                                            width={372}
+                                            type="text"
+                                            label={value === "" ? 'Numero do celular' : 'Celular'}
+                                            value={value}
+                                            onChange={(e: any) => {
+                                                let numero = regex(e?.target?.value)
+                                                if(numero.length <= 15){
+                                                    onChange(numero)
+                                                }
+                                            }}
+                                            onBlur={(e: any) => {
+                                                let numero = regex(e?.target?.value)
+                                                if(numero.length <= 15){
+                                                    onBlur()
+                                                }
+                                            }}
+                                        />
+                                    </div>                                   
+                                    {errors.phone_number && (
+                                        <span>{errors.phone_number.message}</span>
+                                    )}
+                                </span>
                             )}
                         /> 
                         <Controller
                             control={control}
                             name="email"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372}
-                                    type="text"
-                                    label={value === "" ? 'Digite seu e-mail' : 'E-mail'}
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-
-                                />
+                                <span>
+                                    <div>
+                                        <CustomInput
+                                            width={372}
+                                            type="text"
+                                            label={value === "" ? 'Digite seu e-mail' : 'E-mail'}
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                        />
+                                    </div>                                    
+                                    {errors.email&& (
+                                        <span>{errors.email.message}</span>
+                                    )}                                                      
+                                </span>
                             )}
                         />
                     </fieldset>
@@ -148,15 +178,22 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                             name="state"
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomSelect 
-                                    list={uf}
-                                    label="Estado"
-                                    labelDefault="Selecione o Estado" 
-                                    value={value}
-                                    onBlur={onBlur}
-                                    onChange={onChange}
-                                    width={372}
-                                />
+                                <span>
+                                    <div>
+                                        <CustomSelect 
+                                                list={uf}
+                                                label="Estado"
+                                                labelDefault="Selecione o Estado" 
+                                                value={value}
+                                                onBlur={onBlur}
+                                                onChange={onChange}
+                                                width={372}
+                                            />
+                                    </div>                                    
+                                    {errors.state&& (
+                                        <span>{errors.state.message}</span>
+                                    )}
+                                </span>
                             )}
                         />
                         <Controller
@@ -164,15 +201,22 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                             name="city"
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => ( 
-                                <CustomSelect 
-                                    list={city}
-                                    label="Cidade"
-                                    labelDefault="Selecione a Cidade"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                    width={372}
-                                />
+                                <span>
+                                    <div>
+                                        <CustomSelect 
+                                            list={city}
+                                            label="Cidade"
+                                            labelDefault="Selecione a Cidade"
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            width={372}
+                                        />
+                                    </div>
+                                    {errors.city&& (
+                                        <span>{errors.city.message}</span>
+                                    )}
+                                </span>
                             )}
                         />
                     </fieldset>
@@ -216,12 +260,12 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                 <S.ContainerBnt>
                     <button type="button" onClick={onClose} >Cancelar</button>
                     <S.Button
-                            id='submit' 
-                            type='submit'
-                            disabled={!isDirty || !isValid}
-                        >
-                            {isLoading == true ? 'Finalizando...' : 'Finalizar cadastro'}
-                        </S.Button>
+                        id='submit' 
+                        type='submit'
+                        disabled={!isDirty || !isValid}
+                    >
+                        {isLoading == true ? 'Finalizando...' : 'Finalizar cadastro'}
+                    </S.Button>
                 </S.ContainerBnt>
             </form>
             <ModalMsg 

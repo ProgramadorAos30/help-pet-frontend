@@ -7,6 +7,8 @@ import { FormData, IProps } from "./types";
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 import {regex, numberClean} from '../../../constants/regex'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../schema";
 
 async function postUser(data: FormData) {
     const { data: response } = await api.post('/signup', data);
@@ -24,8 +26,9 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
         watch,
         setValue,
         reset,
-    } = useForm<FormData>();
-
+    } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
     const { mutate, isLoading } = useMutation(postUser, {
         onSuccess: () => {
           queryClient.invalidateQueries('users');
@@ -74,28 +77,38 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                             control={control}
                             name="name"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372}
-                                    type="text"
-                                    label="Nome do moderador"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
+                                <>
+                                    <CustomInput
+                                        width={372}
+                                        type="text"
+                                        label="Nome do moderador"
+                                        value={value}
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                    />
+                                    {errors.name && (
+                                        <p>{errors.name.message}</p>
+                                    )}
+                                </>
                             )}
                         />  
                         <Controller
                             control={control}
                             name="password"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372} 
-                                    label="Senha do moderador"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                    type="password"
-                                />
+                                <>
+                                    <CustomInput
+                                        width={372} 
+                                        label="Senha do moderador"
+                                        value={value}
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        type="password"
+                                    />
+                                    {errors.password && (
+                                        <p>{errors.password.message}</p>
+                                    )}
+                                </>
                             )}
                         />                  
                     </fieldset>
@@ -104,24 +117,30 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                             control={control}
                             name="phone_number"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372}
-                                    type="text"
-                                    label="Numero do celular"
-                                    value={value}
-                                    onChange={(e: any) => {
-                                        let numero = regex(e?.target?.value)
-                                        if(numero.length <= 15){
-                                            onChange(numero)
-                                        }
-                                    }}
-                                    onBlur={(e: any) => {
-                                        let numero = regex(e?.target?.value)
-                                        if(numero.length <= 15){
-                                            onBlur()
-                                        }
-                                    }}
-                                />
+                                <>
+                                    <CustomInput
+                                        width={372}
+                                        type="text"
+                                        label="Numero do celular"
+                                        value={value}
+                                        onChange={(e: any) => {
+                                            let numero = regex(e?.target?.value)
+                                            if(numero.length <= 15){
+                                                onChange(numero)
+                                            }
+                                        }}
+                                        onBlur={(e: any) => {
+                                            let numero = regex(e?.target?.value)
+                                            if(numero.length <= 15){
+                                                onBlur()
+                                            }
+                                        }}
+                                    />
+                                    {errors.phone_number && (
+                                        <p>{errors.phone_number.message}</p>
+                                    )}
+                                    
+                                </>                            
                             )}
                         /> 
                         <Controller
@@ -145,15 +164,20 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                             name="state"
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomSelect 
-                                    list={uf}
-                                    label="Estado"
-                                    labelDefault="Selecione o Estado" 
-                                    value={value}
-                                    onBlur={onBlur}
-                                    onChange={onChange}
-                                    width={372}
-                                />
+                                <>
+                                    <CustomSelect 
+                                        list={uf}
+                                        label="Estado"
+                                        labelDefault="Selecione o Estado" 
+                                        value={value}
+                                        onBlur={onBlur}
+                                        onChange={onChange}
+                                        width={372}
+                                    />
+                                    {errors.state&& (
+                                        <p>{errors.state.message}</p>
+                                    )}
+                                </>
                             )}
                         />
                         <Controller
@@ -161,15 +185,20 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                             name="city"
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => ( 
-                                <CustomSelect 
-                                    list={city}
-                                    label="Cidade"
-                                    labelDefault="Selecione a Cidade"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                    width={372}
-                                />
+                                <>
+                                    <CustomSelect 
+                                        list={city}
+                                        label="Cidade"
+                                        labelDefault="Selecione a Cidade"
+                                        value={value}
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        width={372}
+                                    />    
+                                    {errors.city&& (
+                                        <p>{errors.city.message}</p>
+                                    )}
+                                </>
                             )}
                         />
                     </fieldset>
