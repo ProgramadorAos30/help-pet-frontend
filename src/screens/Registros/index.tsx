@@ -13,38 +13,51 @@ import {
     MultSelect,
     Pagination,
     Poppover,
+    ModalDelete,
+    ModalMsg,
 } from '../../components';
-import { convertDate, useCity, useOccurrences, useService, useUf } from '../../services/index';
-import NewOccurence from './newOccurence';
+import { 
+    api,
+    convertDate, 
+    queryClient, 
+    useCity, 
+    useOccurrences, 
+    useService, 
+    useUf 
+} from '../../services/index';
 import { useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
 import { RootState } from '../../stores';
-import { ocurrenceIcon } from '../../assets/index';
 import {
     options,
     iconShow,
     energiIcon,
     whaterIcon,
-    wifiIcon
+    wifiIcon,
+    ocurrenceIcon
 } from '../../assets/index';
-import { UseQueryResult } from 'react-query';
+import NewOccurence from './newOccurence';
 
 const Registros: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
 
-    const [openList, setOpenList] = useState(false);
-    const [maps, setMaps] = useState(true);
-    const [list, setList] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [newOccurence, setNewOccurence] = useState(false);
-    const [listServices, setListServices] = useState<any>();
-    const [page, setPage] = useState<number>(1);
-    const [status, setStatus] = useState<any>(undefined);
-    const [service, setService] = useState<string[]>([]);
-    const [address, setAddress] = useState<any>();
-    const [ufValue, setUfValue] = useState<any>();
-    const [cityValue, setCityValue] = useState<any>();
-    const [initialDate, setInitialDate] = useState<any>(undefined);
-    const [finalDate, setFinalDate] = useState<any>(undefined)
+    const [ openList, setOpenList ] = useState(false);
+    const [ maps, setMaps ] = useState(true);
+    const [ list, setList ] = useState(false);
+    const [ open, setOpen ] = useState(false);
+    const [ newOccurence, setNewOccurence ] = useState(false);
+    const [ listServices, setListServices ] = useState<any>();
+    const [ page, setPage ] = useState<number>(1);
+    const [ status, setStatus ] = useState<any>(undefined);
+    const [ service, setService ] = useState<string[]>([]);
+    const [ address, setAddress ] = useState<any>();
+    const [ ufValue, setUfValue ] = useState<any>();
+    const [ cityValue, setCityValue ] = useState<any>();
+    const [ initialDate, setInitialDate ] = useState<any>(undefined);
+    const [ finalDate, setFinalDate ] = useState<any>(undefined);
+    const [ idDelete, setIdDelete ] = useState('');
+    const [ openDelete, setOpenDelete ] = useState(false);
+    const [ successDelete, setSuccessDelete ] = useState(false);
 
     const {
         data: occurrences,
@@ -53,7 +66,7 @@ const Registros: React.FC = () => {
         isFetched: isFetchedOccurence
     } = useOccurrences(
         token,
-        'ASC',
+        'DESC',
         page,
         10,
         status,
@@ -99,7 +112,22 @@ const Registros: React.FC = () => {
 
     }, [dataServices]);
 
-    console.log(initialDate, finalDate, 'date');
+    const deleteOccurrence = (id: string) => {
+        const resp = api.delete(`/occurrences/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return resp
+    }
+
+    const { mutate: onDelete } = useMutation(deleteOccurrence, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('ocurrencces')
+            setSuccessDelete(true)
+            fetchOccurrences()
+        }
+    })
 
 
     return (
@@ -390,7 +418,7 @@ const Registros: React.FC = () => {
                                                 </S.User>
                                                 <td style={{ width: '179px' }}>
                                                     <span>
-                                                        {convertDate(id.updatedAt)}
+                                                        {convertDate(id.date)}
                                                     </span>
                                                 </td>
                                                 <td style={{ width: '358px' }}>
@@ -415,9 +443,16 @@ const Registros: React.FC = () => {
                                                 <S.Button showOccurence={false} style={{ width: '83px' }}>
                                                     <span>
                                                         <Poppover
+                                                            type='occurrences'
                                                             onClick={() => {}}
-                                                            onDelete={() => {}}
                                                             onEdit={() => {}} 
+                                                            onView={() => {}}
+                                                            onFinish={() => {}}
+                                                            onApprove={() => {}}
+                                                            onDelete={() => {
+                                                                setIdDelete(id.id)
+                                                                setOpenDelete(!openDelete)
+                                                            }}
                                                         /> 
                                                     </span>
                                                 </S.Button>
@@ -470,6 +505,32 @@ const Registros: React.FC = () => {
                     setNewOccurence(!newOccurence)
                     fetchOccurrences()
                 }}
+            />
+
+            <ModalDelete 
+                open={openDelete}
+                buttonText="Sim, excluir"
+                mensage="Deseja mesmo excluir ocorrência"
+                onClose={() => {
+                    setOpenDelete(!openDelete)
+                }}
+                onDelete={() => {
+                    onDelete(idDelete)
+                    setOpenDelete(!openDelete)
+                }}
+                width={469}
+            />
+
+            <ModalMsg 
+                status="success"
+                width={469}
+                height='312px'
+                mensage='Ocorrência deletada com sucesso!'
+                modalBackground={false}
+                onClose={() => {
+                    setSuccessDelete(!successDelete)
+                }}
+                open={successDelete}
             />
         </>
     )

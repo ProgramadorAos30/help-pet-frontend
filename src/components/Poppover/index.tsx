@@ -10,10 +10,14 @@ import {
 interface IProps {
     onClick: () => any,
     onDelete: () => void,
-    onEdit: () => void
+    onEdit: () => void,
+    onFinish?: () => void,
+    onApprove?: () => void,
+    onView?: () => void,
+    type?: string
 }
 
-const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick}) => {
+const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, onApprove, onFinish}) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,39 +41,96 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick}) => {
             >   
                 <img src={options} alt="" />
             </button>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-            >
-                <S.Dialog>
-                    <button 
-                        onClick={handleClose}
-                        type='button'
-                    >
-                        <img src={alertRed} alt="" />
-                    </button>
-                    <button 
-                        onClick={onEdit}
-                        type='button'
-                        id="onEdit_poppover"
-                    >
-                        Editar
-                    </button>
-                    <button 
-                        onClick={onDelete}
-                        type='button'
-                        id="onDelete_poppover"
-                    >
-                        Excluir
-                    </button>
-                </S.Dialog>
-            </Popover>
+            {type !== 'occurrences' ? 
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                >
+                    <S.Dialog>
+                        <button 
+                            onClick={handleClose}
+                            type='button'
+                        >
+                            <img src={alertRed} alt="" />
+                        </button>
+                        <button 
+                            onClick={onEdit}
+                            type='button'
+                            id="onEdit_poppover"
+                        >
+                            Editar
+                        </button>
+                        <button 
+                            onClick={onDelete}
+                            type='button'
+                            id="onDelete_poppover"
+                        >
+                            Excluir
+                        </button>
+                    </S.Dialog>
+                </Popover>
+            :
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                >
+                    <S.DialogOccurrence>
+                        <button 
+                            onClick={handleClose}
+                            type='button'
+                        >
+                            <img src={alertRed} alt="" />
+                        </button>
+                        <button 
+                            onClick={onEdit}
+                            type='button'
+                            id="onEdit_poppover"
+                        >
+                            Editar
+                        </button>
+                        <button 
+                            onClick={onView}
+                            type='button'
+                            id="onView_poppover"
+                        >
+                            Visualizar
+                        </button>
+                        <button 
+                            onClick={onFinish}
+                            type='button'
+                            id="onFinish_poppover"
+                        >
+                            Finalizar ocorrência
+                        </button>
+                        <button 
+                            onClick={onApprove}
+                            type='button'
+                            id="onApprove_poppover"
+                        >
+                            Aprovar/Reprovar
+                        </button>
+                        <button 
+                            onClick={onDelete}
+                            type='button'
+                            id="onDelete_poppover"
+                        >
+                            Excluir
+                        </button>
+                    </S.DialogOccurrence>
+                </Popover>
+            }   
         </>
     );
 };

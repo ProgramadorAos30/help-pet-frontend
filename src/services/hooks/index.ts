@@ -15,5 +15,7 @@ export {
     deleteSource,
     getSourceById
 } from './useSource';
-export { useOccurrences } from './useOccurences';
+export { 
+    useOccurrences
+} from './useOccurences';
 export { useUploads } from './useUploads';
