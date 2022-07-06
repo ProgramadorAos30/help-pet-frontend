@@ -18,3 +18,8 @@
     background: linear-gradient(180deg, var(--color-blue-2), var(--color-blue-1));
     color: #FFFFFF;
 }
+
+.btnYellow {
+    background: linear-gradient(180deg, var(--color-Yellow-1) 0%, var(--color-Yellow-2) 100%);
+    color: #FFFFFF;
+}

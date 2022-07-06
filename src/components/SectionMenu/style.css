@@ -1,0 +1,110 @@
+.SectionMenu {
+    width: 340px;
+    height: 140px;
+    border-radius: 1.2rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(180deg, #64ADEF 0%, #3198F4 100%);
+    border-radius: 2.5rem;
+    /* - Vector - */
+    overflow: hidden;
+    position: relative;
+}
+
+.SectionMenu p {
+    width: 16rem;
+    line-height: 2.4rem;
+    font-size: 1.85rem;
+    color: var(--color-white-1);
+    position: absolute;
+    top: 2rem;
+    left: 2.5rem;
+    z-index: 1;
+}
+
+.SectionMenu button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9rem;
+    height: 3rem;
+    border-radius: 0.8rem;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2.5rem;
+    z-index: 1;
+}
+
+.SectionMenu img {
+    width: 11rem;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    right: 4rem;
+    z-index: 1;
+}
+
+/* - Vector - */
+.positionVector {
+    width: 100%;
+    display: flex;
+}
+
+.vector1 {
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    bottom: -40%;
+    left: 10%;
+    transform: translateX(-50%) translatey(-50%);
+}
+
+.vector1 svg {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    transform: rotate(90deg);
+}
+
+.vector1 svg path {
+    fill: #3394EB;
+}
+
+.vector2 {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%) translatey(-50%);
+}
+
+.vector2 svg {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    transform: rotate(270deg);
+}
+
+.vector2 svg path {
+    fill: #3394EB;
+}
+
+.vector3 {
+    position: absolute;
+    width: 12rem;
+    height: 12rem;
+    right: -20%;
+    bottom: -50%;
+    transform: translateX(-50%) translatey(-50%);
+}
+
+.vector3 svg {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.vector3 svg path {
+    fill: #3394EB;
+}

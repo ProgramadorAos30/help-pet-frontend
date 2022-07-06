@@ -7,28 +7,27 @@ import Button2 from '../../components/Button2'
 
 import { Link } from 'react-router-dom'
 
-function ScreenWelcome1() {
 
+function ScreenWelcome2() {
     return (
-        <div className="screenWelcome1" >
-            pagina 1
-            <img src={Img1} alt="imagem inicial" />
-
+        <div className="screenWelcome2" >
             <h1> Seja <strong>BEM-VINDO</strong> ao Aplicativo <strong>HelpPet</strong> </h1>
+
+            <img src={Img1} alt="imagem inicial" />
 
             <p>ajude em poucos passos, gerando um Qr code para sua conta bancaria</p>
 
-            <Link to="/ScreenWelcome2">
+            <Link to="/ScreenWelcome3">
                 <Button1 className="positionButton1" text="Proximo" />
             </Link>
 
-            <ProgressBar1 className="positionProgressBar1" screenWelcomeNumber="1" />
+            <ProgressBar1 className="positionProgressBar1" screenWelcomeNumber="2" />
 
-            <Link to="/ScreenWelcome3">
+            <Link to="/HomePage">
                 <Button2 className="positionButton2" text="Pular" />
             </Link>
-        </div>
+        </div >
     )
 }
 
-export default ScreenWelcome1
+export default ScreenWelcome2

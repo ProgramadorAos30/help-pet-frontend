@@ -7,7 +7,6 @@ function Button2(Button2Title) {
             <button className="btn btnBlue button2">{Button2Title.text}</button>
         </>
     )
-
 };
 
 export default Button2;

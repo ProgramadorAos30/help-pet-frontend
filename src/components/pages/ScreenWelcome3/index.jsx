@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom'
 function ScreenWelcome3() {
     return (
         <div className="screenWelcome3">
-            pagina 3
+
             <h1>  <strong>teste</strong> ao Aplicativo <strong>HelpPet</strong> </h1>
             <p>ajude em poucos passos, gerando um Qr code para sua conta bancaria</p>
             <img src={Img1} alt="imagem inicial" />
 
-            <Link to="/">
+            <Link to="/HomePage">
                 <Button1 className="positionButton1" text="Proximo" />
             </Link>
 
