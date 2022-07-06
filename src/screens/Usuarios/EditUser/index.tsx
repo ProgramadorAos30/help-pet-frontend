@@ -73,11 +73,11 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <fieldset>
-                        <Controller
+                    <Controller
                             control={control}
                             name="name"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <>
+                                <span>
                                     <CustomInput
                                         width={372}
                                         type="text"
@@ -87,97 +87,106 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                                         onBlur={onBlur}
                                     />
                                     {errors.name && (
-                                        <p>{errors.name.message}</p>
-                                    )}
-                                </>
+                                        <span>{errors.name.message}</span>
+                                    )}                                    
+                                </span>
                             )}
-                        />  
+                        />                     
                         <Controller
                             control={control}
                             name="password"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <>
-                                    <CustomInput
-                                        width={372} 
-                                        label="Senha do moderador"
-                                        value={value}
-                                        onChange={onChange}
-                                        onBlur={onBlur}
-                                        type="password"
-                                    />
+                                <span>
+                                    <div>
+                                        <CustomInput
+                                            width={372} 
+                                            label="Senha do moderador"
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            type="password"
+                                        />
+                                    </div>                                    
                                     {errors.password && (
-                                        <p>{errors.password.message}</p>
+                                        <span>{errors.password.message}</span>
                                     )}
-                                </>
+                                </span>
                             )}
-                        />                  
+                        />                    
                     </fieldset>
                     <fieldset>
                         <Controller
                             control={control}
                             name="phone_number"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <>
-                                    <CustomInput
-                                        width={372}
-                                        type="text"
-                                        label="Numero do celular"
-                                        value={value}
-                                        onChange={(e: any) => {
-                                            let numero = regex(e?.target?.value)
-                                            if(numero.length <= 15){
-                                                onChange(numero)
-                                            }
-                                        }}
-                                        onBlur={(e: any) => {
-                                            let numero = regex(e?.target?.value)
-                                            if(numero.length <= 15){
-                                                onBlur()
-                                            }
-                                        }}
-                                    />
+                                <span>
+                                    <div>
+                                        <CustomInput
+                                            width={372}
+                                            type="text"
+                                            label={value === "" ? 'Numero do celular' : 'Celular'}
+                                            value={value}
+                                            onChange={(e: any) => {
+                                                let numero = regex(e?.target?.value)
+                                                if(numero.length <= 15){
+                                                    onChange(numero)
+                                                }
+                                            }}
+                                            onBlur={(e: any) => {
+                                                let numero = regex(e?.target?.value)
+                                                if(numero.length <= 15){
+                                                    onBlur()
+                                                }
+                                            }}
+                                        />
+                                    </div>                                   
                                     {errors.phone_number && (
-                                        <p>{errors.phone_number.message}</p>
+                                        <span>{errors.phone_number.message}</span>
                                     )}
-                                    
-                                </>                            
+                                </span>
                             )}
                         /> 
                         <Controller
                             control={control}
                             name="email"
                             render={({field: { onChange, onBlur, value }}) => (
-                                <CustomInput
-                                    width={372}
-                                    type="text"
-                                    label="Digite o e-mail"
-                                    value={value}
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
+                                <span>
+                                    <div>
+                                        <CustomInput
+                                            width={372}
+                                            type="text"
+                                            label={value === "" ? value : 'E-mail'}
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                        />
+                                    </div>
+                                </span>
                             )}
                         />
                     </fieldset>
                     <fieldset>
-                    <Controller
+                        <Controller
                             control={control}
                             name="state"
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => (
-                                <>
-                                    <CustomSelect 
-                                        list={uf}
-                                        label="Estado"
-                                        labelDefault="Selecione o Estado" 
-                                        value={value}
-                                        onBlur={onBlur}
-                                        onChange={onChange}
-                                        width={372}
-                                    />
+                                <span>
+                                    <div>
+                                        <CustomSelect 
+                                                list={uf}
+                                                label="Estado"
+                                                labelDefault="Selecione o Estado" 
+                                                value={value}
+                                                onBlur={onBlur}
+                                                onChange={onChange}
+                                                width={372}
+                                            />
+                                    </div>                                    
                                     {errors.state&& (
-                                        <p>{errors.state.message}</p>
+                                        <span>{errors.state.message}</span>
                                     )}
-                                </>
+                                </span>
                             )}
                         />
                         <Controller
@@ -185,39 +194,43 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                             name="city"
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => ( 
-                                <>
-                                    <CustomSelect 
-                                        list={city}
-                                        label="Cidade"
-                                        labelDefault="Selecione a Cidade"
-                                        value={value}
-                                        onChange={onChange}
-                                        onBlur={onBlur}
-                                        width={372}
-                                    />    
+                                <span>
+                                    <div>
+                                        <CustomSelect 
+                                            list={city}
+                                            label="Cidade"
+                                            labelDefault="Selecione a Cidade"
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            width={372}
+                                        />
+                                    </div>
                                     {errors.city&& (
-                                        <p>{errors.city.message}</p>
+                                        <span>{errors.city.message}</span>
                                     )}
-                                </>
+                                </span>
                             )}
                         />
                     </fieldset>
                     <fieldset>
                         <div>
                             <p>Status do usuário:</p>
-                            <Controller 
-                                control={control}
-                                name="active"
-                                render={({field: { onChange, onBlur, value }}) => (
-                                    <CustomSwitch
-                                        leftLabel="Inativo"
-                                        rightLabel="Ativo"
-                                        value={value}
-                                        onChange={onChange}
-                                        onBlur={onBlur}
-                                    />
-                                )}
-                            />
+                            <span>
+                                <Controller 
+                                    control={control}
+                                    name="active"
+                                    render={({field: { onChange, onBlur, value }}) => (
+                                        <CustomSwitch
+                                            leftLabel="Inativo"
+                                            rightLabel="Ativo"
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                        />
+                                    )}
+                                />
+                            </span>
                         </div>
                     </fieldset>
                 </div>

@@ -4,7 +4,6 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { api, useUf, useCity } from "../../../services";
 import { CustomInput, CustomSelect, CustomSwitch, ModalMsg, PersonalModal } from '../../../components/index';
 import { FormData, IProps } from "./types";
-import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 import {regex, numberClean} from '../../../constants/regex'
@@ -67,7 +66,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
     return (
         <PersonalModal
         modalBackground={false}
-        padding={4}
+        padding={5}
         width={858}
         open={isModal}
         onClose={onClose}
@@ -159,7 +158,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                         <CustomInput
                                             width={372}
                                             type="text"
-                                            label={value === "" ? 'Digite seu e-mail' : 'E-mail'}
+                                            label={value === "" ? value : 'E-mail'}
                                             value={value}
                                             onChange={onChange}
                                             onBlur={onBlur}
@@ -173,7 +172,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                         />
                     </fieldset>
                     <fieldset>
-                    <Controller
+                        <Controller
                             control={control}
                             name="state"
                             defaultValue=""
@@ -241,19 +240,21 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                     <fieldset>
                         <div>
                             <p>Status do usuário:</p>
-                            <Controller 
-                                control={control}
-                                name="active"
-                                render={({field: { onChange, onBlur, value }}) => (
-                                    <CustomSwitch
-                                        leftLabel="Inativo"
-                                        rightLabel="Ativo"
-                                        value={value}
-                                        onChange={onChange}
-                                        onBlur={onBlur}
-                                    />
-                                )}
-                            />
+                            <span>
+                                <Controller 
+                                    control={control}
+                                    name="active"
+                                    render={({field: { onChange, onBlur, value }}) => (
+                                        <CustomSwitch
+                                            leftLabel="Inativo"
+                                            rightLabel="Ativo"
+                                            value={value}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                        />
+                                    )}
+                                />
+                            </span>
                         </div>
                     </fieldset>
                 </div>

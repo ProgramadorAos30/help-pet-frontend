@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     overflow: hidden;
-
+    height: 450px;
+ 
     > h1 {
         font-style: normal;
         font-weight: 600;
@@ -11,14 +12,29 @@ export const Container = styled.div`
         text-align: center;
         margin-bottom: 32px;
     }
-    
     > form {
         div {
             > fieldset {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
-                border: none;                
+                border: none;    
+                >div {
+                    margin-top: 8px;
+                    width: 155px;
+                    height: 66px;
+                    > p{
+                        margin-bottom: 10px;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 22px;
+                    }
+                    >div {
+                        justify-content: space-between;
+                        font-size: 16px;
+                        line-height: 18px;  
+                    }
+                }           
             
                 > span {  
                     display: flex;
@@ -26,9 +42,7 @@ export const Container = styled.div`
                     justify-content: flex-start;
                     margin-bottom: 24px;
                     position: relative;
-                    > div {
-
-                    }
+                    
                     > span { 
                         padding-top: 5px;
                         color: red;
@@ -48,6 +62,7 @@ export const Container = styled.div`
 export const ContainerBnt = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-top: 32px;
 
     button { 
         font-weight: 600;

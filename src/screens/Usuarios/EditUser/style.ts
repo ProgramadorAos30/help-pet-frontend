@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     overflow: hidden;
-
+    height: 450px;
+ 
     > h1 {
         font-style: normal;
         font-weight: 600;
@@ -11,16 +12,47 @@ export const Container = styled.div`
         text-align: center;
         margin-bottom: 32px;
     }
-    
     > form {
         div {
             > fieldset {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
-                border: none;
-                > div {
-                    margin-bottom: 20px;
+                border: none;    
+                >div {
+                    margin-top: 8px;
+                    width: 155px;
+                    height: 66px;
+                    > p{
+                        margin-bottom: 10px;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 22px;
+                    }
+                    >div {
+                        justify-content: space-between;
+                        font-size: 16px;
+                        line-height: 18px;  
+                    }
+                }           
+            
+                > span {  
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    margin-bottom: 24px;
+                    position: relative;
+                    
+                    > span { 
+                        padding-top: 5px;
+                        color: red;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 15px;
+                        position: absolute;
+                        margin-top: 56px;
+                    }
                 }
             }
         }
@@ -30,6 +62,7 @@ export const Container = styled.div`
 export const ContainerBnt = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-top: 32px;
 
     button { 
         font-weight: 600;
@@ -47,12 +80,6 @@ export const ContainerBnt = styled.div`
         color: ${props => props.theme.colors.warning};
         border: 1px solid ${props => props.theme.colors.warning};
         background: transparent;
-    }
-
-    >button:nth-child(2){
-        background: ${props => props.theme.colors.blue};        
-        color: ${props => props.theme.colors.white};
-        border: none;
     }
 `;
 
