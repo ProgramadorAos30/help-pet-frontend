@@ -6,7 +6,7 @@ import Popover from '@mui/material/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import {
     options,
-    alertRed
+    closeRed
 } from '../../assets/index'
 
 interface IProps {
@@ -47,22 +47,28 @@ const CardService: React.FC <IProps> = (props) => {
                         <h1>{props.serviceName}</h1>
                     </div>
                 </div>
-                <button
-                    id="open_triger"
-                    type='button'
-                    onClick={handleClick}
-                    
-                >   
-                    <img src={options} alt="" />
-                </button>
+                <span>
+                    <button
+                        id="open_triger"
+                        type='button'
+                        onClick={handleClick}
+                        
+                    >   
+                        <img src={options} alt="" />
+                    </button>
+                </span>                
                 <Popover
                     id={id}
                     open={open}
                     anchorEl={anchorEl}
                     onClose={handleClose}
                     anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                        vertical: -8,
+                        horizontal: 32,
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                         horizontal: 'right',
                     }}
                 >
                     <S.Dialog>
@@ -70,7 +76,7 @@ const CardService: React.FC <IProps> = (props) => {
                             onClick={handleClose}
                             type='button'
                         >
-                            <img src={alertRed} alt="" />
+                            <img src={closeRed} alt="" />
                         </button>
                         <button 
                             onClick={props.onEdit}

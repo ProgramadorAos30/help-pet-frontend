@@ -457,27 +457,29 @@ const Registros: React.FC = () => {
                                                         </p>
                                                     </span>
                                                 </S.Finished>
-                                                <S.Button showOccurence={false} style={{ width: '83px' }}>
+                                                <td style={{ width: '83px' }}>
                                                     <span>
-                                                        <Poppover
-                                                            type='occurrences'
-                                                            onClick={() => {}}
-                                                            onEdit={() => {}} 
-                                                            onView={() => {}}
-                                                            onFinish={() => {}}
-                                                            onApprove={() => {
-                                                                let obj = {
-                                                                    "finished_status": "Yes"
-                                                                }
-                                                                //onEdit(id.id, obj)
-                                                            }}
-                                                            onDelete={() => {
-                                                                setIdDelete(id.id)
-                                                                setOpenDelete(!openDelete)
-                                                            }}
-                                                        /> 
+                                                        <S.Options>
+                                                            <Poppover
+                                                                type='occurrences'
+                                                                onClick={() => {}}
+                                                                onEdit={() => {}} 
+                                                                onView={() => {}}
+                                                                onFinish={() => {}}
+                                                                onApprove={() => {
+                                                                    let obj = {
+                                                                        "finished_status": "Yes"
+                                                                    }
+                                                                    //onEdit(id.id, obj)
+                                                                }}
+                                                                onDelete={() => {
+                                                                    setIdDelete(id.id)
+                                                                    setOpenDelete(!openDelete)
+                                                                }}
+                                                            /> 
+                                                        </S.Options>
                                                     </span>
-                                                </S.Button>
+                                                </td>
                                                 <S.Button showOccurence={true} style={{ width: '135px' }}>
                                                     <span>
                                                         <button>

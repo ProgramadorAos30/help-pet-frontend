@@ -6,7 +6,7 @@ import { CustomInput, CustomSelect, CustomSwitch, ModalMsg, PersonalModal } from
 import { FormData, IProps } from "./types";
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
-import {regex, numberClean} from '../../../constants/regex'
+import { regex, numberClean } from '../../../services/functions/regex'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../schema";
 

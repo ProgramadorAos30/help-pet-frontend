@@ -6,7 +6,7 @@ import { CustomInput, CustomSelect, CustomSwitch, ModalMsg, PersonalModal } from
 import { FormData, IProps } from "./types";
 import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
-import {regex, numberClean} from '../../../constants/regex'
+import { regex, numberClean } from '../../../services/functions/regex'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../schema";
 
@@ -27,6 +27,7 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
         setValue,
         reset,
     } = useForm<FormData>({
+        mode: "onChange",
         resolver: yupResolver(schema)
     });
     const { mutate, isLoading } = useMutation(postUser, {

@@ -193,6 +193,15 @@ export const Finished = styled.td<{ finished: string }>`
 
     }
 `;
+export const Options = styled.span`
+> button {
+    display: flex;
+    justify-content: center;
+    border: none;
+    background: none;
+    width: 24px;
+    margin-left: 10px;}
+`;
 
 export const Button = styled.td<{ showOccurence: boolean }>`
     > span {

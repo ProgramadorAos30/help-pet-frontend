@@ -49,9 +49,16 @@ export const Top = styled.div<{ background: string }>`
         }
     }
 
-    > button {
-        border: none;
-        background: none;
+    > span {
+        display: flex;
+        width: 24px;
+        height: 24px;
+        > button {
+            align-items: center;
+            align-content: center;
+            border: none;
+            background: none;
+        }
     }
 `;
 

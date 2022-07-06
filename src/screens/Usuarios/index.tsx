@@ -35,7 +35,7 @@ import { number } from 'yup/lib/locale';
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
     const { data: users, refetch} = useUsers(token);
-    const [ idUser, setIdUser ] = useState<string>('')
+    const [ idUser, setIdUser ] = useState('')
     
     const [openTotalList, setOpenTotalList] = useState(false);
     const [openSulList, setOpenSulList] = useState(false);
@@ -46,7 +46,7 @@ const Usuarios: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [app, setApp] = useState(true);
     const [panel, setPanel] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
+    const [editUser, setEditUser] = useState(false);
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [showDelete, setShowDelete ] = useState(false);
     const [showSuccess, setShowSuccess ] = useState(false);
@@ -61,23 +61,26 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
     ];
 
-    const deleteService = async (id: string) => {
-        // const data = await api.delete(`/services/${id}`, {
-        //     headers: {
-        //         'Authorization': `Bearer ${token}`
-        //     }
-        // })
+    const deleteUser = async (id: string) => {
+        const data = await api.delete(`/users/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
 
-        // return data
+        return data
     };
 
-    const { mutate, isLoading } = useMutation(deleteService, {
+    const { mutate: onDelete, isLoading } = useMutation(deleteUser, {
         onSuccess: () => {
-          queryClient.invalidateQueries('services');
+          queryClient.invalidateQueries('users');
           setShowDelete(false)
           setShowSuccess(true)
+          refetch()
         }
     });
+
+    console.log(idUser, 'id user')
 
     return (
         <>
@@ -323,8 +326,13 @@ const Usuarios: React.FC = () => {
                                                             <S.Options>
                                                                 <Poppover
                                                                     onClick={() => {}}
-                                                                    onDelete={() => setShowDelete(!false)}
-                                                                    onEdit={() => setOpenModal(!openModal)} 
+                                                                    onDelete={() => {
+                                                                        setShowDelete(!false)
+                                                                        setIdUser(id.id)
+                                                                    }}
+                                                                    onEdit={() => setEditUser(!editUser)}
+                                                                    type={'userApp'} 
+
                                                                 /> 
                                                             </S.Options>
                                                         </span>
@@ -456,8 +464,12 @@ const Usuarios: React.FC = () => {
                                                             <S.Options>
                                                                 <Poppover
                                                                     onClick={() => {}}
-                                                                    onDelete={() => setShowDelete(!false)}
-                                                                    onEdit={() => setOpenModal(!openModal)} 
+                                                                    onDelete={() => {
+                                                                        setShowDelete(!false)
+                                                                        setIdUser(id.id)
+                                                                    }}
+                                                                    onEdit={() => setEditUser(!editUser)} 
+                                                                    type={'userPanel'} 
                                                                 />
                                                             </S.Options>
                                                         </span>
@@ -480,14 +492,14 @@ const Usuarios: React.FC = () => {
                 onClose={() => setOpen(!open)}
             />
             <EditUser 
-                isModal={openModal}
-                onClose={() => setOpenModal(!openModal)}
+                isModal={editUser}
+                onClose={() => setEditUser(!editUser)}
             />
             <ModalDelete
-                mensage='Deseja mesmo excluir este serviço?'
+                mensage='Deseja mesmo excluir este usuário?'
                 onClose={() => setShowDelete(false)}
                 onDelete={() => {
-                    mutate(idUser)
+                    onDelete(idUser)
                     refetch()
                 }}
                 open={showDelete}
@@ -497,14 +509,14 @@ const Usuarios: React.FC = () => {
             <ModalMsg 
                 height='312px'
                 modalBackground={false}
-                mensage='O serviço foi excluido com sucesso!'
+                mensage='O usuário foi excluido com sucesso!'
                 onClose={() => {
                     setShowSuccess(false)
                     setShowDelete(false)
                     refetch()
                 }}
                 open={showSuccess}
-                status=""
+                status="success"
                 width={469}
             />
         </>

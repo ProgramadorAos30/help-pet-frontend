@@ -3,7 +3,7 @@ import * as S from './style';
 import Popover from '@mui/material/Popover';
 import {
     options,
-    alertRed
+    closeRed
 } from '../../assets/index';
 
 
@@ -13,11 +13,14 @@ interface IProps {
     onEdit: () => void,
     onFinish?: () => void,
     onApprove?: () => void,
+    onManage?: () => void,
     onView?: () => void,
+    onAnswer?: () => void,
+    onMark?: () => void,
     type?: string
 }
 
-const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, onApprove, onFinish}) => {
+const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, onApprove, onManage, onFinish, onAnswer, onMark}) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,101 +40,152 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                 id="open_triger"
                 type='button'
                 onClick={handleClick}
-                
             >   
                 <img src={options} alt="" />
             </button>
-            {type !== 'occurrences' ? 
+            <>
                 <Popover
                     id={id}
                     open={open}
                     anchorEl={anchorEl}
                     onClose={handleClose}
                     anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
+                        vertical: -8,
+                        horizontal: 32,
                     }}
-                >
-                    <S.Dialog>
-                        <button 
-                            onClick={handleClose}
-                            type='button'
-                        >
-                            <img src={alertRed} alt="" />
-                        </button>
-                        <button 
-                            onClick={onEdit}
-                            type='button'
-                            id="onEdit_poppover"
-                        >
-                            Editar
-                        </button>
-                        <button 
-                            onClick={onDelete}
-                            type='button'
-                            id="onDelete_poppover"
-                        >
-                            Excluir
-                        </button>
-                    </S.Dialog>
-                </Popover>
-            :
-                <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
+                    transformOrigin={{
+                        vertical: 'top',
+                            horizontal: 'right',
                     }}
+                                    
                 >
-                    <S.DialogOccurrence>
-                        <button 
-                            onClick={handleClose}
-                            type='button'
-                        >
-                            <img src={alertRed} alt="" />
-                        </button>
-                        <button 
-                            onClick={onEdit}
-                            type='button'
-                            id="onEdit_poppover"
-                        >
-                            Editar
-                        </button>
-                        <button 
-                            onClick={onView}
-                            type='button'
-                            id="onView_poppover"
-                        >
-                            Visualizar
-                        </button>
-                        <button 
-                            onClick={onFinish}
-                            type='button'
-                            id="onFinish_poppover"
-                        >
-                            Finalizar ocorrência
-                        </button>
-                        <button 
-                            onClick={onApprove}
-                            type='button'
-                            id="onApprove_poppover"
-                        >
-                            Aprovar/Reprovar
-                        </button>
-                        <button 
-                            onClick={onDelete}
-                            type='button'
-                            id="onDelete_poppover"
-                        >
-                            Excluir
-                        </button>
-                    </S.DialogOccurrence>
+                    {type === 'userApp' && (
+                        <S.TwoItens>
+                            <button 
+                                onClick={handleClose}
+                                type='button'
+                            >
+                                <img src={closeRed} alt="" />
+                            </button>
+                            <button 
+                                onClick={onEdit}
+                                type='button'
+                                id="onEdit_poppover"
+                            >
+                                Gerenciar
+                            </button>
+                            <button 
+                                onClick={onDelete}
+                                type='button'
+                                id="onDelete_poppover"
+                            >
+                                Excluir
+                            </button>
+                        </S.TwoItens>
+                    )}
+                    {type === 'userPanel' && (
+                        <S.TwoItens>
+                            <button 
+                                onClick={handleClose}
+                                type='button'
+                            >
+                                <img src={closeRed} alt="" />
+                            </button>
+                            <button 
+                                onClick={onEdit}
+                                type='button'
+                                id="onEdit_poppover"
+                            >
+                                Editar
+                            </button>
+                            <button 
+                                onClick={onDelete}
+                                type='button'
+                                id="onDelete_poppover"
+                            >
+                                Excluir
+                            </button>
+                        </S.TwoItens>
+                    )}
+                    {type === 'occurrences' && (
+                        <S.FiveItems>
+                            <button 
+                                onClick={handleClose}
+                                type='button'
+                            >
+                                <img src={closeRed} alt="" />
+                            </button>
+                            <button 
+                                onClick={onEdit}
+                                type='button'
+                                id="onEdit_poppover"
+                            >
+                                Editar
+                            </button>
+                            <button 
+                                onClick={onView}
+                                type='button'
+                                id="onView_poppover"
+                            >
+                                Visualizar
+                            </button>
+                            <button 
+                                onClick={onFinish}
+                                type='button'
+                                id="onFinish_poppover"
+                            >
+                                Finalizar ocorrência
+                            </button>
+                            <button 
+                                onClick={onApprove}
+                                type='button'
+                                id="onApprove_poppover"
+                            >
+                                Aprovar/Reprovar
+                            </button>
+                            <button 
+                                onClick={onDelete}
+                                type='button'
+                                id="onDelete_poppover"
+                            >
+                                Excluir
+                            </button>
+                        </S.FiveItems>
+                    )}
+                    {type === 'menssage' && (
+                        <S.ThreeItems>
+                            <button 
+                                onClick={handleClose}
+                                type='button'
+                            >
+                                <img src={closeRed} alt="" />
+                            </button>
+                            <button 
+                                onClick={onAnswer}
+                                type='button'
+                                id="onAnswer_poppover"
+                            >
+                                Responder
+                            </button>
+                            <button 
+                                onClick={onMark}
+                                type='button'
+                                id="onMark_poppover"
+                            >
+                                Marcar como respondida
+                            </button>
+                            <button 
+                                onClick={onDelete}
+                                type='button'
+                                id="onDelete_poppover"
+                            >
+                                Excluir
+                            </button>
+                        </S.ThreeItems>
+                    )}
                 </Popover>
-            }   
-        </>
+            </>
+        </>      
     );
 };
 
