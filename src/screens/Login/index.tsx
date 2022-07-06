@@ -74,24 +74,26 @@ const Login: React.FC = () => {
                             name='username'
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => (
-                                <>
-                                    <CustomInput 
-                                        label='Digite seu e-mail ou celular' 
-                                        onChange={onChange} 
-                                        onBlur={onBlur} 
-                                        type='text' 
-                                        value={value}
-                                        width={372}  
-                                        id="username"         
-                                    />
-                                </>
+                                <span>
+                                    <div>
+                                        <CustomInput 
+                                            label='Digite seu e-mail ou celular' 
+                                            onChange={onChange} 
+                                            onBlur={onBlur} 
+                                            type='text' 
+                                            value={value}
+                                            width={372}  
+                                            id="username"         
+                                        />
+                                    </div>
+                                    {errors?.username && (
+                                        <span>
+                                            {errors?.username?.message}
+                                        </span>
+                                    )}
+                                </span>
                             )}
                         />
-                        {errors?.username && (
-                            <span>
-                                {errors?.username?.message}
-                            </span>
-                        )}
                         </fieldset>
                         <fieldset>
                         <Controller 
@@ -99,25 +101,26 @@ const Login: React.FC = () => {
                             name='password'
                             defaultValue=""
                             render={({field: { onChange, onBlur, value }}) => (
-                                <>
-                                    <CustomInput 
-                                        label='Digite sua senha' 
-                                        onChange={onChange} 
-                                        onBlur={onBlur}  
-                                        type='password' 
-                                        value={value} 
-                                        width={372}
-                                        id="password"                      
-                                    />
-                                    
-                                </>
+                                <span>
+                                    <div>
+                                        <CustomInput 
+                                            label='Digite sua senha' 
+                                            onChange={onChange} 
+                                            onBlur={onBlur}  
+                                            type='password' 
+                                            value={value} 
+                                            width={372}
+                                            id="password"                      
+                                        />
+                                    </div> 
+                                    {errors?.password && (
+                                        <span>
+                                            Senha é obrigatória
+                                        </span>
+                                    )}
+                                </span>
                             )}
-                        />
-                        {errors?.password && (
-                            <span>
-                                Senha é obrigatória
-                            </span>
-                        )}
+                        />                      
                         </fieldset>
                         <S.RemeberPassword
                             id="remeber_password"

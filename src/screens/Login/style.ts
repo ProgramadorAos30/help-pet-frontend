@@ -10,7 +10,7 @@ export const Container = styled.div`
         position: absolute;
         top: 177px;
         left: 186.01px;
-        padding: 89px 98px;
+        padding: 89px 98px 83px 98px;
         background: ${props => props.theme.colors.white};
         width: 568px;
         height: 727px;
@@ -19,7 +19,8 @@ export const Container = styled.div`
         > img { 
             width: 191.16px;
             height: 48.07px;
-            margin-bottom: 40px;
+            margin-top: 4px;
+            margin-bottom: 44px;
         }
 
         > p { 
@@ -40,17 +41,29 @@ export const Container = styled.div`
             line-height: 45px;
             color: #0A3466;
             width: 300px;
-            margin-bottom: 40px;
+            margin-bottom: 43px;
         }
 
         > form {
-
-
             > fieldset {
-                margin-bottom: 24px;
-
-                span { 
-                    color: red;
+                
+                > span {  
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    margin-bottom: 24px;
+                    position: relative;
+                    
+                    > span { 
+                        padding-top: 5px;
+                        color: red;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 15px;
+                        position: absolute;
+                        margin-top: 56px;
+                    }
                 }
             }
 
@@ -76,7 +89,7 @@ export const RemeberPassword = styled.button`
     border-bottom: 1px solid #0A3466;
     color: #0A3466;
     cursor: pointer;
-    margin-bottom: 51px;
+    margin-bottom: 48px;
     float: right;
     cursor: pointer;
     background: none;

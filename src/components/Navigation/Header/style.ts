@@ -18,6 +18,10 @@ export const Container = styled.div`
         > div:nth-child(1){
             padding-right: 32px;
             border-right: 1px solid ${props => props.theme.colors.gray};
+            display:flex;
+            flex-direction: column;
+            align-items: flex-end;
+
             > h1 {
                 font-style: normal;
                 font-weight: 400;
@@ -38,7 +42,7 @@ export const Container = styled.div`
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 32px;
+            margin-left: 28px;
 
             > p {
                 font-style: normal;
@@ -55,6 +59,7 @@ export const Container = styled.div`
 export const Link = styled.button`
     background: none;
     border: none;
+
 `;
 
 export const ModalContainer = styled.div`
