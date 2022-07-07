@@ -12,4 +12,5 @@ export type FormData = {
 export interface IProps {
     onClose: () => void;
     isModal: boolean;
+    itemEdit: any
 }

@@ -1,59 +1,120 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as S from './style';
-import { useForm, Controller } from "react-hook-form";
-import { api, useUf, useCity } from "../../../services";
-import { CustomInput, CustomSelect, CustomSwitch, ModalMsg, PersonalModal } from '../../../components/index';
+import { useSelector } from 'react-redux';
+import { useForm, Controller, useFieldArray,  } from "react-hook-form";
+import { 
+    CustomInput,
+    CustomSelect,
+    CustomSwitch, 
+    ModalMsg, 
+    PersonalModal 
+} from '../../../components/index';
+import { 
+    api, 
+    useUf, 
+    useCity,
+    postUser,
+    putUser, 
+    queryClient,
+} from '../../../services';
+import { RootState } from '../../../stores';
 import { FormData, IProps } from "./types";
 import { useMutation } from 'react-query';
-import { queryClient } from '../../../services/index';
-import { regex, numberClean } from '../../../services/functions/regex'
+import { AxiosResponse } from 'axios';
+
+import {regex, numberClean} from '../../../services/functions/regex'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../schema";
 
-async function postUser(data: FormData) {
-    const { data: response } = await api.post('/signup', data);
-    return response.data;
-}
-
-const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
-
+const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
+    const { token } = useSelector((state : RootState) => state.clickState);
     const { data: uf, isLoading: loadingUf } = useUf();
+    
+    const [ user, setUser ] = useState<any>();
+    const [ idUser, setIdUser ] = useState('');
+    const [ open, setOpen ] = useState(false);
+    const [ successMsg, setSuccessMsg ] = useState(false);
 
     const { 
         handleSubmit,
-        formState: { errors, isDirty, isValid  },
+        formState: { errors, isSubmitting, isDirty, isValid  },
         control,
-        watch,
+        watch,  
         setValue,
         reset,
+        getValues,
     } = useForm<FormData>({
-        mode: "onChange",
         resolver: yupResolver(schema)
     });
-    const { mutate, isLoading } = useMutation(postUser, {
-        onSuccess: () => {
-          queryClient.invalidateQueries('users');
-          setOpen(true);
-        }
-    });
 
-    const [ open, setOpen ] = useState(false);
+    // const { mutate, isLoading } = useMutation(putUser, {
+    //     onSuccess: () => {
+    //       queryClient.invalidateQueries('users');
+    //       setOpen(true);
+    //     }
+    // });
 
-    const onSubmit = (values: FormData) => {
-
-        let obj = Object.assign(values, { 
-            "phone_number": numberClean(values.phone_number),
-            "role": "Administrador",
-        })
-        mutate(obj);
-        console.log(obj, 'valores');
-    };
     const watchPhone = watch('phone_number');
-    console.log(watchPhone, 'teste')
-
     const watchUf = watch('state');
 
     const { data: city, isLoading: loadingCity } = useCity(watchUf);
+
+    async function registerService(values: FormData){
+        const {...item } = values;
+
+        const data: any = {};
+
+        Object.keys(item).map((keys) => {
+            let key = keys as keyof unknown;
+            if(item[key] !== '') data[key] = item[key]
+            else data[key] = null
+        });
+
+        if(Object.entries(data).length === 0) return;
+
+        const method: Promise<AxiosResponse<any, any>> = !!data.id
+            ? putUser(token, data.id, data)
+            : postUser(token, data);
+        
+        return await method
+            .then((resp) => {
+                console.log(resp.data.id);
+                setSuccessMsg(!successMsg)
+                return resp.data
+            })
+            .catch((error) => {
+                console.log(error)
+                return error
+            })
+    };
+
+    async function handleOnSubmit(values: FormData){
+        try {
+            console.log('values', values)        
+
+            let temp: any = getValues();
+
+            delete temp.sources
+            
+            // const _service: IUser = await registerService(values);
+            // setUser(_service);
+            
+            console.log(temp, 'VALUES FFFF');
+            
+        }
+        catch(error){
+            console.log('error')
+        }
+    };
+
+    useEffect(() => {
+        if(!itemEdit) return;
+
+        Object.keys(itemEdit).map((keys) => {
+            let key = keys as keyof unknown;
+            setValue(key as any, itemEdit[key] as any)
+        })
+    }, [itemEdit, setValue]);
 
     useEffect(() => {
         if (!isModal) {
@@ -71,9 +132,10 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
         >
         <S.Container>
             <h1>Editar moderador</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleOnSubmit)} autoComplete="off">
                 <div>
                     <fieldset>
+                        {/* <input class="hidden" type="text" style={{display: 'none!important', visibility: 'hidden!important',}} ></input> */}
                     <Controller
                             control={control}
                             name="name"
@@ -96,16 +158,16 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                         <Controller
                             control={control}
                             name="password"
-                            render={({field: { onChange, onBlur, value }}) => (
+                            render={({field: { onChange, onBlur,}}) => (
                                 <span>
                                     <div>
                                         <CustomInput
                                             width={372} 
                                             label="Senha do moderador"
-                                            value={value}
+                                            value="******"
                                             onChange={onChange}
                                             onBlur={onBlur}
-                                            type="password"
+                                            type="text"
                                         />
                                     </div>                                    
                                     {errors.password && (
@@ -170,15 +232,16 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                         <Controller
                             control={control}
                             name="state"
-                            defaultValue=""
+                            defaultValue="value"
                             render={({field: { onChange, onBlur, value }}) => (
                                 <span>
                                     <div>
                                         <CustomSelect 
                                                 list={uf}
                                                 label="Estado"
-                                                labelDefault="Selecione o Estado" 
+                                                labelDefault={value} 
                                                 value={value}
+                                                defaultValue={value}
                                                 onBlur={onBlur}
                                                 onChange={onChange}
                                                 width={372}
@@ -202,6 +265,7 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                                             label="Cidade"
                                             labelDefault="Selecione a Cidade"
                                             value={value}
+                                            defaultValue={value}
                                             onChange={onChange}
                                             onBlur={onBlur}
                                             width={372}
@@ -228,6 +292,7 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                                             value={value}
                                             onChange={onChange}
                                             onBlur={onBlur}
+                                            defaultValue={value == false ? false : true}
                                         />
                                     )}
                                 />
@@ -242,7 +307,10 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                         type='submit'
                         disabled={!isDirty || !isValid}
                     >
-                        {isLoading == true ? 'Salvando...' : 'Salvar'}
+                        {/* {isLoading == true 
+                                ? "Editando..."
+                                : "Finalizar edição"
+                            } */}
                     </S.Button>
                 </S.ContainerBnt>
             </form>
@@ -251,6 +319,7 @@ const EditForm: React.FC <IProps> =  ({onClose, isModal}) => {
                     modalBackground={false}
                     open={open} 
                     onClose={() => {
+                        setSuccessMsg(!successMsg)
                         setOpen(!open)
                         onClose()
                     }} 
