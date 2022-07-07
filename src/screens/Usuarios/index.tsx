@@ -33,6 +33,8 @@ import {
     options,
     registers,
 } from '../../assets';
+import {regex} from '../../services/functions/regex'
+
 
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
@@ -54,7 +56,7 @@ const Usuarios: React.FC = () => {
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [showDelete, setShowDelete ] = useState(false);
     const [showSuccess, setShowSuccess ] = useState(false);
-
+    const [regexPhone, setRegexPhone] = useState('');
 
     let lista = [
         { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
@@ -231,7 +233,7 @@ const Usuarios: React.FC = () => {
                                         </th>
                                         <th style={{ width: '173px',}}>
                                             <span>
-                                                Whatsapp
+                                                Telefone
                                             </span>
                                         </th>
                                         <th style={{ width: '216px',}}>
@@ -293,7 +295,7 @@ const Usuarios: React.FC = () => {
                                                     </td>
                                                     <td style={{ width: '173px', }}>
                                                         <span>
-                                                            {id.phone_number}
+                                                            {regex(id.phone_number)}                                                                                            
                                                         </span>
                                                     </td>
                                                     <td style={{ width: '216px', }}>
@@ -376,7 +378,7 @@ const Usuarios: React.FC = () => {
                                         </th>
                                         <th style={{ width: '168px', }}>
                                             <span>
-                                                Whatsapp
+                                                Telefone
                                             </span>
                                         </th>
                                         <th style={{ width: '362px', }}>
@@ -432,7 +434,7 @@ const Usuarios: React.FC = () => {
                                                     </td>
                                                     <td style={{ width: '168px', }}>
                                                         <span>
-                                                            {id.phone_number}
+                                                            {regex(id.phone_number)}  
                                                         </span>
                                                     </td>
                                                     <td style={{ width: '358px', }}>
