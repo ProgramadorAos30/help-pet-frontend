@@ -59,6 +59,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
 
     const { data: city, isLoading: loadingCity } = useCity(watchUf);
 
+
     async function registerService(values: FormData){
         const {...item } = values;
 
@@ -87,6 +88,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                 return error
             })
     };
+
 
     async function handleOnSubmit(values: FormData){
         try {
@@ -188,7 +190,12 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                             width={372}
                                             type="text"
                                             label={value === "" ? 'Numero do celular' : 'Celular'}
-                                            value={value}
+                                            value={(e: any) => {
+                                                let numero = regex(e?.target?.value)
+                                                if(numero.length <= 15){
+                                                    onChange(numero)
+                                                }}                      
+                                            }
                                             onChange={(e: any) => {
                                                 let numero = regex(e?.target?.value)
                                                 if(numero.length <= 15){
@@ -301,7 +308,12 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                     </fieldset>
                 </div>
                 <S.ContainerBnt>
-                    <button type="button" onClick={onClose} >Cancelar</button>
+                    <button type="button" 
+                        onClick={() => {
+                            reset()
+                            onClose()
+                        }} 
+                    >Cancelar</button>
                     <S.Button
                         id='submit' 
                         type='submit'
@@ -322,6 +334,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                         setSuccessMsg(!successMsg)
                         setOpen(!open)
                         onClose()
+                        reset()
                     }} 
                     width={375} 
                     status={'success'} 

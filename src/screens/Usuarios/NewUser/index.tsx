@@ -45,10 +45,11 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         let obj = Object.assign(values, { 
             "phone_number": numberClean(values.phone_number),
             "role": "Administrador",
-            "active": "false",
+            "active": values.active === true ? true : false
+            
         })
         mutate(obj);
-        console.log(obj, 'valores');
+        console.log(obj, 'valores submit');
     };
 
     const watchPhone = watch('phone_number');
@@ -63,6 +64,8 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
             reset()
         }
     },[isModal,reset]) 
+
+    console.log(watch('active'))
 
     return (
         <PersonalModal
@@ -251,7 +254,8 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                             rightLabel="Ativo"
                                             value={value}
                                             onChange={onChange}
-                                            onBlur={onBlur}                                            
+                                            onBlur={onBlur}
+                                            // defaultValue={false}
                                         />
                                     )}
                                 />
