@@ -24,6 +24,10 @@ export const Container = styled.div`
         right: 60px;
         top: 40px;
     }
+
+    span {
+        color: red;
+    }
 `;
 
 export const FormTop = styled.div`
@@ -309,29 +313,36 @@ export const ContainerBtn = styled.fieldset`
     justify-content: space-between;
     align-items: center;
     margin-top: 32px;
+`;
 
-    button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 274px;
-        height: 48px;
-        border-radius: 6px;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 19px;
-    }
+export const CancelBtn = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 274px;
+    height: 48px;
+    border-radius: 6px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    background: none;
+    border: 1px solid ${props => props.theme.colors.warning};
+    color: ${props => props.theme.colors.warning};
+`;
 
-    > button:nth-child(1){
-        background: none;
-        border: 1px solid ${props => props.theme.colors.warning};
-        color: ${props => props.theme.colors.warning};
-    }
-
-    > button:nth-child(2){
-        border: none;
-        background: ${props => props.theme.colors.blue};
-        color: ${props => props.theme.colors.white};
-    }
+export const SubmitButton = styled.button<{ disabled: boolean }>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 274px;
+    height: 48px;
+    border-radius: 6px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    border: none;
+    color: ${props => props.disabled == false ? props.theme.colors.white : '#2C3941'};
+    background: ${props => props.disabled == false ? props.theme.colors.blue : '#C7C7C7'};
 `;

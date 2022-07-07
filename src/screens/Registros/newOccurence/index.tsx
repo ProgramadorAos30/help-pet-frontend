@@ -69,22 +69,40 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             }
         });
         return response.data;
-    }
+    };
 
     const {
         handleSubmit,
-        formState: { errors, isDirty, isValid },
+        formState: { errors, isDirty, isValid, dirtyFields },
         control,
         watch,
         register,
-        getValues,
         setValue,
+        getValues,
         reset
     } = useForm<FormData>({
-        resolver: yupResolver(schema)
+        mode: 'onChange',
+        resolver: yupResolver(schema),
+        defaultValues: {
+            // service: '',
+            // source: '',
+            // source_name: '',
+            // date: '',
+            // address: '',
+            //special_place: 'NotKnow',
+            have_energy_meter: 'NotKnow',
+            have_hydrometer: 'NotKnow',
+            have_reservoir: 'NotKnow',
+            number_residents: 0,
+            type_place: 'Other'
+            // type_place: '',
+            // area: '',
+            // description: '',
+            // agree_share: false,
+        }
     });
 
-    const { mutate, isLoading, isSuccess } = useMutation(postOccurence, {
+    const { mutate, isLoading } = useMutation(postOccurence, {
         onSuccess: (resp) => {
             setOpen(true)
             queryClient.invalidateQueries('occurence');
@@ -94,42 +112,28 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
     });
 
     const onSubmit = (values: FormData) => {
-        const obj = {
-            "id": values.id,
-            "service": values.service,
-            "source": values.source,
-            "source_name": values.source_name,
-            "date": values.date,
-            "restoration_date": values.restoration_date,
-            "address": values.address,
-            "neighborhood": values.neighborhood,
-            "city": values.city,
-            "state": values.state,
-            "country": values.country,
-            "special_place": values.special_place,
-            "have_energy_meter": values.have_energy_meter,
-            "have_hydrometer": values.have_hydrometer,
-            "have_reservoir": values.have_reservoir,
-            "number_residents": values.number_residents,
-            "type_place": values.type_place,
-            "area": values.area,
-            "description": values.description,
-            "restoration_description": values.restoration_description,
+        const obj = Object.assign(values, { 
             "agree_share": values.agree_share === "Yes" ? true : false,
-            "latitude": values.latitude,
-            "longitude": values.longitude,
-            "status": values.status,
-            "finished_status": values.finished_status
-        }
+        })
+
         mutate(obj);
-        console.log(values, 'valores');
     };
+
+    const watchSpecialPlate = watch('special_place')
 
     useEffect(() => {
         if(!isModal){
             reset()
         }
     }, [isModal, reset]);
+
+    useEffect(() => {
+        if(watchSpecialPlate !== 'Yes'){
+            setValue('type_place', 'Other')
+        }
+    }, [watchSpecialPlate])
+
+    console.log(isDirty, 'isDirty', isValid, 'isValid', dirtyFields);
 
     return (
         <>
@@ -145,6 +149,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                     <h1>Registrar ocorrência</h1>
                     <button
                         type='button'
+                        id='close-modal'
                         onClick={() => {
                             setCloseOccurrence(!closeOccurrence)
                         }}
@@ -184,10 +189,10 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     )
                                                 }}
                                             />
-                                            {errors.service && (
-                                                <p>{errors.address?.message}</p>
-                                            )}
                                         </div>
+                                        {errors.service && (
+                                            <span>{errors.address?.message}</span>
+                                        )}
                                     </fieldset>
                                     {watch('service') !== undefined ? 
                                         <fieldset>
@@ -221,9 +226,6 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         )
                                                     }}
                                                 />
-                                                {errors.source && (
-                                                    <p>{errors.source.message}</p>
-                                                )}
                                             </div>
                                         </fieldset>
                                         :
@@ -238,6 +240,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         <div>
                                                             <Controller 
                                                                 name="source_name"
+                                                                defaultValue=''
                                                                 control={control}    
                                                                 render={({field: { onChange, onBlur, value }}) => {
                                                                     return (
@@ -253,9 +256,6 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                     )
                                                                 }}
                                                             />
-                                                            {errors.source_name && (
-                                                                <p>{errors.source_name.message}</p>
-                                                            )}
                                                         </div>
                                                     )
                                                 } else {
@@ -306,6 +306,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                 </div>
                                                                 <div>
                                                                     <input 
+                                                                        defaultChecked={true}
                                                                         {...register('have_hydrometer')}
                                                                         type="radio" 
                                                                         name="have_hydrometer" 
@@ -345,6 +346,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                 </div>
                                                                 <div>
                                                                     <input 
+                                                                        defaultChecked={true}
                                                                         {...register('have_reservoir')}
                                                                         type="radio" 
                                                                         name="have_reservoir" 
@@ -395,7 +397,8 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                                 <label htmlFor="No">Não</label>
                                                             </div>
                                                             <div>
-                                                                <input 
+                                                                <input
+                                                                    defaultChecked={true} 
                                                                     {...register('have_energy_meter')}
                                                                     type="radio" 
                                                                     name="have_energy_meter" 
@@ -435,6 +438,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                             )
                                         }}
                                     />
+                                    {errors.date && (
+                                        <span>Preencha o campo data.</span>
+                                    )}
                                 </div>
                             </fieldset>
                             <fieldset>
@@ -446,24 +452,25 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                 </p>
                                 <fieldset>
                                     <input 
+                                        {...register('special_place')}
                                         type="radio" 
                                         id="special_place_yes" 
                                         value="Yes"
-                                        {...register('special_place')}
                                     />
                                     <label htmlFor="yes">Sim</label>
                                     <input 
+                                        {...register('special_place')}
                                         type="radio" 
                                         id="special_place_no" 
                                         value="No"
-                                        {...register('special_place')}
                                     />
                                     <label htmlFor="no">Não</label>
-                                    <input 
+                                    <input
+                                        {...register('special_place')}
+                                        defaultChecked={true}
                                         type="radio" 
                                         id="special_place_unknow" 
                                         value="NotKnow"
-                                        {...register('special_place')}
                                     />
                                     <label htmlFor="unknow">Não sei</label>
                                 </fieldset>
@@ -492,6 +499,9 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                 )
                                             }}
                                         />
+                                        {errors.type_place && (
+                                            <p>{errors.type_place.message}</p>
+                                        )}
                                     </div>
                                 </fieldset>
                             )}
@@ -513,11 +523,15 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         type="text"
                                                         value={value}
                                                         width={372}
-                                                        id='date_time'
+                                                        id='address'
                                                     />
                                                 )
                                             }}
                                         />
+
+                                        {errors.address && (
+                                            <span>{errors.address.message}</span>
+                                        )}
                                     </fieldset>
                                     <fieldset>
                                         <div>
@@ -540,10 +554,15 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                         labelDefault='Área afetada'
                                                         width={372}
                                                         list={TYPE_LOCAL}
+                                                        id='area'
                                                     />
                                                 )
                                             }}
                                         />
+
+                                        {errors.area && (
+                                            <span>{errors.area.message}</span>
+                                        )}
                                     </fieldset>
                                     {watch('area') === 'House' && (
                                         <fieldset>
@@ -557,7 +576,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                             label='Número de moradores'
                                                             onBlur={onBlur}
                                                             onChange={onChange}
-                                                            type="text"
+                                                            type="number"
                                                             value={value}
                                                             width={372}
                                                             id='number_residents'
@@ -565,6 +584,10 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                     )
                                                 }}
                                             />
+
+                                        {errors.number_residents && (
+                                            <span>{errors.number_residents.message}</span>
+                                        )}
                                         </fieldset>
                                     )}
                                 </fieldset>
@@ -615,6 +638,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                 />
                                 <label htmlFor="Yes">Sim</label>
                                 <input 
+                                    defaultChecked={true}
                                     {...register('agree_share')}
                                     type="radio" 
                                     name="agree_share" 
@@ -625,19 +649,22 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             </fieldset>
                         </S.FormBottom>
                         <S.ContainerBtn>
-                            <button 
+                            <S.CancelBtn 
                                 type='button' 
+                                id='cancel'
                                 onClick={() => {
                                     setCloseOccurrence(!closeOccurrence)
                                 }}
                             >
                                 Cancelar
-                            </button>
-                            <button type='submit'>
-                                { 
-                                    isLoading ? 'Cadastrando...' : 'Registrar ocorrência'
-                                }
-                            </button>
+                            </S.CancelBtn>
+                            <S.SubmitButton 
+                                type='submit'
+                                id='submit'
+                                disabled={isValid === true && isDirty === true ? false : true}
+                            >
+                                {isLoading ? 'Cadastrando...' : 'Registrar ocorrência'}
+                            </S.SubmitButton>
                         </S.ContainerBtn>
                     </form>
                 </S.Container>

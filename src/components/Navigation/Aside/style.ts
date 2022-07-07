@@ -44,10 +44,13 @@ export const Link = styled(NavLink)`
     border-radius: 8px;
     padding: 12px 10px;
     margin-bottom: 16px;
+            transition: 1s;
 
     > img{
         margin-right: 22px;
         filter: opacity(0.4) drop-shadow(0 0 0); 
+        width: 20px;
+            transition: 1s;
     }
 
     :hover, &.active {
@@ -59,11 +62,16 @@ export const Link = styled(NavLink)`
         line-height: 24px;
 
         > img {
-            filter: brightness(0) invert(1); 
+            filter: brightness(0) invert(1);
         }
     }
 
     :hover{
         opacity: 0.5;
+        transition: 1s;
+        > img {
+            width: 24px;
+            transition: 1s;
+        }
     }
 `;
