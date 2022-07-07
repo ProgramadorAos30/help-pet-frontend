@@ -586,7 +586,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                             />
 
                                         {errors.number_residents && (
-                                            <span>{errors.number_residents.message}</span>
+                                            <span>Verifique o numero digitado.</span>
                                         )}
                                         </fieldset>
                                     )}
@@ -683,7 +683,8 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                 occurence={true}
                 finishOccurence={() => {
                     putOccurence(idOccurrence, {
-                        "finished_status": "Yes"
+                        "finished_status": "Yes",
+                        "status": 'Approved'
                     })
                     setOpen(!open)
                     onHide()

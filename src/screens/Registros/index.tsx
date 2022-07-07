@@ -146,6 +146,8 @@ const Registros: React.FC = () => {
     //     }
     // })
 
+    console.log(occurrences);
+    
 
     return (
         <>
