@@ -47,6 +47,7 @@ const Registros: React.FC = () => {
     const [ open, setOpen ] = useState(false);
     const [ newOccurence, setNewOccurence ] = useState(false);
     const [ listServices, setListServices ] = useState<any>();
+    const [ occurrenceObj, setOccurrenceObj ] = useState<any>({});
     const [ page, setPage ] = useState<number>(1);
     const [ status, setStatus ] = useState<any>(undefined);
     const [ service, setService ] = useState<string[]>([]);
@@ -465,9 +466,16 @@ const Registros: React.FC = () => {
                                                             <Poppover
                                                                 type='occurrences'
                                                                 onClick={() => {}}
-                                                                onEdit={() => {}} 
-                                                                onView={() => {}}
-                                                                onFinish={() => {}}
+                                                                onEdit={() => {
+                                                                    setOccurrenceObj(id)
+                                                                }} 
+                                                                onView={() => {
+                                                                    setOccurrenceObj(id)
+                                                                }}
+                                                                onFinish={() => {
+                                                                    setOccurrenceObj(id)
+
+                                                                }}
                                                                 onApprove={() => {
                                                                     let obj = {
                                                                         "finished_status": "Yes"
@@ -509,9 +517,24 @@ const Registros: React.FC = () => {
                             <img src={iconShow} alt="" />
                         </S.PrevNext>
                         <S.AtualPage>{page}</S.AtualPage>
-                        <S.Page>{page + 1}</S.Page>
-                        <S.Page>{page + 2}</S.Page>
-                        <S.Page>{page + 3}</S.Page>
+                        <S.Page
+                            onClick={() => {
+                                let cont = page + 1
+                                setPage(cont);
+                            }}
+                        >{page + 1}</S.Page>
+                        <S.Page
+                            onClick={() => {
+                                let cont = page + 2
+                                setPage(cont);
+                            }}
+                        >{page + 2}</S.Page>
+                        <S.Page
+                            onClick={() => {
+                                let cont = page + 3
+                                setPage(cont);
+                            }}
+                        >{page + 3}</S.Page>
                         <S.PrevNext
                             to="next"
                             onClick={() => {

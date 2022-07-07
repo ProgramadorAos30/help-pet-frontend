@@ -3,6 +3,17 @@ import styled from "styled-components";
 export const Header = styled.div`
     display: flex;
     justify-content: space-between;
+    
+    > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: ${props => props.theme.colors.white};
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        height: 40px; 
+        margin: 2px 0px;
+    }
 `;
 
 export const Container = styled.div`

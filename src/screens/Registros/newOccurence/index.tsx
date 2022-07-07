@@ -178,11 +178,13 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                                                             width={254}
                                                             childrean={
                                                                 services?.map((id: any) => {
-                                                                    return (
-                                                                        <MenuItem value={id.id}>
-                                                                            {id.name}
-                                                                        </MenuItem>
-                                                                    )
+                                                                    if(id.active === true){
+                                                                        return (
+                                                                            <MenuItem value={id.id}>
+                                                                                {id.name}
+                                                                            </MenuItem>
+                                                                        )
+                                                                    }
                                                                 })
                                                             }
                                                         />
