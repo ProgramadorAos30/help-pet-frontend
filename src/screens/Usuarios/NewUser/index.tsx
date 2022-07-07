@@ -86,6 +86,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                             render={({field: { onChange, onBlur, value }}) => (
                                 <span>
                                     <CustomInput
+                                        id="name"
                                         width={372}
                                         type="text"
                                         label="Nome do moderador"
@@ -106,6 +107,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <span>
                                     <div>
                                         <CustomInput
+                                            id="password"
                                             width={372} 
                                             label="Senha do moderador"
                                             value={value}
@@ -129,6 +131,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <span>
                                     <div>
                                         <CustomInput
+                                            id="phone_number"
                                             width={372}
                                             type="text"
                                             label={value === "" ? 'Numero do celular' : 'Celular'}
@@ -160,6 +163,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <span>
                                     <div>
                                         <CustomInput
+                                            id="email"
                                             width={372}
                                             type="text"
                                             label={value === "" ? value : 'E-mail'}
@@ -184,14 +188,15 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <span>
                                     <div>
                                         <CustomSelect 
-                                                list={uf}
-                                                label="Estado"
-                                                labelDefault="Selecione o Estado" 
-                                                value={value}
-                                                onBlur={onBlur}
-                                                onChange={onChange}
-                                                width={372}
-                                            />
+                                            id="state"
+                                            list={uf}
+                                            label="Estado"
+                                            labelDefault="Selecione o Estado" 
+                                            value={value}
+                                            onBlur={onBlur}
+                                            onChange={onChange}
+                                            width={372}
+                                        />
                                     </div>                                    
                                     {errors.state&& (
                                         <span>{errors.state.message}</span>
@@ -207,6 +212,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                 <span>
                                     <div>
                                         <CustomSelect 
+                                            id="city"
                                             list={city}
                                             label="Cidade"
                                             labelDefault="Selecione a Cidade"
@@ -250,6 +256,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                     name="active"
                                     render={({field: { onChange, onBlur, value }}) => (
                                         <CustomSwitch
+                                            id="active"
                                             leftLabel="Inativo"
                                             rightLabel="Ativo"
                                             value={value}
@@ -264,7 +271,13 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                     </fieldset>
                 </div>
                 <S.ContainerBnt>
-                    <button type="button" onClick={onClose} >Cancelar</button>
+                    <button 
+                        id='Cancel'
+                        type="button" 
+                        onClick={onClose} 
+                    >
+                            Cancelar
+                    </button>
                     <S.Button
                         id='submit' 
                         type='submit'
