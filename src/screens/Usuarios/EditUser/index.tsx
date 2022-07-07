@@ -190,12 +190,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                             width={372}
                                             type="text"
                                             label={value === "" ? 'Numero do celular' : 'Celular'}
-                                            value={(e: any) => {
-                                                let numero = regex(e?.target?.value)
-                                                if(numero.length <= 15){
-                                                    onChange(numero)
-                                                }}                      
-                                            }
+                                            value={regex(value)}
                                             onChange={(e: any) => {
                                                 let numero = regex(e?.target?.value)
                                                 if(numero.length <= 15){
