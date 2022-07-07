@@ -363,7 +363,7 @@ const EditForm: React.FC<IProps> = ({onHide, isModal, itemEdit}) => {
             <ModalMsg 
                 height='312px'
                 modalBackground={false}
-                mensage='Falaha ao cadastrar serviço!'
+                mensage='Falha ao cadastrar serviço!'
                 onClose={() => {
                     reset()
                     setErrMsg(!errMsg)
