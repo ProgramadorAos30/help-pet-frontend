@@ -470,10 +470,12 @@ const Usuarios: React.FC = () => {
                                                                     onDelete={() => {
                                                                         setShowDelete(!false)
                                                                         setIdUser(id.id)
+                                                                        
                                                                     }}
                                                                     onEdit={() => {
                                                                         setEditUser(!editUser)
                                                                         setObjUser(id)
+                                                                        
                                                                     }} 
                                                                     type={'userPanel'} 
                                                                 />

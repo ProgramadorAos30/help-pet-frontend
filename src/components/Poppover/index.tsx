@@ -16,7 +16,7 @@ interface IProps {
     onView?: () => void,
     onAnswer?: () => void,
     onMark?: () => void,
-    type?: string
+    type?: string,
 }
 
 const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, onApprove, onFinish, onAnswer, onMark}) => {
@@ -67,14 +67,20 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 <img src={closeRed} alt="" />
                             </button>
                             <button 
-                                onClick={onEdit}
+                                onClick={() => {
+                                    onEdit()
+                                    handleClose()
+                                }}
                                 type='button'
                                 id="onEdit_poppover"
                             >
                                 Gerenciar
                             </button>
                             <button 
-                                onClick={onDelete}
+                                onClick={() => {
+                                    onDelete()
+                                    handleClose()
+                                }}
                                 type='button'
                                 id="onDelete_poppover"
                             >
@@ -85,20 +91,28 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                     {type === 'userPanel' && (
                         <S.TwoItens>
                             <button 
-                                onClick={handleClose}
+                                onClick={()=>{
+                                    handleClose()
+                                }}
                                 type='button'
                             >
                                 <img src={closeRed} alt="" />
                             </button>
                             <button 
-                                onClick={onEdit}
+                                onClick={()=>{
+                                    onEdit();
+                                    handleClose();
+                                }}
                                 type='button'
                                 id="onEdit_poppover"
                             >
                                 Editar
                             </button>
                             <button 
-                                onClick={onDelete}
+                                onClick={() => {
+                                    onDelete()
+                                    handleClose()
+                                }}
                                 type='button'
                                 id="onDelete_poppover"
                             >
@@ -115,13 +129,20 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 <img src={closeRed} alt="" />
                             </button>
                             <button 
-                                onClick={onEdit}
+                                onClick={() => {
+                                    onEdit()
+                                    handleClose()
+                                }}
                                 type='button'
                                 id="onEdit_poppover"
                             >
                                 Editar
                             </button>
                             <button 
+                                // onClick={() => {
+                                //     onView()
+                                //     handleClose()
+                                // }}
                                 onClick={onView}
                                 type='button'
                                 id="onView_poppover"
@@ -129,6 +150,10 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 Visualizar
                             </button>
                             <button 
+                                // onClick={() => {
+                                //     onFinish()
+                                //     handleClose()
+                                // }}
                                 onClick={onFinish}
                                 type='button'
                                 id="onFinish_poppover"
@@ -136,6 +161,10 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 Finalizar ocorrência
                             </button>
                             <button 
+                                // onClick={() => {
+                                //     onApprove()
+                                //     handleClose()
+                                // }}
                                 onClick={onApprove}
                                 type='button'
                                 id="onApprove_poppover"
@@ -143,7 +172,10 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 Aprovar/Reprovar
                             </button>
                             <button 
-                                onClick={onDelete}
+                                onClick={() => {
+                                    onDelete()
+                                    handleClose()
+                                }}
                                 type='button'
                                 id="onDelete_poppover"
                             >
@@ -160,6 +192,10 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 <img src={closeRed} alt="" />
                             </button>
                             <button 
+                                // onClick={() => {
+                                //     onAnswer()                                    
+                                //     handleClose()
+                                // }}
                                 onClick={onAnswer}
                                 type='button'
                                 id="onAnswer_poppover"
@@ -167,6 +203,10 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 Responder
                             </button>
                             <button 
+                                // onClick={() => {
+                                //     onMark()
+                                //     handleClose()
+                                // }}
                                 onClick={onMark}
                                 type='button'
                                 id="onMark_poppover"
@@ -174,7 +214,10 @@ const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, o
                                 Marcar como respondida
                             </button>
                             <button 
-                                onClick={onDelete}
+                                onClick={() => {
+                                    onDelete()
+                                    handleClose()
+                                }}
                                 type='button'
                                 id="onDelete_poppover"
                             >

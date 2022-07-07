@@ -25,6 +25,7 @@ import { AxiosResponse } from 'axios';
 import {regex, numberClean} from '../../../services/functions/regex'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../schema";
+import { on } from 'events';
 
 const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
     const { token } = useSelector((state : RootState) => state.clickState);
@@ -37,15 +38,18 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
 
     const { 
         handleSubmit,
-        formState: { errors, isSubmitting, isDirty, isValid  },
+        formState: { errors, isDirty, isValid  },
         control,
         watch,  
         setValue,
         reset,
         getValues,
     } = useForm<FormData>({
+        mode: "onChange",
         resolver: yupResolver(schema)
     });
+
+
 
     // const { mutate, isLoading } = useMutation(putUser, {
     //     onSuccess: () => {
@@ -54,68 +58,26 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
     //     }
     // });
 
+    const onSubmit = (values: FormData) => {
+        
+        let obj = Object.assign(values, { 
+            "phone_number": numberClean(values.phone_number),
+            "role": "Administrador",
+            "active": values.active === true ? true : false     
+        })
+        // mutate(obj);
+        console.log(obj, 'valores submit');
+    };
+
     const watchPhone = watch('phone_number');
     const watchUf = watch('state');
 
     const { data: city, isLoading: loadingCity } = useCity(watchUf);
 
-
-    async function registerService(values: FormData){
-        const {...item } = values;
-
-        const data: any = {};
-
-        Object.keys(item).map((keys) => {
-            let key = keys as keyof unknown;
-            if(item[key] !== '') data[key] = item[key]
-            else data[key] = null
-        });
-
-        if(Object.entries(data).length === 0) return;
-
-        const method: Promise<AxiosResponse<any, any>> = !!data.id
-            ? putUser(token, data.id, data)
-            : postUser(token, data);
-        
-        return await method
-            .then((resp) => {
-                console.log(resp.data.id);
-                setSuccessMsg(!successMsg)
-                return resp.data
-            })
-            .catch((error) => {
-                console.log(error)
-                return error
-            })
-    };
-
-
-    async function handleOnSubmit(values: FormData){
-        try {
-            console.log('values', values)        
-
-            let temp: any = getValues();
-
-            delete temp.sources
-            
-            // const _service: IUser = await registerService(values);
-            // setUser(_service);
-            
-            console.log(temp, 'VALUES FFFF');
-            
-        }
-        catch(error){
-            console.log('error')
-        }
-    };
-
     useEffect(() => {
-        if(!itemEdit) return;
-
-        Object.keys(itemEdit).map((keys) => {
-            let key = keys as keyof unknown;
-            setValue(key as any, itemEdit[key] as any)
-        })
+        if(itemEdit != undefined){
+            reset(itemEdit)
+        }
     }, [itemEdit, setValue]);
 
     useEffect(() => {
@@ -134,7 +96,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
         >
         <S.Container>
             <h1>Editar moderador</h1>
-            <form onSubmit={handleSubmit(handleOnSubmit)} autoComplete="off">
+            <form onSubmit={handleSubmit(onSubmit)}  autoComplete="off">
                 <div>
                     <fieldset>
                         {/* <input class="hidden" type="text" style={{display: 'none!important', visibility: 'hidden!important',}} ></input> */}
@@ -307,17 +269,17 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                         onClick={() => {
                             reset()
                             onClose()
-                        }} 
-                    >Cancelar</button>
+                        }}
+                    >Cancelar</button>  
                     <S.Button
                         id='submit' 
                         type='submit'
                         disabled={!isDirty || !isValid}
                     >
-                        {/* {isLoading == true 
+                        {true == true 
                                 ? "Editando..."
                                 : "Finalizar edição"
-                            } */}
+                            }
                     </S.Button>
                 </S.ContainerBnt>
             </form>
@@ -329,7 +291,6 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                         setSuccessMsg(!successMsg)
                         setOpen(!open)
                         onClose()
-                        reset()
                     }} 
                     width={375} 
                     status={'success'} 
