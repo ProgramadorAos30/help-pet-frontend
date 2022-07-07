@@ -44,7 +44,8 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         
         let obj = Object.assign(values, { 
             "phone_number": numberClean(values.phone_number),
-            "role": "Administrador"
+            "role": "Administrador",
+            "active": "false",
         })
         mutate(obj);
         console.log(obj, 'valores');
@@ -73,7 +74,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         >
         <S.Container>
             <h1>Cadastrar moderador</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}  autoComplete="off">
                 <div>
                     <fieldset>
                         <Controller
@@ -250,7 +251,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                                             rightLabel="Ativo"
                                             value={value}
                                             onChange={onChange}
-                                            onBlur={onBlur}
+                                            onBlur={onBlur}                                            
                                         />
                                     )}
                                 />

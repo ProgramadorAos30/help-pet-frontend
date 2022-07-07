@@ -31,6 +31,6 @@ export default {
         infoOrange: '#FF8735',
 
         //gradiente
-        gradient: 'linear-gradient(100.39deg, #2261AC 9.04%, #3EC5FF 143.53%);'
+        gradient: '#1773E2'
     }
 }

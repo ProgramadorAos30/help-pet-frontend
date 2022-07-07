@@ -13,14 +13,13 @@ interface IProps {
     onEdit: () => void,
     onFinish?: () => void,
     onApprove?: () => void,
-    onManage?: () => void,
     onView?: () => void,
     onAnswer?: () => void,
     onMark?: () => void,
     type?: string
 }
 
-const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, onApprove, onManage, onFinish, onAnswer, onMark}) => {
+const Poppover: React.FC <IProps> = ({onDelete, onEdit, onClick, type, onView, onApprove, onFinish, onAnswer, onMark}) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

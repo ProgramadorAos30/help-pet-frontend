@@ -15,7 +15,12 @@ import {
     ModalDelete,
     ModalMsg,
 } from '../../components';
-import { api, useUf, queryClient, useUsers } from '../../services';
+import { 
+    api, 
+    useUf, 
+    queryClient, 
+    useUsers,
+} from '../../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../stores';
 import { useMutation } from 'react-query';
@@ -28,14 +33,12 @@ import {
     options,
     registers,
 } from '../../assets';
-import { ThemeProvider } from 'styled-components';
-import { Console } from 'console';
-import { number } from 'yup/lib/locale';
 
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
     const { data: users, refetch} = useUsers(token);
-    const [ idUser, setIdUser ] = useState('')
+    const [ idUser, setIdUser ] = useState('');
+    const [ objUser, setObjUser ] = useState<any>();
     
     const [openTotalList, setOpenTotalList] = useState(false);
     const [openSulList, setOpenSulList] = useState(false);
@@ -43,6 +46,7 @@ const Usuarios: React.FC = () => {
     const [openSudesteList, setOpenSudesteList] = useState(false);
     const [openNordesteList, setOpenNordesteList] = useState(false);
     const [openCentroList, setOpenCentroList] = useState(false);
+
     const [open, setOpen] = useState(false);
     const [app, setApp] = useState(true);
     const [panel, setPanel] = useState(false);
@@ -67,7 +71,6 @@ const Usuarios: React.FC = () => {
                 'Authorization': `Bearer ${token}`
             }
         })
-
         return data
     };
 
@@ -79,8 +82,6 @@ const Usuarios: React.FC = () => {
           refetch()
         }
     });
-
-    console.log(idUser, 'id user')
 
     return (
         <>
@@ -468,7 +469,10 @@ const Usuarios: React.FC = () => {
                                                                         setShowDelete(!false)
                                                                         setIdUser(id.id)
                                                                     }}
-                                                                    onEdit={() => setEditUser(!editUser)} 
+                                                                    onEdit={() => {
+                                                                        setEditUser(!editUser)
+                                                                        setObjUser(id)
+                                                                    }} 
                                                                     type={'userPanel'} 
                                                                 />
                                                             </S.Options>
@@ -494,6 +498,7 @@ const Usuarios: React.FC = () => {
             <EditUser 
                 isModal={editUser}
                 onClose={() => setEditUser(!editUser)}
+                itemEdit={objUser}
             />
             <ModalDelete
                 mensage='Deseja mesmo excluir este usuário?'

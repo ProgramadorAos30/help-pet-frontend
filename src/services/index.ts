@@ -23,6 +23,10 @@ export {
     useUf,
     useCity,
     useUsers,
+    postUser, 
+    deleteUser,
+    putUser,
+    getUserById,
     useOccurrences,
     useUploads
 } from './hooks/index';

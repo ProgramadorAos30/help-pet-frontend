@@ -60,7 +60,7 @@ const CustomInput: React.FC <IProps> = (props) => {
     return (
         <ThemeProvider theme={theme}>
             <FormControl
-                variant="filled" 
+                variant="filled"
                 sx={{ width: props.width, height: 56, background: '#FFF  !important', borderRadius: '8px !important', border:'none'}}
             >
                 <TextField
@@ -71,6 +71,7 @@ const CustomInput: React.FC <IProps> = (props) => {
                     value={props.value}
                     id={props.id}
                     ref={props.ref}
+                    autoComplete="off"
                     InputProps={{
                         disableUnderline: true,
                         style: {

@@ -1,6 +1,12 @@
 export { useUf } from './useUf';
 export { useCity } from './useCity';
-export { useUsers } from './useUser';
+export { 
+    useUsers,
+    postUser, 
+    deleteUser,
+    putUser,
+    getUserById,
+} from './useUser';
 export { 
     useService,
     postService, 
