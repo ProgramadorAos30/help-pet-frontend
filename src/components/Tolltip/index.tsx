@@ -11,7 +11,21 @@ interface IProps {
 const Button = styled.button`
   border: none;
   background: none;
+  
 `;
+// const useStyles = makeStyles(theme => ({
+//   arrow: {
+//     "&:before": {
+//       border: "1px solid #E6E8ED"
+//     },
+//     color: theme.palette.common.white
+//   },
+//   tooltip: {
+//     backgroundColor: theme.palette.common.white,
+//     border: "1px solid #E6E8ED",
+//     color: "#4A4A4A"
+//   }
+// }));
 
 const CustomTolltip: React.FC <IProps> = (props) => {
   const theme = createTheme({
@@ -19,14 +33,14 @@ const CustomTolltip: React.FC <IProps> = (props) => {
       MuiTooltip: {
         styleOverrides: {
           tooltipArrow: {
-            color: '#2C3941'
+            backgroundColor: '#2C3941',
           },
           tooltip: {
             backgroundColor: '#2C3941',
             fontSize: '12px',
             fontWeight: '400',
             lineHeight: '18px',
-          }
+          }          
         }
       }
     }
@@ -34,7 +48,11 @@ const CustomTolltip: React.FC <IProps> = (props) => {
 
     return (
       <ThemeProvider theme={theme}>
-        <Tooltip title={props.desciption} placement="top">
+        <Tooltip 
+          arrow 
+          title={props.desciption} 
+          placement="top"
+        >
           <Button type="button">
             {props.title}
           </Button>

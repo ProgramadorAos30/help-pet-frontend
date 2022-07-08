@@ -33,13 +33,12 @@ import {
 } from '../../assets';
 import {regex} from '../../services/functions/regex'
 
-
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
-    const { data: users, refetch} = useUsers(token);
+    const { data: uf, isLoading: loadingUf } = useUf();
     const [ idUser, setIdUser ] = useState('');
     const [ objUser, setObjUser ] = useState<any>();
-    
+
     const [openTotalList, setOpenTotalList] = useState(false);
     const [openSulList, setOpenSulList] = useState(false);
     const [openNorteList, setOpenNorteList] = useState(false);
@@ -56,6 +55,38 @@ const Usuarios: React.FC = () => {
     const [showSuccess, setShowSuccess ] = useState(false);
     const [regexPhone, setRegexPhone] = useState('');
 
+    const [ page, setPage ] = useState<number>(1);
+    const [ user, setUser] = useState<any>();
+    const [ genre, setGenre ] = useState<any>();
+    const [ breed, setBreed] = useState<any>();
+    const [ ufValue, setUfValue ] = useState<any>();
+    const [ role, setRole] = useState<any>();
+
+    const {
+        data: users,
+        isLoading: loadUsers,
+        refetch: refetch,
+        isFetched: isFetchedUsers,
+    } = useUsers(
+        token,
+        'DESC',
+        page,
+        100,
+        user,
+        ufValue,
+        genre,
+        breed,
+        role,
+    );
+
+    console.log('pagina  -  ', page)
+    console.log('user  -  ', user)
+    console.log('ufValue  -  ', ufValue)
+    console.log('genre  -  ', genre)
+    console.log('breed  -  ', breed)
+    console.log('role  -  ', role)
+
+
     let lista = [
         { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
         { label: 'Pesquisar 2', value: 'pesquisa2', number: 2 },
@@ -63,6 +94,20 @@ const Usuarios: React.FC = () => {
         { label: 'Pesquisar 4', value: 'pesquisa4', number: 4 },
         { label: 'Pesquisar 5', value: 'pesquisa5', number: 5 },
         { label: 'Pesquisar 6', value: 'pesquisa6', number: 5 },
+    ];
+
+    let listaRaça = [
+        { label: 'Humana', value: 'Humana' },
+        { label: 'Barata', value: 'Barata'},
+        { label: 'Mosquito', value: 'Mosquito'},
+        { label: 'Golfinho', value: 'Golfinho'},
+    ];
+    
+    let listaGenero = [
+        { label: 'Heterosexual', value: 'Hetero' },
+        { label: 'Homosexual', value: 'Homosexual'},
+        { label: 'Pansexual', value: 'Pansexual'},
+        { label: 'Bisexual', value: 'Bisexual'},
     ];
 
     const deleteUser = async (id: string) => {
@@ -81,7 +126,7 @@ const Usuarios: React.FC = () => {
           setShowSuccess(true)
           refetch()
         }
-    });
+    });    
 
     return (
         <>
@@ -180,40 +225,48 @@ const Usuarios: React.FC = () => {
                                 <div>
                                     <Search
                                         onChange={(e) => {
-                                            console.log(e.target.value)
+                                            // setUser(e.target.value);
+                                            // console.log(e.target.value)
                                         }}
+
                                         width='409px'
                                     />
 
                                     <CustomSelect
                                         onChange={(e) => {
-                                            console.log(e.target.value);
+                                            // setBreed(e.target.value);
+                                            // console.log(e.target.value);
                                         }}
+                                        id='Raça'
                                         label='Raça'
                                         labelDefault='Raça'
-                                        list={undefined}
+                                        list={listaRaça}
                                         value=''
                                         width={176}
                                     />
                                     <CustomSelect
                                         onChange={(e) => {
-                                            console.log(e.target.value);
+                                            // setGenre(e.target.value);
+                                            // console.log(e.target.value);
                                         }}
+                                        id='Genero'
                                         label='Genero'
                                         labelDefault='Genero'
-                                        list={undefined}
+                                        list={listaGenero}
                                         value=''
                                         width={176}
                                     />
                                     <CustomSelect
                                         onChange={(e) => {
-                                            console.log(e.target.value);
+                                            // setUfValue(e.target.value);
+                                            // console.log(e.target.value);
                                         }}
+                                        id="state"
                                         label='Estado'
                                         labelDefault='Estado'
-                                        list={undefined}
+                                        list={uf}
                                         value='Todos os Estados'
-                                        width={176}
+                                        width={254}
                                     />
                                 </div>
                             </S.SearchInputs>
@@ -281,68 +334,68 @@ const Usuarios: React.FC = () => {
                                         </th>
                                     </tr>
                                 </S.TableHead>
-                                {users?.map((id: any) => {
-                                    return (
-                                        <tbody>
-                                            {id.role === 'Mobile' && (
-                                                <tr>
-                                                    <td style={{ width: '246px', }}>
-                                                        <span style={{marginLeft: '24px'}}>
-                                                            {id.name}
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ width: '173px', }}>
-                                                        <span>
-                                                            {regex(id.phone_number)}                                                                                            
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ width: '216px', }}>
-                                                        <span>
-                                                            {id.email}
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ width: '192px', }}>
-                                                        <span>
-                                                            {id.state}
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ width: '195px', }}>
-                                                        <span>
-                                                            {id.city}
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ width: '191px', }}>
-                                                        <S.Active active={id.active}>
-                                                            {id.active === true ? "Ativo" : "Inativo"}
-                                                        </S.Active>
-                                                    </td>
-                                                    <td style={{ width: '209px', }}>
-                                                        <S.Trusted trusted={id.trusted}>
-                                                            <img width="20px" src={id.trusted === true ? trusted : noTrusted} alt={id.trusted === true ? "Confiável" : "Não confiável"} />
-                                                            {id.trusted === true ? "Confiável" : "Não confiável"}
-                                                        </S.Trusted>
-                                                    </td>
-                                                    <td style={{ width: 'auto' }}>
-                                                        <span>
-                                                            <S.Options>
-                                                                <Poppover
-                                                                    onClick={() => {}}
-                                                                    onDelete={() => {
-                                                                        setShowDelete(!false)
-                                                                        setIdUser(id.id)
-                                                                    }}
-                                                                    onEdit={() => setEditUser(!editUser)}
-                                                                    type={'userApp'} 
+                                <tbody>
+                                {users?.data?.map((id: any) => {
+                                    if(id.role === 'Mobile'){
+                                        return (
+                                            <tr>
+                                                <td style={{ width: '246px', }}>
+                                                    <span style={{marginLeft: '24px'}}>
+                                                        {id.name}
+                                                    </span>
+                                                </td>
+                                                <td style={{ width: '173px', }}>
+                                                    <span>
+                                                        {regex(id.phone_number)}                                                                                            
+                                                    </span>
+                                                </td>
+                                                <td style={{ width: '216px', }}>
+                                                    <span>
+                                                        {id.email}
+                                                    </span>
+                                                </td>
+                                                <td style={{ width: '192px', }}>
+                                                    <span>
+                                                        {id.state}
+                                                    </span>
+                                                </td>
+                                                <td style={{ width: '195px', }}>
+                                                    <span>
+                                                        {id.city}
+                                                    </span>
+                                                </td>
+                                                <td style={{ width: '191px', }}>
+                                                    <S.Active active={id.active}>
+                                                        {id.active === true ? "Ativo" : "Inativo"}
+                                                    </S.Active>
+                                                </td>
+                                                <td style={{ width: '209px', }}>
+                                                    <S.Trusted trusted={id.trusted}>
+                                                        <img width="20px" src={id.trusted === true ? trusted : noTrusted} alt={id.trusted === true ? "Confiável" : "Não confiável"} />
+                                                        {id.trusted === true ? "Confiável" : "Não confiável"}
+                                                    </S.Trusted>
+                                                </td>
+                                                <td style={{ width: 'auto' }}>
+                                                    <span>
+                                                        <S.Options>
+                                                            <Poppover
+                                                                onClick={() => {}}
+                                                                onDelete={() => {
+                                                                    setShowDelete(!false)
+                                                                    setIdUser(id.id)
+                                                                }}
+                                                                onEdit={() => setEditUser(!editUser)}
+                                                                type={'userApp'} 
 
-                                                                /> 
-                                                            </S.Options>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    )
+                                                            /> 
+                                                        </S.Options>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
                                 })}
+                                </tbody>
                             </S.Table>
                         </S.ContainerListApp>
                     </>
@@ -355,14 +408,11 @@ const Usuarios: React.FC = () => {
                                 <p>Usuários cadastrados no painel</p>
                                 <Search
                                     onChange={(e) => {
-                                        console.log(e.target.value)
+                                        // console.log(e.target.value)
                                     }}
                                     width='822px'
                                 />
                             </S.SearchInputs>
-                            <div>
-                            </div>
-                            
                             <S.Table>
                                 <S.TableHead>
                                     <tr>
@@ -420,10 +470,10 @@ const Usuarios: React.FC = () => {
                                         </th>
                                     </tr>
                                 </S.TableHead>
-                                {users?.map((id: any) => {
-                                    return (
-                                        <tbody>
-                                            {id.role === 'Administrador' && (
+                                {users?.data?.map((id: any) => {
+                                    if(id.role === 'Administrador'){
+                                        return (
+                                            <tbody>
                                                 <tr>
                                                     <td style={{ width: '367px', }}>
                                                         <span  style={{ marginLeft: '24px' }}>
@@ -468,12 +518,10 @@ const Usuarios: React.FC = () => {
                                                                     onDelete={() => {
                                                                         setShowDelete(!false)
                                                                         setIdUser(id.id)
-                                                                        
                                                                     }}
                                                                     onEdit={() => {
                                                                         setEditUser(!editUser)
                                                                         setObjUser(id)
-                                                                        
                                                                     }} 
                                                                     type={'userPanel'} 
                                                                 />
@@ -481,18 +529,22 @@ const Usuarios: React.FC = () => {
                                                         </span>
                                                     </td>
                                                 </tr>
-                                            )}
-                                        </tbody>
-                                    )
+                                            </tbody>
+                                        )
+                                    }
                                 })}
                             </S.Table>
                         </S.ContainerListApp>
-
                     </>
                 )}
             </>
         
-            <Pagination />
+            <Pagination 
+                onPage={(e: any) => {
+                    setPage(e)
+                }} 
+                value={page} 
+            />
             <NewUser 
                 isModal={open}
                 onClose={() => setOpen(!open)}

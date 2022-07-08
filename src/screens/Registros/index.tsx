@@ -505,47 +505,12 @@ const Registros: React.FC = () => {
                             </S.Table>
                         </S.Container>
                     </Box>
-                    {/* <Pagination /> */}
-                    <S.ContainerBtn>
-                        <S.PrevNext
-                            to="prev"
-                            onClick={() => {
-                                let cont = page - 1;
-                                setPage(cont);
-                            }}
-                            disabled={page === 1 ? true : false}
-                        >
-                            <img src={iconShow} alt="" />
-                        </S.PrevNext>
-                        <S.AtualPage>{page}</S.AtualPage>
-                        <S.Page
-                            onClick={() => {
-                                let cont = page + 1
-                                setPage(cont);
-                            }}
-                        >{page + 1}</S.Page>
-                        <S.Page
-                            onClick={() => {
-                                let cont = page + 2
-                                setPage(cont);
-                            }}
-                        >{page + 2}</S.Page>
-                        <S.Page
-                            onClick={() => {
-                                let cont = page + 3
-                                setPage(cont);
-                            }}
-                        >{page + 3}</S.Page>
-                        <S.PrevNext
-                            to="next"
-                            onClick={() => {
-                                let cont = page + 1;
-                                setPage(cont);
-                            }}
-                        >
-                            <img src={iconShow} alt="" />
-                        </S.PrevNext>
-                    </S.ContainerBtn>
+                    <Pagination 
+                            onPage={(e: any) => {
+                            setPage(e)
+                            }} 
+                            value={page} 
+                        />                    
                 </>
             )}
 

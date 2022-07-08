@@ -15,7 +15,9 @@ const Search: React.FC <IProps> = (props) => {
                 onChange={props.onChange} 
                 type="input" 
                 placeholder='Pesquisar'
-                id="search"/>
+                id="search"
+                autoComplete='off'
+            />
             <label htmlFor="search">
                 <img src={search} alt="" />
             </label>

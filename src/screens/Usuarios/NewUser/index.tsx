@@ -305,17 +305,17 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                     status={'success'} 
                     mensage='O moderador foi cadastrado com sucesso!'            
                 />
-                <ModalMsg 
-                    height='312px'
-                    modalBackground={false}
-                    open={openError} 
-                    onClose={() => {
-                        setOpenError(!openError)
-                    }}
-                    width={375} 
-                    status={'error'} 
-                    mensage='E-mail ou telefone já foram cadastrados, Tente novamente'            
-                />
+            <ModalMsg 
+                height='312px'
+                modalBackground={false}
+                open={openError} 
+                onClose={() => {
+                    setOpenError(!openError)
+                }}
+                width={375} 
+                status={'error'} 
+                mensage='E-mail ou telefone já foram cadastrados, Tente novamente'            
+            />
         </S.Container>
         </PersonalModal>
     );

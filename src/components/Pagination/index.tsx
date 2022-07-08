@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style';
 import {
     iconShow,
 } from '../../assets';
 
-const Pagination: React.FC = () => {
-    const [page, setPage] = useState<number>(1);
+interface IProps {
+    onPage: (e: any) => any,
+    value: any,
+}
+
+const Pagination: React.FC <IProps> = ({onPage,value}) => {
+
+    const [page, setPage] = React.useState<number>(value);
+    
+    useEffect(()=>{
+        onPage(page)
+    }, [page])
+
 
     return (
         <S.DivConatainerBtn>
@@ -22,9 +33,24 @@ const Pagination: React.FC = () => {
                 </S.PrevNext>
                 <div>
                     <S.AtualPage>{page}</S.AtualPage>
-                    <S.Page>{page + 1}</S.Page>
-                    <S.Page>{page + 2}</S.Page>
-                    <S.Page>{page + 3}</S.Page>
+                    <S.Page
+                            onClick={() => {
+                                let cont = page + 1
+                                setPage(cont);
+                            }}
+                        >{page + 1}</S.Page>
+                        <S.Page
+                            onClick={() => {
+                                let cont = page + 2
+                                setPage(cont);
+                            }}
+                        >{page + 2}</S.Page>
+                        <S.Page
+                            onClick={() => {
+                                let cont = page + 3
+                                setPage(cont);
+                            }}
+                        >{page + 3}</S.Page>
                 </div>
                 <S.PrevNext
                     to="next"
