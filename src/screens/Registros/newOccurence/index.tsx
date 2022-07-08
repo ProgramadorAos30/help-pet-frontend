@@ -112,11 +112,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
     });
 
     const onSubmit = (values: FormData) => {
-        const obj = Object.assign(values, { 
-            "agree_share": values.agree_share === "Yes" ? true : false,
-        })
-
-        mutate(obj);
+        mutate(values);
     };
 
     const watchSpecialPlate = watch('special_place')

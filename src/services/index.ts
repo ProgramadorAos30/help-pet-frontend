@@ -28,5 +28,6 @@ export {
     putUser,
     getUserById,
     useOccurrences,
+    putOccurrences,
     useUploads
 } from './hooks/index';

@@ -22,6 +22,7 @@ export {
     getSourceById
 } from './useSource';
 export { 
-    useOccurrences
+    useOccurrences,
+    putOccurrences
 } from './useOccurences';
 export { useUploads } from './useUploads';

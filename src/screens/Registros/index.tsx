@@ -37,6 +37,7 @@ import {
     ocurrenceIcon
 } from '../../assets/index';
 import NewOccurence from './newOccurence';
+import ApproveReprove from './ApproveReprove';
 
 const Registros: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
@@ -45,9 +46,14 @@ const Registros: React.FC = () => {
     const [ maps, setMaps ] = useState(true);
     const [ list, setList ] = useState(false);
     const [ open, setOpen ] = useState(false);
-    const [ newOccurence, setNewOccurence ] = useState(false);
+    const [ idDelete, setIdDelete ] = useState('');
     const [ listServices, setListServices ] = useState<any>();
     const [ occurrenceObj, setOccurrenceObj ] = useState<any>({});
+    const [ openDelete, setOpenDelete ] = useState(false);
+    const [ newOccurence, setNewOccurence ] = useState(false);
+    const [ approveReprove, setApproveReprove ] = useState(false);
+    const [ successDelete, setSuccessDelete ] = useState(false);
+
     const [ page, setPage ] = useState<number>(1);
     const [ status, setStatus ] = useState<any>(undefined);
     const [ service, setService ] = useState<string[]>([]);
@@ -56,9 +62,6 @@ const Registros: React.FC = () => {
     const [ cityValue, setCityValue ] = useState<any>();
     const [ initialDate, setInitialDate ] = useState<any>(undefined);
     const [ finalDate, setFinalDate ] = useState<any>(undefined);
-    const [ idDelete, setIdDelete ] = useState('');
-    const [ openDelete, setOpenDelete ] = useState(false);
-    const [ successDelete, setSuccessDelete ] = useState(false);
 
     const {
         data: occurrences,
@@ -474,13 +477,10 @@ const Registros: React.FC = () => {
                                                                 }}
                                                                 onFinish={() => {
                                                                     setOccurrenceObj(id)
-
                                                                 }}
                                                                 onApprove={() => {
-                                                                    let obj = {
-                                                                        "finished_status": "Yes"
-                                                                    }
-                                                                    //onEdit(id.id, obj)
+                                                                    setOccurrenceObj(id)
+                                                                    setApproveReprove(true)
                                                                 }}
                                                                 onDelete={() => {
                                                                     setIdDelete(id.id)
@@ -574,12 +574,20 @@ const Registros: React.FC = () => {
                 status="success"
                 width={469}
                 height='312px'
-                mensage='Ocorrência deletada com sucesso!'
+                mensage='Ocorrência foi excluida com sucesso!'
                 modalBackground={false}
                 onClose={() => {
                     setSuccessDelete(!successDelete)
                 }}
                 open={successDelete}
+            />
+
+            <ApproveReprove 
+                onHide={() => {
+                    setApproveReprove(!approveReprove)
+                } } 
+                isModal={approveReprove} 
+                itemEdit={occurrenceObj}                
             />
         </>
     )
