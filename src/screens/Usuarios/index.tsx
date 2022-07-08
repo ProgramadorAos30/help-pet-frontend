@@ -29,7 +29,7 @@ import {
     alertDark,
     trusted,
     noTrusted,
-    userIcon
+    //userIcon
 } from '../../assets';
 import {regex} from '../../services/functions/regex'
 
@@ -164,7 +164,7 @@ const Usuarios: React.FC = () => {
                     <>
                         <S.CardList>
                             <CardInfo
-                                icon={userIcon}
+                                //icon={userIcon}
                                 title="Total"/*{/*ExTotal.label}*/
                                 value={20/*ExTotal.number*/}
                                 type="list"

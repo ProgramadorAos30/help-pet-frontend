@@ -8,7 +8,7 @@ import {
     putOccurrences
 } from '../../../services';
 import {
-    PersonalModal
+    PersonalModal, SwitchOptions
 } from '../../../components';
 import { 
     blueAlert,
@@ -26,6 +26,7 @@ import { useMutation } from 'react-query';
 import { queryClient } from '../../../services/index';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores';
+import { AxiosResponse } from 'axios';
 
 interface IProps {
     onHide: () => void,
@@ -41,13 +42,32 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         watch,
         register,
         setValue,
-        reset
+        reset,
     } = useForm<FormData>({
         mode: 'onChange',
         defaultValues: {
-            
+            "status": "Disapproved"
         }
     });
+
+
+    // const { mutate: put } = useMutation(putOccurrences, {
+    //     onSuccess: () => {
+
+    //     }
+    // })
+
+    function onSubmit (values: FormData) {
+        const obj = Object.assign(itemEdit, {
+            'status': values.status,
+            "service": itemEdit.service.id,
+            "source": itemEdit.source.id
+        })
+
+        //put(token, itemEdit.id, obj)
+
+        console.log(token, values, 'valores submit');
+    };
 
     useEffect(() => {
         if(!itemEdit) return;
@@ -64,22 +84,7 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         }
     }, [isModal, reset]);
 
-    const putOccurrence = (id: string, dados: any) => {
-        const resp = api.put(`/occurrences/${id}`, dados, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-
-        return resp
-    }
-
-    const onSubmit = (values: FormData) => {
-        putOccurrences(token, itemEdit.id, values)
-        console.log(values, 'valores submit');
-    };
-
-    console.log(watch('status'))
+    console.log(itemEdit)
 
     return (
         <PersonalModal
@@ -91,31 +96,20 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         >
             <S.Container>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <fieldset>
-                        <S.Approve htmlFor="approve">
-                            <img src="" alt="" />
-                            Aprovar
-                            <input 
-                                {...register('status')}
-                                type="radio" 
-                                name="status" 
-                                id="approve"
-                                value="Approved"
-                                defaultChecked={true}
-                            />
-                        </S.Approve>
-                        <S.Repprove htmlFor="reprove">
-                            <img src="" alt="" />
-                            Aprovar
-                            <input 
-                                {...register('status')}
-                                type="radio" 
-                                name="status" 
-                                id="reprove" 
-                                value='Disapproved'
-                            />
-                        </S.Repprove>
-                    </fieldset>
+                    <SwitchOptions 
+                        width='252px'
+                        register={register}
+                        checkedOne={itemEdit.status === 'Approved' ? true : false}
+                        checkedTwo={itemEdit.status === 'Disapproved' || itemEdit.status === 'Waiting' ? true : false }
+                        status={watch('status') || 'Waiting'}
+                        primaryId='reprove'
+                        seccondaryId='approve'
+                        primaryLabel='Reprovar'
+                        seccondaryLabel='Aprovar'
+                        type='occurrences'
+                        valueOne='Disapproved'
+                        valueTwo='Approved'
+                    />
                     <S.ContainerBtn>
                         <button
                             type='button'
@@ -127,10 +121,7 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             Voltar
                         </button>
                         <button
-                            type='button'
-                            onClick={() => {
-                                
-                            }}
+                            type='submit'
                         >
                             Finalizar
                         </button>

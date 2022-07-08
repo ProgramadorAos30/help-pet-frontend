@@ -32,7 +32,8 @@ import alertDark from './alertDark.svg';
 import modalIconClose from './modalIconClose.svg';
 import mapsDefault from './mapsDefault.svg';
 import closeRed from './closeRed.svg';
-import userIcon from './userIcon.svg';
+import disabledError from './disableError.svg';
+import disabledSuccess from './disableSuccess.svg';
 
 export {
     logOut,
@@ -69,5 +70,6 @@ export {
     modalIconClose,
     mapsDefault,
     closeRed,
-    userIcon,
+    disabledError,
+    disabledSuccess
 }
