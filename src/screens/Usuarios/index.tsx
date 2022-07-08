@@ -26,12 +26,10 @@ import { RootState } from '../../stores';
 import { useMutation } from 'react-query';
 import {
     iconShow,
-    ocurrenceIcon,
     alertDark,
     trusted,
     noTrusted,
-    options,
-    registers,
+    userIcon
 } from '../../assets';
 import {regex} from '../../services/functions/regex'
 
@@ -121,7 +119,7 @@ const Usuarios: React.FC = () => {
                     <>
                         <S.CardList>
                             <CardInfo
-                                icon={ocurrenceIcon}
+                                icon={userIcon}
                                 title="Total"/*{/*ExTotal.label}*/
                                 value={20/*ExTotal.number*/}
                                 type="list"

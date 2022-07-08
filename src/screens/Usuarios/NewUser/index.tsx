@@ -9,6 +9,7 @@ import { queryClient } from '../../../services/index';
 import { regex, numberClean } from '../../../services/functions/regex'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../schema";
+import { on } from "stream";
 
 async function postUser(data: FormData) {
     const { data: response } = await api.post('/signup', data);
@@ -20,7 +21,7 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
     const { data: uf, isLoading: loadingUf } = useUf();
     const ref = useRef<any>(null)
     const [ open, setOpen ] = useState(false);
-    
+    const [ openError, setOpenError] = useState(false)
     const { 
         handleSubmit,
         formState: { errors, isDirty, isValid  },
@@ -37,6 +38,13 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
         onSuccess: () => {
           queryClient.invalidateQueries('users');
           setOpen(true);
+        },
+        onError:(e: any) => {
+            setOpenError(e.response.data.message ==
+                        'Este e-mail não é permitido. Tente novamente.' 
+                        || 'Este telefone não é permitido. Tente novamente.'
+                        ? true
+                        : false)
         }
     });
 
@@ -49,11 +57,9 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
             
         })
         mutate(obj);
-        console.log(obj, 'valores submit');
     };
 
-    const watchPhone = watch('phone_number');
-    console.log(watchPhone, 'teste')
+    const watchPhone = watch('phone_number')
 
     const watchUf = watch('state');
 
@@ -298,6 +304,17 @@ const NewUser: React.FC <IProps> = ({onClose, isModal}) => {
                     width={375} 
                     status={'success'} 
                     mensage='O moderador foi cadastrado com sucesso!'            
+                />
+                <ModalMsg 
+                    height='312px'
+                    modalBackground={false}
+                    open={openError} 
+                    onClose={() => {
+                        setOpenError(!openError)
+                    }}
+                    width={375} 
+                    status={'error'} 
+                    mensage='E-mail ou telefone já foram cadastrados, Tente novamente'            
                 />
         </S.Container>
         </PersonalModal>

@@ -29,9 +29,10 @@ import uploadIcon from './uploadIcon.svg';
 import alertRed from './alertRed.svg';
 import orangeAlert from './orangeAlert.svg'
 import alertDark from './alertDark.svg';
-import modalIconClose from './modalIconClose.svg'
-import mapsDefault from './mapsDefault.svg'
-import closeRed from './closeRed.svg'
+import modalIconClose from './modalIconClose.svg';
+import mapsDefault from './mapsDefault.svg';
+import closeRed from './closeRed.svg';
+import userIcon from './userIcon.svg';
 
 export {
     logOut,
@@ -68,4 +69,5 @@ export {
     modalIconClose,
     mapsDefault,
     closeRed,
+    userIcon,
 }
