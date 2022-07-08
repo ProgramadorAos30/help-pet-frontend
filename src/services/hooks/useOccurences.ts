@@ -108,12 +108,12 @@ export const useOccurrences = <T>(
     )
 )}
 
-export const putOccurrences = async <T>(token: string, id: string, dados: any):Promise<Occurrences> => {
-    const resp =  await api.put<Occurrences>(`/occurrences/${id}`, dados, { 
+export const putOccurrences = async (token: string, id: string, dados: any) => {
+    const resp =  await api.put(`/occurrences/${id}`, dados, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
     //useOccurrences(token)
-    return resp.data
+    return resp
 };
