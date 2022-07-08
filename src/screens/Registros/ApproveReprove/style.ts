@@ -11,3 +11,7 @@ export const Approve = styled.label`
 export const Repprove = styled.label`
 
 `;
+
+export const ContainerBtn = styled.fieldset`
+
+`;

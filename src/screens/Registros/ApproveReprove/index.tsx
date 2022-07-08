@@ -43,7 +43,10 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
         setValue,
         reset
     } = useForm<FormData>({
-        mode: 'onChange'
+        mode: 'onChange',
+        defaultValues: {
+            
+        }
     });
 
     useEffect(() => {
@@ -113,7 +116,7 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                             />
                         </S.Repprove>
                     </fieldset>
-                    <div>
+                    <S.ContainerBtn>
                         <button
                             type='button'
                             onClick={() => {
@@ -126,13 +129,12 @@ const ApproveReprove: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                         <button
                             type='button'
                             onClick={() => {
-                                onHide()
-                                reset()
+                                
                             }}
                         >
                             Finalizar
                         </button>
-                    </div>
+                    </S.ContainerBtn>
                 </form>
             </S.Container>
         </PersonalModal>

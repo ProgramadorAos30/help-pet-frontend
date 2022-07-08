@@ -177,6 +177,7 @@ const Registros: React.FC = () => {
                 <DefaultButton 
                     onSelect={() => setNewOccurence(!newOccurence)}
                     text="Registrar ocorrência"
+                    id="register_occurrence"
                 />
             </S.Header>
             {maps == true && (
