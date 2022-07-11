@@ -156,7 +156,7 @@ export const Status = styled.td<{ status: string }>`
                         background: rgba(62, 168, 73, 0.1);
                         color: #3EA849 !important;
                     `;
-                } else if(props.status == "Reproved"){
+                } else if(props.status == "Disapproved"){
                     return `
                         background: rgba(250, 20, 59, 0.1);
                         color: #E40B17 !important;

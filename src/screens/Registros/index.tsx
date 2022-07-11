@@ -38,6 +38,7 @@ import {
 } from '../../assets/index';
 import NewOccurence from './newOccurence';
 import ApproveReprove from './ApproveReprove';
+import FinishOccurence from './FinishOccurrence';
 
 const Registros: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
@@ -53,6 +54,7 @@ const Registros: React.FC = () => {
     const [ newOccurence, setNewOccurence ] = useState(false);
     const [ approveReprove, setApproveReprove ] = useState(false);
     const [ successDelete, setSuccessDelete ] = useState(false);
+    const [ finishOccurrence, setFinishOccurrence ] = useState(false);
 
     const [ page, setPage ] = useState<number>(1);
     const [ status, setStatus ] = useState<any>(undefined);
@@ -100,7 +102,7 @@ const Registros: React.FC = () => {
             return 'Aguardando aprovação'
         } else if (status == "Approved") {
             return 'Aprovado'
-        } else if (status == "Reproved") {
+        } else if (status == "Disapproved") {
             return "Reprovado"
         } else {
             return status
@@ -460,7 +462,10 @@ const Registros: React.FC = () => {
                                                 <S.Finished finished={id.finished_status}>
                                                     <span>
                                                         <p>
-                                                            {id.finished_status}
+                                                            {id.finished_status === 'Yes'
+                                                                ? 'Sim'
+                                                                : 'Não'
+                                                            }
                                                         </p>
                                                     </span>
                                                 </S.Finished>
@@ -478,6 +483,7 @@ const Registros: React.FC = () => {
                                                                 }}
                                                                 onFinish={() => {
                                                                     setOccurrenceObj(id)
+                                                                    setFinishOccurrence(!finishOccurrence)
                                                                 }}
                                                                 onApprove={() => {
                                                                     setOccurrenceObj(id)
@@ -506,11 +512,11 @@ const Registros: React.FC = () => {
                         </S.Container>
                     </Box>
                     <Pagination 
-                            onPage={(e: any) => {
-                            setPage(e)
-                            }} 
-                            value={page} 
-                        />                    
+                        onPage={(e: any) => {
+                        setPage(e)
+                        }} 
+                        value={page} 
+                    />                    
                 </>
             )}
 
@@ -555,6 +561,14 @@ const Registros: React.FC = () => {
                 } } 
                 isModal={approveReprove} 
                 itemEdit={occurrenceObj}                
+            />
+
+            <FinishOccurence
+                isModal={finishOccurrence}
+                itemEdit={occurrenceObj}
+                onHide={() => {
+                    setFinishOccurrence(!finishOccurrence)
+                }}
             />
         </>
     )
