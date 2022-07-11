@@ -523,6 +523,7 @@ const Registros: React.FC = () => {
             />
 
             <ModalDelete 
+                backgroundColor='false'
                 open={openDelete}
                 buttonText="Sim, excluir"
                 mensage="Deseja mesmo excluir ocorrência"

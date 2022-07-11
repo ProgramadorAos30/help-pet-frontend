@@ -10,10 +10,11 @@ interface IProps {
     width: number,
     mensage: string,
     onDelete: () => void,
-    buttonText: any
+    buttonText: any,
+    backgroundColor: string
 }
 
-const Container = styled.div`
+const Container = styled.div<{ backgroundColor: string }>`
         padding: 40px;
         height: 312px;
         width: 389px;
@@ -63,8 +64,24 @@ const Container = styled.div`
             }
 
             > button:nth-child(2){
-                background: #E40B17;
-                color: #FFF;
+                ${props => {
+                    if(props.backgroundColor === ''){
+                        return `
+                            background: #E40B17;
+                            color: #FFF;
+                        `;
+                    } else if (props.backgroundColor === 'false'){
+                        return `
+                            background: #E40B17;
+                            color: #FFF;
+                        `;
+                    } else {
+                        return `
+                            background: #3EA849;
+                            color: #FFF;
+                        `;
+                    }
+                }}
             }
         }
 `;
@@ -91,7 +108,7 @@ const ModalDelete: React.FC <IProps> = (props) => {
             onClose={props.onClose}
         >
             <Box sx={style}>
-                <Container>
+                <Container backgroundColor={props.backgroundColor}>
                     <img src={orangeAlert} alt="" />
                     <p>{props.mensage}</p>
                     <div>
