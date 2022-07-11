@@ -23,7 +23,9 @@ const FinishOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
             >
                 <S.Container>
                     <h1>Finalizar ocorrência</h1>
-
+                    <div>
+                        
+                    </div>
                 </S.Container>
             </PersonalModal>
             
