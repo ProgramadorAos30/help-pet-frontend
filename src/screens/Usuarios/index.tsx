@@ -553,7 +553,7 @@ const Usuarios: React.FC = () => {
                 itemEdit={objUser}
             />
             <ModalDelete
-                backgroundColor='false'
+                // backgroundColor='false'
                 mensage='Deseja mesmo excluir este usuário?'
                 onClose={() => setShowDelete(false)}
                 onDelete={() => {
