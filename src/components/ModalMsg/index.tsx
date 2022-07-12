@@ -15,7 +15,7 @@ interface IProps {
     mensage: string
     modalBackground: boolean,
     height: string,
-    occurence?: boolean
+    occurence?: boolean,
     finishOccurence?: () => void
 }
 

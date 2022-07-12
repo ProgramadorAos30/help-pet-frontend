@@ -44,20 +44,6 @@ const SwitchOptions: React.FC <IProps> = ({
 }) => {
     return (
         <S.Container width={width}>
-            <S.Repprove
-                htmlFor={primaryId} 
-                value={status}
-            >
-                <img src={status === 'Disapproved' || status === 'Waiting' ? alertRed : disabledError} alt="" />
-                {primaryLabel}
-                <input 
-                    {...register(type === 'occurrences' ? 'status' : 'trusted')}
-                    type="radio" 
-                    defaultChecked={checkedOne}
-                    id={primaryId}
-                    value={valueOne}
-                />
-            </S.Repprove>
             <S.Approve  
                 htmlFor={seccondaryId} 
                 value={status}
@@ -72,6 +58,20 @@ const SwitchOptions: React.FC <IProps> = ({
                     value={valueTwo}
                 />
             </S.Approve>
+            <S.Repprove
+                htmlFor={primaryId} 
+                value={status}
+            >
+                <img src={status === 'Disapproved' || status === 'Waiting' ? alertRed : disabledError} alt="" />
+                {primaryLabel}
+                <input 
+                    {...register(type === 'occurrences' ? 'status' : 'trusted')}
+                    type="radio" 
+                    defaultChecked={checkedOne}
+                    id={primaryId}
+                    value={valueOne}
+                />
+            </S.Repprove>
         </S.Container>
     );
 };

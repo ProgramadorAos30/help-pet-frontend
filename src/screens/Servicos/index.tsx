@@ -101,6 +101,7 @@ const Servicos: React.FC = () => {
             />
 
             <ModalDelete 
+                backgroundColor='false'
                 mensage='Deseja mesmo excluir este serviço?'
                 onClose={() => setShowDelete(false)}
                 onDelete={() => {

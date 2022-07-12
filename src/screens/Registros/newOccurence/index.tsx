@@ -689,6 +689,7 @@ const NewOccurence: React.FC<IProps> = ({ onHide, isModal, itemEdit }) => {
                 }}
             />
             <ModalDelete
+                backgroundColor='false'
                 buttonText="Sim, cancelar"
                 mensage='Deseja mesmo cancelar o registro desta ocorrência?'
                 onClose={() => {
