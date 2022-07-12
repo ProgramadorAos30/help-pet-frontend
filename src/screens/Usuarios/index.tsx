@@ -20,6 +20,7 @@ import {
     useUf, 
     queryClient, 
     useUsers,
+    useDashboardRegionList,
 } from '../../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../stores';
@@ -36,8 +37,13 @@ import {regex} from '../../services/functions/regex'
 const Usuarios: React.FC = () => {
     const { token } = useSelector((state: RootState) => state.clickState);
     const { data: uf, isLoading: loadingUf } = useUf();
+    const { data: regionUsers } = useDashboardRegionList(token);
+    console.log(regionUsers, "teste")
+
     const [ idUser, setIdUser ] = useState('');
-    const [ objUser, setObjUser ] = useState<any>();
+    const [ objUser, setObjUser ] = useState<any>(null);
+
+    const [totalList, setTotalList] = useState<any>();
 
     const [openTotalList, setOpenTotalList] = useState(false);
     const [openSulList, setOpenSulList] = useState(false);
@@ -79,13 +85,34 @@ const Usuarios: React.FC = () => {
         role,
     );
 
-    console.log('pagina  -  ', page)
-    console.log('user  -  ', user)
-    console.log('ufValue  -  ', ufValue)
-    console.log('genre  -  ', genre)
-    console.log('breed  -  ', breed)
-    console.log('role  -  ', role)
+    // console.log('pagina  -  ', page)
+    // console.log('user  -  ', user)
+    // console.log('ufValue  -  ', ufValue)
+    // console.log('genre  -  ', genre)
+    // console.log('breed  -  ', breed)
+    // console.log('role  -  ', role)
 
+    // useEffect(() => {
+
+    //     let spam:any = []
+    //     regionUsers?.forEach((e) =>{
+
+    //         let estados e.forEach(id => {
+                
+    //         });
+
+    //         let cont = e.user_total
+    //         spam.push({
+    //             estado: e.state_list,
+    //             // estadoSigla: e.sigla,
+    //             // regiao: e.regiao.nome,
+    //             qtd: e.user_total
+    //         })
+    //     })
+    //     setTotalList(spam)
+    // },[])
+
+    console.log ('regiões', totalList)
 
     let lista = [
         { label: 'Rio de janeiro', value: 'Rio de janeiro', number: 1 },
@@ -162,62 +189,30 @@ const Usuarios: React.FC = () => {
             <>
                 {app === true && (
                     <>
-                        <S.CardList>
-                            <CardInfo
+                        <S.CardList>                            
+                            <CardInfo 
                                 //icon={userIcon}
-                                title="Total"/*{/*ExTotal.label}*/
-                                value={20/*ExTotal.number*/}
+                                title="Total"
+                                value={20}
                                 type="list"
                                 width='273px'
                                 list={lista}
                                 open={openTotalList}
                                 setOpen={() => setOpenTotalList(!openTotalList)}
                             />
-                            <CardInfo
-                                title="Sul"
-                                value={20}
-                                type="list"
-                                width='236px'
-                                list={lista}
-                                open={openSulList}
-                                setOpen={() => setOpenSulList(!openSulList)}
-                            />
-                            <CardInfo
-                                title="Norte"
-                                value={20}
-                                type="list"
-                                width='236px'
-                                list={lista}
-                                open={openNorteList}
-                                setOpen={() => setOpenNorteList(!openNorteList)}
-                            />
-                            <CardInfo
-                                title="Sudeste"
-                                value={20}
-                                type="list"
-                                width='236px'
-                                list={lista}
-                                open={openSudesteList}
-                                setOpen={() => setOpenSudesteList(!openSudesteList)}
-                            />
-                            <CardInfo
-                                title="Nordeste"
-                                value={20}
-                                type="list"
-                                width='236px'
-                                list={lista}
-                                open={openNordesteList}
-                                setOpen={() => setOpenNordesteList(!openNordesteList)}
-                            />
-                            <CardInfo
-                                title="Centro-Oeste"
-                                value={20}
-                                type="list"
-                                width='236px'
-                                list={lista}
-                                open={openCentroList}
-                                setOpen={() => setOpenCentroList(!openCentroList)}
-                            />
+                            {regionUsers?.map((id: any, index: number) => {
+                                return (
+                                    <CardInfo key={id}
+                                        title={id.name}
+                                        value={id.user_total}
+                                        type="list"
+                                        width='236px'
+                                        list={id.state_list}
+                                        open={openSulList}
+                                        setOpen={() => setOpenSulList(!openSulList)}
+                                    />
+                                )
+                            })}
                         </S.CardList>
                         <S.ContainerListApp>
                             <S.SearchInputs>
@@ -522,6 +517,7 @@ const Usuarios: React.FC = () => {
                                                                     onEdit={() => {
                                                                         setEditUser(!editUser)
                                                                         setObjUser(id)
+                                                                        setIdUser(id.id)
                                                                     }} 
                                                                     type={'userPanel'} 
                                                                 />
@@ -538,7 +534,6 @@ const Usuarios: React.FC = () => {
                     </>
                 )}
             </>
-        
             <Pagination 
                 onPage={(e: any) => {
                     setPage(e)
@@ -551,7 +546,10 @@ const Usuarios: React.FC = () => {
             />
             <EditUser 
                 isModal={editUser}
-                onClose={() => setEditUser(!editUser)}
+                onClose={() => {                    
+                    setEditUser(!editUser)
+                    setObjUser(null)                                        
+                }}
                 itemEdit={objUser}
             />
             <ModalDelete

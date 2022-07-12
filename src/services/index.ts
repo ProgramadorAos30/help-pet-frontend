@@ -29,5 +29,6 @@ export {
     getUserById,
     useOccurrences,
     putOccurrences,
-    useUploads
+    useUploads,
+    useDashboardRegionList,
 } from './hooks/index';

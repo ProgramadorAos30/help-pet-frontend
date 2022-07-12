@@ -54,6 +54,8 @@ interface IProps {
     ref? : any,
     id?: string,
     name?: string
+    disabled?: boolean;
+    defaultValue?: string;
 }
 
 const CustomInput: React.FC <IProps> = (props) => {
@@ -72,6 +74,8 @@ const CustomInput: React.FC <IProps> = (props) => {
                     id={props.id}
                     ref={props.ref}
                     autoComplete="off"
+                    defaultValue={props.defaultValue}
+                    disabled= {props.disabled}
                     InputProps={{
                         disableUnderline: true,
                         style: {

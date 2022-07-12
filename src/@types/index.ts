@@ -85,9 +85,7 @@ export interface AllUsers {
     pageCount: any,
     hasPreviousPage: any,
     hasNextPage: any
-
   }]
-
 }
 
 export interface User_setings {
@@ -139,6 +137,17 @@ export interface Dashboard_users {
       total: number,
       monthly: number
     }
+};
+
+export type State_List = {
+    name: string,
+    user_total: number
+};
+
+export interface Dashboard_region_Users {
+  name: string,
+  state_list: State_List[]
+  user_total: number
 };
 
 export interface Messages {

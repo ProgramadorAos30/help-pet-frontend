@@ -6,6 +6,8 @@ import { iconShow } from '../../assets/index';
 
 
 type List = {
+    name?: string,
+    user_total?: number,
     label?: string,
     number?: number,
 }
@@ -59,8 +61,8 @@ const CardInfo: React.FC<IProps> = (props) => {
                         {props.list?.map((id: any) => {
                             return (
                                 <div>
-                                    <h1>{id.label}</h1>
-                                    <p>{id.number}</p>
+                                    <h1>{id.label || id.name}</h1>
+                                    <p>{id.number || id.user_total}</p>
                                 </div>
                             )
                         })}

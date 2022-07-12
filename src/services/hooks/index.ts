@@ -26,3 +26,4 @@ export {
     putOccurrences
 } from './useOccurences';
 export { useUploads } from './useUploads';
+export { useDashboardRegionList } from './useRegionUsers';

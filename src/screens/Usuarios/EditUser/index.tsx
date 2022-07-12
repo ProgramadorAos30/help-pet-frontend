@@ -35,10 +35,11 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
     const [ idUser, setIdUser ] = useState('');
     const [ open, setOpen ] = useState(false);
     const [ successMsg, setSuccessMsg ] = useState(false);
+    const [ errMsg, setErrMsg ] = useState(false);
 
     const { 
         handleSubmit,
-        formState: { errors, isDirty, isValid  },
+        formState: { errors, isSubmitting, isDirty, isValid, dirtyFields  },
         control,
         watch,  
         setValue,
@@ -46,10 +47,29 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
         getValues,
     } = useForm<FormData>({
         mode: "onChange",
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            name: itemEdit?.name,
+            phone_number: itemEdit?.phone_number,
+            password: itemEdit?.password,
+            email: itemEdit?.email,
+            state: itemEdit?.state,
+            city: itemEdit?.city,
+            active: itemEdit?.active,
+        }
+
     });
 
+    useEffect(() => {
+        if(!itemEdit)return;
 
+        Object.keys(itemEdit).map((keys) => {
+         let key = keys as keyof unknown;
+         setValue(key as any, itemEdit[key] as any)
+        })
+     }, [itemEdit, setValue]);
+
+    console.log(dirtyFields, 'teste')
 
     // const { mutate, isLoading } = useMutation(putUser, {
     //     onSuccess: () => {
@@ -60,7 +80,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
 
     const onSubmit = (values: FormData) => {
         
-        let obj = Object.assign(values, { 
+        let obj = Object.assign(itemEdit, { 
             "phone_number": numberClean(values.phone_number),
             "role": "Administrador",
             "active": values.active === true ? true : false     
@@ -73,12 +93,6 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
     const watchUf = watch('state');
 
     const { data: city, isLoading: loadingCity } = useCity(watchUf);
-
-    useEffect(() => {
-        if(itemEdit != undefined){
-            reset(itemEdit)
-        }
-    }, [itemEdit, setValue]);
 
     useEffect(() => {
         if (!isModal) {
@@ -110,9 +124,11 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                         width={372}
                                         type="text"
                                         label="Nome do moderador"
+                                        defaultValue={itemEdit.name}
                                         value={value}
                                         onChange={onChange}
                                         onBlur={onBlur}
+
                                     />
                                     {errors.name && (
                                         <span>{errors.name.message}</span>
@@ -120,20 +136,21 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                 </span>
                             )}
                         />                     
-                        <Controller
+                        {/* <Controller 
                             control={control}
                             name="password"
                             render={({field: { onChange, onBlur,}}) => (
-                                <span>
-                                    <div>
+                                <span >
+                                    <div >
                                         <CustomInput
                                             id="password"
                                             width={372} 
                                             label="Senha do moderador"
-                                            value="******"
+                                            value={itemEdit.password}
                                             onChange={onChange}
                                             onBlur={onBlur}
-                                            type="text"
+                                            type="text"   
+                                            disabled={true}                                         
                                         />
                                     </div>                                    
                                     {errors.password && (
@@ -141,7 +158,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                     )}
                                 </span>
                             )}
-                        />                    
+                        />*/}
                     </fieldset>
                     <fieldset>
                         <Controller
@@ -156,6 +173,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                             type="text"
                                             label={value === "" ? 'Numero do celular' : 'Celular'}
                                             value={regex(value)}
+                                            defaultValue={itemEdit.phone_number}
                                             onChange={(e: any) => {
                                                 let numero = regex(e?.target?.value)
                                                 if(numero.length <= 15){
@@ -187,9 +205,11 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                             width={372}
                                             type="text"
                                             label={value === "" ? value : 'E-mail'}
-                                            value={value}
+                                            value={itemEdit.email}
+                                            defaultValue={itemEdit.email}
                                             onChange={onChange}
                                             onBlur={onBlur}
+                                            disabled={true}
                                         />
                                     </div>
                                 </span>
@@ -210,7 +230,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                             label="Estado"
                                             labelDefault={value} 
                                             value={value}
-                                            defaultValue={value}
+                                            defaultValue={itemEdit.state}
                                             onBlur={onBlur}
                                             onChange={onChange}
                                             width={372}
@@ -235,7 +255,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                                             label="Cidade"
                                             labelDefault="Selecione a Cidade"
                                             value={value}
-                                            defaultValue={value}
+                                            defaultValue={itemEdit.city}
                                             onChange={onChange}
                                             onBlur={onBlur}
                                             width={372}
@@ -287,7 +307,7 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                         type='submit'
                         disabled={!isDirty || !isValid}
                     >
-                        {true == true 
+                        {isSubmitting 
                                 ? "Editando..."
                                 : "Finalizar edição"
                             }
@@ -305,8 +325,21 @@ const EditForm: React.FC <IProps> =  ({onClose, itemEdit, isModal}) => {
                     }} 
                     width={375} 
                     status={'success'} 
-                    mensage='O moderador foi editado com sucesso!'            
+                    mensage='O moderador foi editado com sucesso!'
                 />
+                <ModalMsg 
+                height='312px'
+                modalBackground={false}
+                mensage='Falha em editar moderador!'
+                onClose={() => {
+                    reset()
+                    setErrMsg(!errMsg)
+                    onClose()
+                }}
+                open={errMsg}
+                status="falha"
+                width={375}
+            />
         </S.Container>
         </PersonalModal>
     );
